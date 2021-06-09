@@ -2,6 +2,7 @@ import pandas as pd
 import config
 import matplotlib.pyplot as plt
 
+
 # Simple data visualization of polluting gases
 
 df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\test_data.csv')
