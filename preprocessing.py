@@ -61,7 +61,7 @@ num_entries = int((T_END - T_START) / 86400)
 time_step = T_START
 
 # Get list of column names based on the number of entries (each hour of data will be one column)
-col_names = ['city', 'lon', 'lat']
+col_names = ['city', 'lat', 'lon']
 for i in range(num_entries):
     # Convert daily interval to human-readable
     timedate = datetime.datetime.fromtimestamp(time_step)
@@ -82,7 +82,7 @@ with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.
         city_name = city_df.iloc[i][0]
         city_lat = city_df.iloc[i][1]
         city_lon = city_df.iloc[i][2]
-        city_info=[city_name, city_lon, city_lat]
+        city_info=[city_name, city_lat, city_lon]
         
         # Retrieve particulate list; write row to csv
         entry = gen_point_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END)
