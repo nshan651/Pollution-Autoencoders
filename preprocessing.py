@@ -122,8 +122,8 @@ city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings
 city_count = 5 # Actual: len(city_df)
 
 # Start and ending times. Testing for Dec 2020
-T_START = 1606853919
-T_END = 1609445919
+T_START = 1606456800
+T_END = 1623128400
 
 # Derive number of entries from start and end
 # Change in epoch to number of hours gets us total entries
