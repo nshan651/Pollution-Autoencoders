@@ -49,11 +49,11 @@ def gen_point_data(name, lat, lon, t_start, t_end):
 
 ### Retrieve data for list of cities ###
 city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
-city_count = 5 # Actual: len(city_df)
+city_count = 576 # Actual: len(city_df)
 
 # Start and ending times. Testing for Dec 2020
-T_START = 1606853919
-T_END = 1609445919
+T_START = 1620450000
+T_END = 1623128400
 
 # Derive number of entries from start and end
 # Change in epoch to number of hours gets us total entries
@@ -88,6 +88,8 @@ with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.
         entry = gen_point_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END)
         city_info+=entry
         writer_obj.writerow(city_info)
+        if(i%60==0):
+            time.sleep(60)
 
     f_open.close()
 
