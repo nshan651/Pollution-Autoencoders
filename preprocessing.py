@@ -81,7 +81,7 @@ async def request_buffer(city_df):
     '''
 
     curr_index = 0
-    df_size = 300 #len(city_df)
+    df_size = len(city_df)
     # Run batch request every minute
     while (curr_index < curr_index+60):
         print('\nPlacing batch request...')
@@ -102,7 +102,7 @@ async def request_buffer(city_df):
                 
         f_open.close()
     
-        print('index is: ', curr_index)
+        print('Request placed, index updated to: ', curr_index)
 
         # Check if current position has reached the end of file
         if curr_index < df_size:
