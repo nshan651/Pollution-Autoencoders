@@ -47,6 +47,7 @@ def gen_point_data(name, lat, lon, t_start, t_end):
 
     return pm_list
 
+
 def batch_request(city_df, col_names):
     ''' 
     Places a batch request for PM2.5 levels on every minute 
