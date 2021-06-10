@@ -4,6 +4,7 @@ import pandas as pd
 import config
 import matplotlib.pyplot as plt
 import datetime
+import asyncio
 from csv import writer
 
 
@@ -46,7 +47,76 @@ def gen_point_data(name, lat, lon, t_start, t_end):
 
     return pm_list
 
+def batch_request(city_df, col_names):
+    ''' 
+    Places a batch request for PM2.5 levels on every minute 
 
+    @params:
+        col_names: list of columns including city_name, lat/lon, and PM2.5 features
+        city_df: data frame containing city information
+    '''
+
+    # Write header
+    with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.csv', 'w', newline='') as f_open:
+        writer_obj = writer(f_open)
+        writer_obj.writerow(col_names)
+        f_open.close()
+
+    # Set up event loop
+    loop = asyncio.get_event_loop()
+    
+    try:
+        loop.run_until_complete(request_buffer(city_df))
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print('Exiting loop')
+        loop.close()
+
+    
+async def request_buffer(city_df):
+    ''' Async function to buffer API requests to 60/min 
+        @params:
+            city_df: data frame containing city information
+    '''
+
+    curr_index = 0
+    df_size = 300 #len(city_df)
+    # Run batch request every minute
+    while (curr_index < curr_index+60):
+        print('\nPlacing batch request...')
+        # Write entry to file
+        with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.csv', 'a', newline='') as f_open:
+            writer_obj = writer(f_open)
+            # Loop through 60 cities from current index
+            for i in range(curr_index, curr_index+60):
+                city_name = city_df.iloc[i][0]
+                city_lat = city_df.iloc[i][1]
+                city_lon = city_df.iloc[i][2]
+                city_info = [city_name, city_lat, city_lon]
+
+                # Retrieve particulate list; write row to csv
+                entry = gen_point_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END)
+                city_info+=entry
+                writer_obj.writerow(city_info)
+                
+        f_open.close()
+    
+        print('index is: ', curr_index)
+
+        # Check if current position has reached the end of file
+        if curr_index < df_size:
+            # Increment index to next batch of 60
+            curr_index+=60
+            await asyncio.sleep(60)
+        else:
+            # Otherwise, return from event loop
+            break
+    
+    # Finish running
+    return 0
+      
+    
 ### Retrieve data for list of cities ###
 city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
 city_count = 5 # Actual: len(city_df)
@@ -61,7 +131,7 @@ num_entries = int((T_END - T_START) / 86400)
 time_step = T_START
 
 # Get list of column names based on the number of entries (each hour of data will be one column)
-col_names = []
+col_names = ['city', 'lat', 'lon']
 for i in range(num_entries):
     # Convert daily interval to human-readable
     timedate = datetime.datetime.fromtimestamp(time_step)
@@ -71,23 +141,11 @@ for i in range(num_entries):
     # Append col to list
     col_names.append(time_string)
 
-# Write entry to file
-with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.csv', 'w', newline='') as f_open:
-    writer_obj = writer(f_open)
-    # Write header
-    writer_obj.writerow(col_names)
 
-    # Loop through all 28,000+ cities and retrieve data
-    for i in range(city_count):
-        city_name = city_df.iloc[i][0]
-        city_lat = city_df.iloc[i][1]
-        city_lon = city_df.iloc[i][2]
+### Init batch request ###
+batch_request(city_df=city_df, col_names=col_names)
 
-        # Retrieve particulate list; write row to csv
-        entry = gen_point_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END)
-        writer_obj.writerow(entry)
 
-    f_open.close()
 
 
 
