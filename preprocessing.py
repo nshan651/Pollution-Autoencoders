@@ -17,7 +17,7 @@ def gen_point_data(name, lat, lon, t_start, t_end):
         lat, lon: latitude and longitude in decimal degrees
         t_start, t_end: starting and ending epoch in Unix time
     '''
-
+    
     # Connect to endpoint and load data
     endpoint = 'http://api.openweathermap.org/data/2.5/air_pollution/history?lat={LAT}&lon={LON}&start={START}&end={END}&appid={KEY}'.format(
         LAT=lat, 
@@ -60,7 +60,7 @@ def batch_request(city_df, col_names):
     # Write header
     with open('C:\\github_repos\\Universal-Embeddings\\data\\geocoded-cities-master.csv', 'w', newline='') as f_open:
         writer_obj = writer(f_open)
-        writer_obj.writerow(col_names)
+        #writer_obj.writerow(col_names)
         f_open.close()
 
     # Set up event loop
@@ -99,7 +99,7 @@ async def request_buffer(city_df):
                 # Retrieve particulate list; write row to csv
                 entry = gen_point_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END)
                 city_info+=entry
-                writer_obj.writerow(city_info)
+                #writer_obj.writerow(city_info)
                 
         f_open.close()
     
@@ -120,27 +120,35 @@ async def request_buffer(city_df):
     
 ### Retrieve data for list of cities ###
 city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
-city_count = 5 # Actual: len(city_df)
+city_count = len(city_df)
 
 # Start and ending times. Testing for Dec 2020
 T_START = 1606456800
 T_END = 1623128400
 
-# Derive number of entries from start and end
-# Change in epoch to number of hours gets us total entries
-num_entries = int((T_END - T_START) / 86400)
-time_step = T_START
 
-# Get list of column names based on the number of entries (each hour of data will be one column)
-col_names = ['city', 'lat', 'lon']
-for i in range(num_entries):
-    # Convert daily interval to human-readable
-    timedate = datetime.datetime.fromtimestamp(time_step)
-    time_string = timedate.strftime('pm25_%Y_%m_%d')
-    # Increment time_step
-    time_step+=86400
-    # Append col to list
-    col_names.append(time_string)
+def gen_cols(t_start, t_end):
+    # Get list of column names based on the number of entries (each hour of data will be one column)
+    # Derive number of entries from start and end
+
+    # Change in epoch to number of hours gets us total entries
+    num_entries = int((t_end - t_start) / 86400)
+    time_step = T_START
+    col_names = ['city', 'lat', 'lon']
+  
+    for i in range(num_entries):
+        # Convert daily interval to human-readable
+        timedate = datetime.datetime.fromtimestamp(time_step)
+        time_string = timedate.strftime('pm25_%Y_%m_%d')
+        # Increment time_step
+        time_step+=86400
+        # Append col to list
+        col_names.append(time_string)
+    
+    return col_names
+
+col_names = gen_cols(T_START, T_END)
+
 
 
 ### Init batch request ###
