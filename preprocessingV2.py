@@ -37,8 +37,6 @@ def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
     ls = df['list'][0]
     df_size = len(ls)
     
-    # 2D list of all 8 components' daily time series averages over a given period
-    component_master_list = []
     # Hourly time series list of each entry; daily total of each entry
     ts_list = []
     component_dict = {}
@@ -57,7 +55,6 @@ def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
         component_dict[component] = ts_list
         # Clear list for next iteration
         ts_list = []
-    print('components:', component_dict)
     return component_dict
 
 def gen_cols(t_start, t_end, component):
@@ -145,7 +142,7 @@ async def request_buffer(city_df, component_names):
         if curr_index < df_size:
             # Increment index to next batch of 60
             curr_index+=60
-            await asyncio.sleep(60)
+            await asyncio.sleep(90)
         else:
             # Otherwise, return from event loop
             break
