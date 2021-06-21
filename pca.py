@@ -172,6 +172,7 @@ def pca_linegraph(num_of_comp, component_names, colors_list):
     ''' 
     Plot a linegraph for pca
     '''
+    
     plt.figure(figsize=(12,10))
     plt.rcParams.update({'font.size': 18})
     for i, component in enumerate(component_names):

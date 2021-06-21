@@ -32,7 +32,7 @@ def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
     page = requests.get(url=endpoint)
     content = json.loads(page.content)
     df = pd.json_normalize(content)
-
+    
     # List all records
     ls = df['list'][0]
     df_size = len(ls)
