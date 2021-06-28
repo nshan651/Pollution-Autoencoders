@@ -69,12 +69,12 @@ def run_pca(component):
 
     ### Preprocessing ###
 
-    df = pd.read_csv('C:\\github_repos\\Universal-Embeddings\\data\\gases\\{}.csv'.format(component))
+    df = pd.read_csv('C:\\github_repos\\Universal-Embeddings\\data\\data_clean\\{}_data_clean.csv'.format(component))
     columns = list(df.columns.values)
     
     # Features list and removal of city, lat, lon
     features = list(df.columns.values)
-    del features[:1]
+    del features[:1]    
     del features[-1]
 
     # y value list using last day of 7-month data
@@ -207,10 +207,10 @@ def pca_scatter(component, colors_list):
     plt.title('PCA scatter plot of CO')
     # Annotate points
     for i in range(size):
-        if i%20 == 0:
+        if i%300 == 0:
             X = X_train[i,0]
             Y = X_train[i,1]
-            plt.annotate(text=annotations[i], xy=(X,Y))
+            plt.annotate(text=annotations[i], xy=(X,Y)) 
     plt.show()
     
     

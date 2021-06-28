@@ -57,6 +57,7 @@ def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
         ts_list = []
     return component_dict
 
+
 def gen_cols(t_start, t_end, component):
     ''' 
     Get list of column names based on the number of entries (each daily average of data will be one column)
@@ -82,7 +83,8 @@ def gen_cols(t_start, t_end, component):
         col_names.append(time_string)
 
     return col_names
-    
+
+
 def batch_request(city_df, component_names):
     ''' 
     Places a batch request for gas/particulate levels on every minute 
@@ -129,7 +131,7 @@ async def request_buffer(city_df, component_names):
             # Cycle through each component and write to file
             for component in component_names:
                 # Write entry to file
-                file_name = 'C:\\github_repos\\Universal-Embeddings\\data\\gases\\{}.csv'.format(component)
+                file_name = 'C:\\github_repos\\Pollution-Autoencoders\\data\\gases\\{}.csv'.format(component)
                 with open(file_name, 'a', newline='') as f_open:
                     writer_obj = writer(f_open)
                     city_info+=entry[component]
@@ -152,7 +154,7 @@ async def request_buffer(city_df, component_names):
       
     
 ### Retrieve data for list of cities ###
-city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
+city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Pollution-Autoencoders\\data\\city_lat_lon.csv')
 city_count = len(city_df)
 
 # Start and ending times. Testing for Dec 2020
@@ -167,7 +169,7 @@ col_names_dict = {}
 for component in COMPONENT_NAMES:
     # generate column names
     col_names_dict[component] = list(gen_cols(T_START, T_END, component))
-    file_name = 'C:\\github_repos\\Universal-Embeddings\\data\\gases\\{COMPONENT}.csv'.format(COMPONENT=component)
+    file_name = 'C:\\github_repos\\Pollution-Autoencoders\\data\\gases\\{COMPONENT}.csv'.format(COMPONENT=component)
     with open(file_name, 'w', newline='') as f_open:
         writer_obj = writer(f_open)
         writer_obj.writerow(col_names_dict[component][:])
