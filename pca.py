@@ -1,24 +1,12 @@
-import json
 import pandas as pd
-import seaborn
-import warnings
 import numpy as np
-import operator
-import sys
 import matplotlib.pyplot as plt
 
-from pandas.io.json import json_normalize
 from sklearn.decomposition import PCA
-from sklearn.model_selection import KFold, train_test_split, GridSearchCV, cross_val_score
-from sklearn import linear_model
-from sklearn.metrics import make_scorer,mean_squared_error,r2_score,mean_absolute_error,accuracy_score, confusion_matrix
-from sklearn.ensemble import BaggingRegressor, RandomForestRegressor, RandomForestClassifier, AdaBoostRegressor
+from sklearn.model_selection import KFold, train_test_split
+from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, Normalizer
-from sklearn.datasets import make_classification
-from sklearn import svm, tree
-from sklearn.naive_bayes import GaussianNB
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+from sklearn.preprocessing import Normalizer
 from sklearn.cluster import KMeans
 
 
@@ -62,7 +50,7 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds=0, dev=False):
         return var_val, r2_val, X_train
 
 
-def run_pca(component):
+def pca_run(dims, component):
     ''' 
     Run PCA using k-fold cross validation strategy
     '''
@@ -70,8 +58,7 @@ def run_pca(component):
     ### Preprocessing ###
 
     df = pd.read_csv('C:\\github_repos\\Universal-Embeddings\\data\\data_clean\\{}_data_clean.csv'.format(component))
-    columns = list(df.columns.values)
-    
+        
     # Features list and removal of city, lat, lon
     features = list(df.columns.values)
     del features[:1]    
@@ -85,7 +72,7 @@ def run_pca(component):
     x = Normalizer().fit_transform(x)
 
     # Number of features to compare
-    num_of_comp=inp=list(range(2,191))
+    num_of_comp=list(range(2,dims+1))
 
     ### Cross Validation ### 
 
@@ -145,7 +132,6 @@ def run_pca(component):
     # using the best set to call PCA function to use the test set with all components
     pca_r2=[]
     pca_variance=[]
-    # List of PCA encoded values to use in visualization
     
     # Obtain optimal PCA variance and R2 scores and add to list
     for i in train_test_comp:
@@ -168,18 +154,24 @@ def run_pca(component):
     return (pca_variance, pca_r2, X_train)
 
 
-def pca_linegraph(num_of_comp, component_names, colors_list):
+def pca_linegraph(dims, component_names, colors_list):
     ''' 
     Plot a linegraph for pca
+
+    @params:
+        dims: The range of dimensions over which to plot
+        component_names: Names of the gases/particulates
+        colors_list: List of colors to graph
     '''
     
     plt.figure(figsize=(12,10))
     plt.rcParams.update({'font.size': 18})
+    num_of_comp = list(range(2,dims+1))
     for i, component in enumerate(component_names):
         print('--- PCA on {} ---'.format(component))
-        variance, r2, _ = run_pca(component)
-        plt.plot(num_of_comp, variance, label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
-        plt.plot(num_of_comp, r2, linestyle = '-.', marker = 'H', color = colors_list[i])
+        variance, r2, _ = pca_run(component)
+        plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
+        plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
         plt.xlabel('Dimension')
         plt.ylabel('Variance/R2')
         plt.title('PCA of Polluting Gases')
@@ -187,9 +179,13 @@ def pca_linegraph(num_of_comp, component_names, colors_list):
     plt.show()
     
 
-def pca_scatter(component, colors_list):
+def pca_scatter(component, color):
     '''
     PCA scatter plot of multiple components 
+
+    @params:
+        component: gas/particulate to be represented in first two dimensions
+        color: The color of the scatter plot
     '''
     
     city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
@@ -199,9 +195,9 @@ def pca_scatter(component, colors_list):
     plt.rcParams.update({'font.size': 18})
 
     print('--- PCA on {} ---'.format(component))
-    pca_variance, pca_r2, X_train = run_pca(component)
+    pca_variance, pca_r2, X_train = pca_run(component)
 
-    plt.scatter(X_train[:,0], X_train[:,1], label='{}'.format(component), c=colors_list[0], alpha=0.1)
+    plt.scatter(X_train[:,0], X_train[:,1], label='{}'.format(component), c=color, alpha=0.1)
 
     size = len(X_train)
     plt.title('PCA scatter plot of CO')
@@ -222,7 +218,7 @@ def pca_kmeans(component, colors_list):
     plt.figure(figsize=(10,10))
     plt.rcParams.update({'font.size': 18})
     # Run PCA
-    *_, X_train = run_pca('co')
+    *_, X_train = pca_run('co')
     # Perform KMeans
     kmeans = KMeans(n_clusters=3)
     # Compute cluster centers and predict cluster indicies
@@ -240,7 +236,8 @@ def pca_kmeans(component, colors_list):
 COMPONENT_NAMES = ['co', 'no', 'no2']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # All dimensions
-num_of_comp=inp=list(range(2,191))
+DIMS = 190
+dims=list(range(2,191))
 # First 25 dims
 comp_25 = list(range(2,27))
 # First 3 dims
