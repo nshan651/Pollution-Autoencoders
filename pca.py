@@ -56,7 +56,6 @@ def pca_run(dims, component):
     '''
 
     ### Preprocessing ###
-
     df = pd.read_csv('C:\\github_repos\\Universal-Embeddings\\data\\data_clean\\{}_data_clean.csv'.format(component))
         
     # Features list and removal of city, lat, lon
@@ -152,63 +151,7 @@ def pca_run(dims, component):
         pca_r2.append(R2)
 
     return (pca_variance, pca_r2, X_train)
-
-
-def pca_linegraph(dims, component_names, colors_list):
-    ''' 
-    Plot a linegraph for pca
-
-    @params:
-        dims: The range of dimensions over which to plot
-        component_names: Names of the gases/particulates
-        colors_list: List of colors to graph
-    '''
-    
-    plt.figure(figsize=(12,10))
-    plt.rcParams.update({'font.size': 18})
-    num_of_comp = list(range(2,dims+1))
-    for i, component in enumerate(component_names):
-        print('--- PCA on {} ---'.format(component))
-        variance, r2, _ = pca_run(component)
-        plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
-        plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
-        plt.xlabel('Dimension')
-        plt.ylabel('Variance/R2')
-        plt.title('PCA of Polluting Gases')
-        plt.legend()
-    plt.show()
-    
-
-def pca_scatter(component, color):
-    '''
-    PCA scatter plot of multiple components 
-
-    @params:
-        component: gas/particulate to be represented in first two dimensions
-        color: The color of the scatter plot
-    '''
-    
-    city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Universal-Embeddings\\data\\city_lat_lon.csv')
-    annotations = city_df.loc[:,'city']
-    
-    plt.figure(figsize=(12,12))
-    plt.rcParams.update({'font.size': 18})
-
-    print('--- PCA on {} ---'.format(component))
-    pca_variance, pca_r2, X_train = pca_run(component)
-
-    plt.scatter(X_train[:,0], X_train[:,1], label='{}'.format(component), c=color, alpha=0.1)
-
-    size = len(X_train)
-    plt.title('PCA scatter plot of CO')
-    # Annotate points
-    for i in range(size):
-        if i%300 == 0:
-            X = X_train[i,0]
-            Y = X_train[i,1]
-            plt.annotate(text=annotations[i], xy=(X,Y)) 
-    plt.show()
-    
+   
     
 def pca_kmeans(component, colors_list):
     '''
@@ -235,16 +178,6 @@ def pca_kmeans(component, colors_list):
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 COMPONENT_NAMES = ['co', 'no', 'no2']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
-# All dimensions
 DIMS = 190
-dims=list(range(2,191))
-# First 25 dims
-comp_25 = list(range(2,27))
-# First 3 dims
-comp_3 = list(range(2,5))
 
-# PCA scatter
-#pca_scatter(COMPONENT_NAMES[0], COLORS_LIST)
 
-# PCA K-means
-pca_scatter('co', COLORS_LIST)
