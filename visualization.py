@@ -22,8 +22,10 @@ def linegraph(type, dims, component_names, colors_list):
         # AE or PCA
         if type == 'ae':
             file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/autoencoders/{}_ae_results.csv'.format(component)
+            plt_title = 'Autoencoder of Polluting Gases'
         elif type == 'pca':
             file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/pca/{}_pca_results.csv'.format(component)
+            plt_title = 'PCA of Polluting Gases'
         else:
             print('Type must be "ae" or "pca"')
             quit()
@@ -38,7 +40,7 @@ def linegraph(type, dims, component_names, colors_list):
         plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
         plt.xlabel('Dimension')
         plt.ylabel('% Explained Variance')
-        plt.title('Autoencoder of Polluting Gases')
+        plt.title(plt_title)
         
     plt.show()
 
@@ -146,12 +148,13 @@ def heatmap(component):
 
 ### RUN ###
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['no2']
+COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['no2']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
 DIMS = 190
 
 #scatter('ae', 'co', 'r')
+#linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #linegraph('ae', DIMS, COMPONENT_NAMES, COLORS_LIST)
-heatmap(COMPONENT_NAMES[0])
+#heatmap(COMPONENT_NAMES[0])

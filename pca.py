@@ -36,7 +36,7 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds=0, dev=False):
         var_val=model.score(dev_pca, dev_labels_pca)
         Y_test_predict = model.predict(dev_pca)
         r2_val=r2_score(dev_labels_pca,Y_test_predict)
-        return model.intercept_,model.coef_,res_sum_square,var_val,r2_val
+        return (model.intercept_, model.coef_, res_sum_square, var_val, r2_val)
 
     # Linear regression on test set
     else:
@@ -47,111 +47,136 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds=0, dev=False):
         var_val=model.score(X_test, Y_test)
         Y_test_predict = model.predict(X_test)
         r2_val=r2_score(Y_test,Y_test_predict)
-        return var_val, r2_val, X_train
+        return (var_val, r2_val, X_train)
 
 
-def pca_run(dims, component):
+def pca_run(dims, component_names):
     ''' 
     Run PCA using k-fold cross validation strategy
+
+    @params:
+        dims: Number of starting dimensions
+        component_names: The names of the gases/particulates
     '''
 
-    ### Preprocessing ###
-    df = pd.read_csv('C:\\github_repos\\Universal-Embeddings\\data\\data_clean\\{}_data_clean.csv'.format(component))
+    for component in component_names:
+        print('---------- Beginning PCA for {} ----------'.format(component))
+        ### Preprocessing ###
+        df = pd.read_csv('/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
+            
+        # Features list and removal of city, lat, lon
+        features = list(df.columns.values)
+        del features[:1]    
+        del features[-1]
+
+        # y value list using last day of 7-month data
+        y = df.loc[:, ['{}_2021_06_06'.format(component)]].values
+
+        # Normalize x values
+        x = df.loc[:, features].values
+        x = Normalizer().fit_transform(x)
+
+        # Number of features to compare
+        num_of_comp=list(range(2,dims+1))
+
+        ### Cross Validation ### 
+
+        # k-fold cross validation; any cross-validation technique can be substituted here
+        kfold = KFold(n_splits=2, shuffle=True)
+        folds=0
+        # Train/test and metrics for current component's set of data
+        train_test_dict = {}
+        metrics={}
+        # Contains all train_test splits/metrics in PCA for n components and 
+        # m sets of splits
+        train_test_comp = {}
+        metrics_comp = {}
+        metrics_comp_set = {}
+
+        # Loop through train/test data and save the best data with highest R2 scores
+        for training_index, test_index in kfold.split(x):
+            # Split X and Y train and test data
+            X_train, X_test = x[training_index, :], x[test_index, :]
+            Y_train, Y_test = y[training_index], y[test_index]
+            folds+=1
+            # Update dict with train/test values
+            train_test_dict['X_train'] = X_train
+            train_test_dict['X_test'] = X_test
+            train_test_dict['Y_train'] = Y_train
+            train_test_dict['Y_test'] = Y_test
+            # Save best sets of train/test data that have high R2 scores
+            train_test_comp[folds] = train_test_dict.copy()
+            
+            # Train PCA and save a list of metrics 
+            for i in num_of_comp:
+                model_intercept, model_coef, res_sum_square, variance_score, Rsquare = pca(i, X_train, X_test, Y_train, Y_test, folds, dev=True)
+                # Create metrics list for current comparison
+                metrics['model_intercept']=model_intercept
+                metrics['model_coef']=model_coef
+                metrics['res_sum_square']=res_sum_square
+                metrics['variance_score']=variance_score
+                metrics['Rsquare']=Rsquare
+                metrics_comp[i] = metrics.copy()
+            # Save each metrics comparison for later
+            metrics_comp_set[folds] = metrics_comp.copy()
+
+        # Calculate the R2 score for each component
+        best_r2 = -100
+        sets = 0
+        for i in metrics_comp_set:
+            for j in metrics_comp_set[i]:
+                R2 = metrics_comp_set[i][j]['Rsquare']
+                #print('set : ' + str(i) + ' ' + 'comp' + ' ' + 
+                #    str(j) + ' ' + 'Rsquare' + ' ' + str(R2))
+                if R2 >= best_r2:
+                    best_r2 = R2
+                    sets=i
+            
+        # Graph PCA to test set with best components
+        # using the best set to call PCA function to use the test set with all components
+        pca_r2=[]
+        pca_variance=[]
+
+        # Obtain optimal PCA variance and R2 scores and add to list
+        for i in train_test_comp:
+            if i == sets:
+                for j in train_test_comp[sets]:
+                    if 'X_test'==j:
+                        X_ttbest=train_test_comp[sets][j]
+                    elif 'X_train' ==j:
+                        X_tnbest=train_test_comp[sets][j]
+                    elif 'Y_test' ==j:
+                        Y_ttbest=train_test_comp[sets][j]
+                    elif 'Y_train'==j:
+                        Y_tnbest=train_test_comp[sets][j]
+
+        # Test set for pca
+        for i in num_of_comp:   
+            variance, R2, X_train = pca(i, X_tnbest, X_ttbest, Y_tnbest ,Y_ttbest, folds, dev=False)
+            pca_variance.append(variance)
+            pca_r2.append(R2)
+            #pca_X_train.append(X_train)
+               
+        # Normalize var and r2 so they are same length as ax1 and ax2
+        append_size = len(X_train[:,0]) - dims + 1
+        norm = np.empty(append_size)
+        norm[:] = np.NaN
+        var_norm = [*pca_variance, *norm]
+        r2_norm = [*pca_r2, *norm]
+
+        # Output dict to write 
+        output_dict = {
+            '{}_X_train_ax1'.format(component): X_train[:,0],
+            '{}_X_train_ax2'.format(component) : X_train[:,1],
+            '{}_var'.format(component) : var_norm,
+            '{}_r2'.format(component) : r2_norm
+        }
         
-    # Features list and removal of city, lat, lon
-    features = list(df.columns.values)
-    del features[:1]    
-    del features[-1]
-
-    # y value list using last day of 7-month data
-    y = df.loc[:, ['{}_2021_06_06'.format(component)]].values
-
-    # Normalize x values
-    x = df.loc[:, features].values
-    x = Normalizer().fit_transform(x)
-
-    # Number of features to compare
-    num_of_comp=list(range(2,dims+1))
-
-    ### Cross Validation ### 
-
-    # k-fold cross validation; any cross-validation technique can be substituted here
-    kfold = KFold(n_splits=2, shuffle=True)
-    folds=0
-    # Train/test and metrics for current component's set of data
-    train_test_dict = {}
-    metrics={}
-    # Contains all train_test splits/metrics in PCA for n components and 
-    # m sets of splits
-    train_test_comp = {}
-    metrics_comp = {}
-    metrics_comp_set = {}
-
-    # Loop through train/test data and save the best data with highest R2 scores
-    for training_index, test_index in kfold.split(x):
-        # Split X and Y train and test data
-        X_train, X_test = x[training_index, :], x[test_index, :]
-        Y_train, Y_test = y[training_index], y[test_index]
-        folds+=1
-        print('-----------------------------------------')
-        # Update dict with train/test values
-        train_test_dict['X_train'] = X_train
-        train_test_dict['X_test'] = X_test
-        train_test_dict['Y_train'] = Y_train
-        train_test_dict['Y_test'] = Y_test
-        # Save best sets of train/test data that have high R2 scores
-        train_test_comp[folds] = train_test_dict.copy()
+        # Write entry to file
+        file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/pca/{}_pca_results.csv'.format(component)
+        write_data = pd.DataFrame(data=output_dict)
+        write_data.to_csv(path_or_buf=file_name, index=False)
         
-        # Train PCA and save a list of metrics 
-        for i in num_of_comp:
-            model_intercept, model_coef, res_sum_square, variance_score, Rsquare = pca(i, X_train, X_test, Y_train, Y_test, folds, dev=True)
-            # Create metrics list for current comparison
-            metrics['model_intercept']=model_intercept
-            metrics['model_coef']=model_coef
-            metrics['res_sum_square']=res_sum_square
-            metrics['variance_score']=variance_score
-            metrics['Rsquare']=Rsquare
-            metrics_comp[i] = metrics.copy()
-        # Save each metrics comparison for later
-        metrics_comp_set[folds] = metrics_comp.copy()
-
-    # Calculate the R2 score for each component
-    best_r2 = -100
-    sets = 0
-    for i in metrics_comp_set:
-        for j in metrics_comp_set[i]:
-            R2 = metrics_comp_set[i][j]['Rsquare']
-            #print('set : ' + str(i) + ' ' + 'comp' + ' ' + 
-            #    str(j) + ' ' + 'Rsquare' + ' ' + str(R2))
-            if R2 >= best_r2:
-                best_r2 = R2
-                sets=i
-        
-    # Graph PCA to test set with best components
-    # using the best set to call PCA function to use the test set with all components
-    pca_r2=[]
-    pca_variance=[]
-    
-    # Obtain optimal PCA variance and R2 scores and add to list
-    for i in train_test_comp:
-        if i == sets:
-            for j in train_test_comp[sets]:
-                if 'X_test'==j:
-                    X_ttbest=train_test_comp[sets][j]
-                elif 'X_train' ==j:
-                    X_tnbest=train_test_comp[sets][j]
-                elif 'Y_test' ==j:
-                    Y_ttbest=train_test_comp[sets][j]
-                elif 'Y_train'==j:
-                    Y_tnbest=train_test_comp[sets][j]
-    print('-----------------------------------------')
-    for i in num_of_comp:   
-        variance, R2, X_train = pca(i, X_tnbest, X_ttbest, Y_tnbest ,Y_ttbest, folds, dev=False)
-        pca_variance.append(variance)
-        pca_r2.append(R2)
-
-    return (pca_variance, pca_r2, X_train)
-   
     
 def pca_kmeans(component, colors_list):
     '''
@@ -175,9 +200,11 @@ def pca_kmeans(component, colors_list):
 
 ### RUN ###
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co', 'no', 'no2']
+COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 DIMS = 190
+
+pca_run(DIMS, COMPONENT_NAMES)
 
 

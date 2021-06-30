@@ -113,12 +113,10 @@ def ae_run(dims, component_names):
         print('--- Autoencoder for {} ---'.format(component))
         variance, r2, X_train = autoencoder(dfx, y, dims, component)
 
-        # Create empty list of NaNs
+        # Normalize var and r2 so they are same length as ax1 and ax2
         append_size = len(X_train[:,0]) - dims + 1
         norm = np.empty(append_size)
         norm[:] = np.NaN
-        
-        # Normalize var and r2 so they are same length as ax1 and ax2
         var_norm = [*variance, *norm]
         r2_norm = [*r2, *norm]
 
@@ -137,13 +135,13 @@ def ae_run(dims, component_names):
     
 ### RUN ###
 
-COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-#COMPONENT_NAMES = ['no2']
+#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+COMPONENT_NAMES = ['no2']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
-DIMS = 190
+DIMS = 3
 
 # Method tests
-#ae_run(DIMS, COMPONENT_NAMES)
+ae_run(DIMS, COMPONENT_NAMES)
 
 
