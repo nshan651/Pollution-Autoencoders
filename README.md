@@ -4,6 +4,13 @@
 
 **Pollution Autoencoders** uses a deep autoencoder neural network to characterize cities in the United States based on time-series readings of various polluting gases and particulates. 
 
+<table align=center><tr>
+<td><img src=images/pipeline/pollution_graphic.jpg alt="ae architecture" width=400px height=200px ></td></td>
+<td><img src=images/pipeline/berkeley_aqi.png alt="ae architecture" width=400px height=200px ></td>
+</tr></table>
+<p align=right style="font-size:8px"> <b>[right]</b> PM2.5 Air Pollution Concentration (μg/mg³), Berkely Earth
+</p>
+
 We compared the [Autoencoders](https://www.deeplearningbook.org/contents/autoencoders.html) method with [Principle Component Analysis (PCA)](https://www.sartorius.com/en/knowledge/science-snippets/what-is-principal-component-analysis-pca-and-how-it-is-used-507186), an older technique for reducing the dimensionality of a data set.
 
 The main advantage of Autoencoders have over PCA is in their capability of discovering non-linear relationships between polluting gases. Autoencoders are able to capture more of the explained variance because of this increased flexibility.
@@ -38,12 +45,14 @@ In our case, we wanted to see what properties the autoencoder model could extrac
 
 <p align="center">
   <img src="images/pipeline/gifs/data_scroll.gif" alt="data_scroll">
-  <i>Carbon Monoxide Data</i>
+  <i style="font-size: 8pt">Carbon Monoxide Data</i>
 </p>
 
 After obtaining the requisite data, we cleaned and preprocessed the data by removing cities that had the same name and any entries with missing values. While this made the data quickly useable, a more ideal solution would be to add a state/country code to distinguish between cities and to impute any missing values. For more on this see the [future improvements](#future-improvements) section.
 
-We compared the autoencoder model to Principle Component Analysis, a much older technique used for dimensionality reduction that has been a part of statistical literature since the early twentieth century.[[2]](#2)
+We compared the autoencoder model to Principle Component Analysis, a much older technique used for dimensionality reduction that has been a part of statistical literature since the early twentieth century.[[2]](#2) The main distinction between autoencoders and PCA is that autoencoders can span a nonlinear subspace, whereas PCA learns the principle subspace.
+
+Autoencoders that employ nonlinar encoder and decoder functions can create a more powerful generalization than PCA. However, an autoencoder model that is allowed too much capacity is at risk of reconstructing the input "too perfectly" without extracting any useful information.[[3]](#1)
 
 
 ## Pipeline
@@ -60,12 +69,21 @@ We compared the autoencoder model to Principle Component Analysis, a much older 
 
 ## Results
 
+We compared the results from Principal Component Analysis (PCA) and the Autoencoder models across 190 dimensions.
+
+<table align=center><tr>
+<td> <img src="images/pca_lineplot/pca_linegraph.png" alt="pca_linegraph" style="width: 300px;"/> </td>
+<td> <img src="images/ae_lineplot/ae_linegraph.png" alt="ae_linegraph" style="width: 300px;"/> </td>
+</tr></table>
+
+
+
 ## Future Improvements
 
 
 ## References
 
-<a id="1">[1]</a> 
+<a id="1">[1,3]</a> 
 Ian Goodfellow, Yoshua Bengio, Aaron Courville (2016). 
 Deep Learning. MIT Press.
 
