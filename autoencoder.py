@@ -94,8 +94,7 @@ def ae_run(dims, component_names):
     for component in component_names:
         print('---------- Beginning Autoencoder training for {} ----------'.format(component))
         df = pd.read_csv('/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
-        #columns = list(df.columns.values)
-
+        
         # Features list and removal of city, lat, lon
         features = list(df.columns.values)
         del features[:3] 
@@ -110,7 +109,6 @@ def ae_run(dims, component_names):
         dfx = pd.DataFrame(x)
 
         # Train Autoencoder model
-        print('--- Autoencoder for {} ---'.format(component))
         variance, r2, X_train = autoencoder(dfx, y, dims, component)
 
         # Normalize var and r2 so they are same length as ax1 and ax2

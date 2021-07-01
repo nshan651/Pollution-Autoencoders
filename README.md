@@ -19,11 +19,25 @@ Install the required packages.
 </p>
 <br>
 
-## Autoencoders
+## A Brief Introduction to Autoencoders
+
+An autoencoder is a neural network that encodes its input data into a low-dimensional latent space encoding. Once the input is encoded, it can be decoded by reconstructing the input using the latent space.
+
+<center>
+<img title="ae architecture" alt="ae architecture" height=50% width = 40% src=images/pipeline/ae_architecture.png>
+</center>
+
+Autoencoders are usually restricted in ways that allow them to copy approximately. which forces the model to prioritize which elements of the input should be copied. In the process of imperfectly copying the input, we hope that the latent dimensions will take on useful properties. Such a method of constraining the hidden layer to have smaller dimensions than the input is referred to as an <b> Undercomplete Autoencoder</b>.
+
+For example, a particularly interesting usecase for us was in clustering cities based on the first two dimensions. The first two dimensions of both models were especially useful because they happened to result in some of the largest jumps in explained variance.
 
 <br>
 
 ## Tools & Pipeline
+
+<center>
+<img title="Pipeline" alt="Pipeline" height=100% width = 100% src=images/pipeline/pipeline.png>
+</center>
 
 <br>
 
