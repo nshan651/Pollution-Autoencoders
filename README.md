@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Pollution Autoencoders** uses a deep autoencoder neural network to characterize cities in the United States based on time-series readings of various polluting gases and particulates. 
+**Pollution Autoencoders** uses a deep autoencoder neural network to characterize cities in the United States based on time-series readings of various polluting gases and particulates. We compared the [Autoencoders](https://www.deeplearningbook.org/contents/autoencoders.html) method with [Principle Component Analysis (PCA)](https://www.sartorius.com/en/knowledge/science-snippets/what-is-principal-component-analysis-pca-and-how-it-is-used-507186), an older technique for reducing the dimensionality of a data set. 
 
 <table align=center><tr>
 <td><img src=images/pipeline/pollution_graphic.jpg alt="ae architecture" width=400px height=200px ></td></td>
@@ -11,7 +11,7 @@
 <p align=right style="font-size:8px"> <b>[right]</b> PM2.5 Air Pollution Concentration (μg/mg³), Berkely Earth
 </p>
 
-We compared the [Autoencoders](https://www.deeplearningbook.org/contents/autoencoders.html) method with [Principle Component Analysis (PCA)](https://www.sartorius.com/en/knowledge/science-snippets/what-is-principal-component-analysis-pca-and-how-it-is-used-507186), an older technique for reducing the dimensionality of a data set.
+
 
 The main advantage of Autoencoders have over PCA is in their capability of discovering non-linear relationships between polluting gases. Autoencoders are able to capture more of the explained variance because of this increased flexibility.
 
@@ -41,7 +41,7 @@ For example, a particularly interesting usecase for us was in clustering cities 
 
 The main use of an undercomplete autoencoder is not in its ability to perfectly reconstruct the input, but in the useful features it is capable of distilling. 
 
-In our case, we wanted to see what properties the autoencoder model could extract when given time series air pollution data for various cities throughout the United States. Using data from [OpenWeather's Air Pollution API](https://openweathermap.org/api/air-pollution), we constructed data frames for eight polluting gases and particulates. We obtained the daily averages of each pollutant six and a half months for just over eighteen thousand cities in the U.S. and other U.S. territories. 
+In our case, we wanted to see what properties the autoencoder model could extract when given time series air pollution data for various cities throughout the United States. Using data from [OpenWeather's Air Pollution API](https://openweathermap.org/api/air-pollution), we constructed data frames for eight polluting gases and particulates. We obtained the daily averages of each pollutant six and a half months for just over eighteen-thousand cities in the U.S. and other U.S. territories. 
 
 <p align="center">
   <img src="images/pipeline/gifs/data_scroll.gif" alt="data_scroll">
@@ -72,10 +72,24 @@ Autoencoders that employ nonlinar encoder and decoder functions can create a mor
 We compared the results from Principal Component Analysis (PCA) and the Autoencoder models across 190 dimensions.
 
 <table align=center><tr>
-<td> <img src="images/pca_lineplot/pca_linegraph.png" alt="pca_linegraph" style="width: 300px;"/> </td>
-<td> <img src="images/ae_lineplot/ae_linegraph.png" alt="ae_linegraph" style="width: 300px;"/> </td>
+<td> <img src="images/pca_lineplot/pca_linegraph.png" alt="pca_linegraph" style="width: 300px; height: 175px"/> </td>
+<td> <img src="images/ae_lineplot/ae_linegraph.png" alt="ae_linegraph" style="width: 300px; height: 175px"/> </td>
 </tr></table>
 
+Unfortunately did not have the time to properly tune the autoencoder [(in progress!)](#future-improvements) so gains in explained variance were mixed. However, one thing we noticed was that their was a large jump in explained variance for the first few dimensions in both types of models. Graphing the first 25 dimensions makes this more clear.
+
+<table align=center><tr>
+<td> <img src="images/pca_lineplot/pca_25_dims.png" alt="pca_linegraph" style="width: 300px; height: 175px"/> </td>
+<td> <img src="images/ae_lineplot/ae_25_dims.png" alt="ae_linegraph" style="width: 300px; height: 175px"/> </td>
+</tr></table>
+
+One of the benefits of dimensionality reduction is that it can make visualization easier. We created a clustering of different cities for Carbon Monoxide in the first two dimensions in order to see how the model characterized different cities. We plotted some of the outliers against a list of very populous cities.
+
+<p align="center">
+  <img src="images/pipeline/gifs/scatter.gif" alt="Pipeline" width=500px height=300px>
+</p>
+
+It came as little surprise that the most prominent characterization the model made was in highly populated versus less populated cities. We are still searching for more nuanced characteristics that could be interesting.
 
 
 ## Future Improvements
