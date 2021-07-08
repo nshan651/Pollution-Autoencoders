@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 
 
 
-def linegraph(type, dims, component_names, colors_list):
+def linegraph(f_name, type, dims, component_names, colors_list):
     ''' 
     Plot the explained variance across dimensions using the model results
 
     @params:
+        f_name: Name of the file
         type: Type of reduction method, pca or autoencoders
         dims: Number of dimensions
         component_names: Gas/particulate list
@@ -21,11 +22,11 @@ def linegraph(type, dims, component_names, colors_list):
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
-            file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/autoencoders/{}_ae_results.csv'.format(component)
-            plt_title = 'Autoencoder of Polluting Gases'
+            file_name = '%s/autoencoders/trial2/%s_ae_results.csv' % (f_name, component)
+            plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/pca/{}_pca_results.csv'.format(component)
-            plt_title = 'PCA of Polluting Gases'
+            file_name = '%s/autoencoders/trial2/%s_pca_results.csv' % (f_name, component)
+            plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
             quit()
@@ -41,24 +42,25 @@ def linegraph(type, dims, component_names, colors_list):
         plt.xlabel('Dimension')
         plt.ylabel('% Explained Variance')
         plt.title(plt_title)
-        
+        plt.legend()
     plt.show()
 
 
-def scatter(type, component, color):
+def scatter(f_name, type, component, color):
     '''
     Autoencoder scatter plot of multiple components for the first two dimensions
 
     @params:
+        f_name: Name of the file
         component: Name of gas or particulate
         color: Scatter plot color
     '''
 
     # Read in X_train values for first two dimensions from model results
     if type == 'ae':
-        file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/autoencoders/{}_ae_results.csv'.format(component)
+        file_name = '%s/autoencoders/trail1/%s_ae_results.csv' % (f_name, component)
     elif type == 'pca':
-        file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/pca/{}_pca_results.csv'.format(component)
+        file_name = '%s/autoencoders/trial1/%s_pca_results.csv' % (f_name, component)
     else:
         print('Type must be "ae" or "pca"')
         quit()
@@ -148,13 +150,13 @@ def heatmap(component):
 
 ### RUN ###
 
-COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-#COMPONENT_NAMES = ['no2']
+#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
-DIMS = 190
-
+DIMS = 120
+F_NAME = '/home/nicks/Documents/model_tuning_results'
 #scatter('ae', 'co', 'r')
-#linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
-#linegraph('ae', DIMS, COMPONENT_NAMES, COLORS_LIST)
+linegraph(F_NAME, 'ae', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #heatmap(COMPONENT_NAMES[0])
+
