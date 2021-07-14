@@ -178,9 +178,9 @@ def grid_search(component, iter_dims, param_vec):
     # Write title and erase any previous values
     # Create title
     file_name = '/home/nicks/Documents/model_tuning_results/autoencoders/vector_dimensions/{}_vec_dim'.format(component)
-    with open(file_name,'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(grid_list)
+    #with open(file_name,'w') as f:
+    #    writer = csv.writer(f)
+    #    writer.writerow(grid_list)
     # Perform a Grid Search (3875 cycles)
     for dim in iter_dims:
         best_var = -100
@@ -221,7 +221,7 @@ EPOCH = [10, 50, 75, 100]
 # Param vector
 PARAM_VEC = list(itertools.product(LR,BATCH,EPOCH))
 # List of key dimensions
-ITER_DIMS = np.concatenate((np.arange(2,26,1), np.array([30,40,50,60,80,100,120])), axis=0)
+ITER_DIMS = np.concatenate((np.arange(14,26,1), np.array([30,40,50,60,80,100,120])), axis=0)
 
 # Method tests
 #ae_run(DIMS, COMPONENT_NAMES)
