@@ -2346,12 +2346,10 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Goodfellow16</bcf:citekey>
-    <bcf:citekey order="2">Goodfellow16</bcf:citekey>
-    <bcf:citekey order="3">Jolliffe02</bcf:citekey>
-    <bcf:citekey order="4">Jolliffe02</bcf:citekey>
-    <bcf:citekey order="5">NAAQS09</bcf:citekey>
-    <bcf:citekey order="6">NAAQS09</bcf:citekey>
+    <bcf:citekey order="1">NAAQS09</bcf:citekey>
+    <bcf:citekey order="2">Wang19</bcf:citekey>
+    <bcf:citekey order="3">Wang19</bcf:citekey>
+    <bcf:citekey order="4">Goodfellow16</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

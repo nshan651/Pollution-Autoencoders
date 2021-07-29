@@ -1,3 +1,4 @@
+
 # Meeting 1
 # Paper Creation Section 1
 
@@ -18,20 +19,6 @@
 - dependent is part of the input
 - "normalized the x values in the input data"
 - reason why we picked scalar
-    -The results are dramatically better. The difference is due to simple
-     geometry. The initial hyperplanes pass fairly near the origin. If the data
-     are centered near the origin (as with {-1,1} coding), the initial
-     hyperplanes will cut through the data in a variety of directions. If the
-     data are offset from the origin (as with {0,1} coding), many of the initial
-     hyperplanes will miss the data entirely, and those that pass through the
-    data will provide a only a limited range of directions, making it difficult
-    to find local optima that use hyperplanes that go in different directions.
-    If the data are far from the origin (as with {9,10} coding), most of the
-    initial hyperplanes will miss the data entirely, which will cause most of
-    the hidden units to saturate and make any learning difficult. See "Should I
-    standardize the input variables?" for more information.
-    
-    -http://www.faqs.org/faqs/ai-faq/neural-nets/part2/
 - justify the "Why"
 - "we segregated the x and y in input data then we normalized x"
 - feature addition of daily averages of hourly data
@@ -56,9 +43,3 @@
 - Change pipeline graphic in box 3, linreg on encoded/encoded data
     - results of all three
 
-## Methodology explaination
-
-- make a covariance matrix for pca/ae
-- talk about number of components/dimensions that were chosen for "optimal" explaination
-    -Meaning, what was the fewest no. of dimensions that explained the most for each model
-- Link to article explaination: https://psico.fcep.urv.cat/utilitats/factor/documentation/Percentage_of_explained_common_variance.pdf

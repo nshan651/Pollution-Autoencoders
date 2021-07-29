@@ -3,65 +3,267 @@
 \usepackage{blindtext}
 \usepackage{multicol}
 \usepackage[document]{ragged2e}
+\usepackage[pass, letterpaper]{geometry}
+%\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subcaption}
 \addbibresource{ref.bib}
 
+% Define macros
+\newcommand\note[1]{\textbf{\textcolor{red}{#1}}}
+
+% Captions
+\captionsetup{justification = raggedright, singlelinecheck = false, labelfont=bf}
 
 \title{Using a Deep Autoencoder Model to Characterize Air Pollution}
-\author{Nicolas Shannon$^{1}$, Bishnu Timalsena$^{2}$, Raul Chavez$^{3}$, \\Vandana Nunna Lakshmi$^{2}$}
+\author{Nicolas Shannon$^{1}$, Bishnu Timalsena$^{2}$, Raul Chavez Jr.$^{3}$, \\Vandana Nunna Lakshmi$^{2}$}
 \date{}
 % To cite, use \parencite{} or \textcite{}
 
 \begin{document}
 
+% Acknowledgements
 \begin{centering}
-
 \maketitle
-
 \vspace{-0.50cm}
 \scriptsize
 {$^{1}$Department of Computer Science, Loyola University Chicago, Chicago, IL, US}\\
 {$^{2}$Department of Computer Science, University North Texas, Denton, TX, US}\\
-{$^{3}$Department of Electrical and Computer Engineering, University of Texas - Rio Grande Valley, Rio Grande Valley, TX, US}
-
+{$^{3}$Department of Electrical and Computer Engineering, University of Texas 
+    - Rio Grande Valley, Brownsville, TX, US \note{$\leftarrow$ fix formatting}}
 \end{centering}
+
 \begin{abstract}
-Climate change is one of the most complex challenges humanity has ever faced. It is a multi-dimensional
-problem that poses economic, social, scientific, political, and moral 
-questions that must be addressed. One of the most important ways of 
-combating climate change is to research pollution mitigation strategies 
-so that policy makers and government planners are better equipped to  make 
-informed decisions. We focused on the principle cause of global warming:
-the polluting gases responsible for the rapid global climate shift.
-We developed a technique to characterize cities by their levels of 
-various polluting gases and particulate matter using an undercomplete autoencoder 
-model. By creating a representation of pollution levels for numerous cities
-across the United States, we explored some of the more prominent features 
-that characterize urban pollution. We compared two techniques for reducing 
-the dimensionality of our input - Principle Component Analysis (PCA) and
-Undercomplete Autoencoders. The two first two hidden dimensions represented
-a
-large percentage of the explained variance in the model, so we clustered the cities in an effort to extract any useful features.
+Air pollutants are both a cause and a symptom of climate change. Global warming has the potential to raise
+the levels of various air pollutants. The rise in surface air pollutants can lead to heat trapped close to 
+the Earth's surface by virtue of the greenhouse effect, which further perpetuates the cycle. In order to
+more effectively combat climate change, it is important to understand and characterize the source of 
+emissions. We developed a technique to characterize cities by the levels of various air toxins using an
+undercomplete autoencoder model. By representing the pollution levels of eighteen thousand cities across
+the United States, we explore some of the more prominent features that characterize urban pollution.
+We compare two techniques for reducing the input dimensionality - Principle Component Analysis (PCA) and
+Undercomplete Autoencoders.
 \end{abstract}
 
 \vspace{0.25cm}
-
 \section{Introduction}
-\blindtext\blindtext
+Over the past several decades, air pollution has been a major concern for human health
+and the environment. The EPA sets national air quality standards for  six major air
+toxins: ground level Ozone (O$_3$), Carbon Monoxide (CO), Sulfur Dioxide (SO$_2$),
+Lead (Pb), Nitrogen Dioxide (NO$_2$), and particulate matter (PM). \parencite{NAAQS09}.
+The sources of these emissions vary, but the two largest contributors are industrial 
+processes and motorized vehicles.
 
-\vspace{0.25cm}
+\newpage
 
-\begin{multicols}{2}
+Short and long term exposure to air toxins pose significant risk to human health. 
+A study by \textcite{Wang19} found a correlation  between increased ambient CO
+levels and outpatient visits for respiratory, cardiovascular, genitourinary, and gastrointenstinal
+diseases. Several studies performed by the EPA also suggest that people with pre-existing health
+conditions are at higher risk when exposed to CO over long periods.\par
+
+\subsection{Air Toxins}
+We wanted to explore how CO and other gases can be characterized with respect to location
+in an effort to provide researchers and policy makers with the context and tools necessary to
+make informed decisions. There are a litany of technologies and tools for pollution prevention
+and control, but most of these options require contextual information and large amounts of data.
+\par
+By creating an embedding of time series pollution data for numerous cities throughout the U.S.,
+we can explore the more interesting features of the model as well as apply it to tangential 
+areas such as the pollution generated by industrial farming and animal husbandry activities.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{/home/nicks/Documents/paper-draft/images/co-concentration-table.png}
+    \caption{Carbon Monoxide Exposure Table, Parts Per Million (ppm)}
+    \label{fig:co-exposure}
+\end{figure}
+
+\subsection{A Deep Learning Approach}
+In this paper we compare the autoencoder model with principle component analysis (PCA), a much
+older technique for dimensional reduction. Using a deep autoencoder has several advantages.
+First, deep autoencoders are better at compressing highly complex data into few dimensions.
+Autoencoders with a nonlinear encoder and decoder function can learn more powerful nonlinear
+generalizations than PCA. \parencite{Goodfellow16}.
+\par \note{Autoencoder grapic from poster here}
+
+\section{Related Work}
+The idea of generating embeddings for a location is a highly potential expanse for research.
+The two major forces behind its competency are, the fact that large volumes of data is being
+effectively compressed and that these embeddings, when plugged into any model could effectively
+represent any given location.  A lot of research is being done on location embeddings in recent
+times. For instance, location embeddings are being generated based on human-mobility data 
+(Crivellari, A.; 2019) to understand the behavioral proximity between different locations 
+irrespective of their spatial distances. The sequence of locations that are frequently
+travelled were fed to a Skip-gram Word2vec model to generate the location embeddings. Another 
+approach that was implemented to leverage location embeddings is, GPS2Vec ( Yifang Yin, 2019).
+This application consists of a neural network that would generate embeddings for a location, 
+based on the semantic contexts that are sourced from the user content published on multiple 
+digital platforms. With the integration of these embeddings, a successful geo-tagged image
+classification task is demonstrated. In another effort (Carl Yang, 2019), the location 
+embeddings derived from user content such as addresses, phone numbers, images, place names and 
+all other details from multiple individual online posts, are compressed to form low dimensional
+embeddings to solve the place duplication issue. Deduplication of locations, is a paramount 
+task for any digital platform since they provide a place graph to its users, which is the 
+result of merging location data from multiple sources. This merge leads to duplicity since 
+different sources could hold different names for the same place. By applying K-NN search, 
+pair-wise duplication prediction on these generated location embeddings, the application can
+identify the duplicates and eliminate them to result in an efficient place graph.
+
 \section{Methodology}
-The main use of an undercomplete autoencoder is not in its ability to perfectly reconstruct the input, but in the useful features it is capable of distilling.
-In our case, we wanted to see what properties the autoencoder model could extract when given time series air pollution data for various cities throughout the United States. Using data from OpenWeather's Air Pollution API, we constructed data frames for eight polluting gases and particulates. We obtained the daily averages of each pollutant six and a half months for just over eighteen-thousand cities in the U.S. and other U.S. territories.
-After obtaining the requisite data, we cleaned and preprocessed the data by removing cities that had the same name and any entries with missing values. While this made the data quickly useable, a more ideal solution would be to add a state/country code to distinguish between cities and to impute any missing values. For more on this see the future improvements section.
-We compared the autoencoder model to Principle Component Analysis, a much older technique used for dimensionality reduction that has been a part of statistical literature since the early twentieth century.[2] The main distinction between autoencoders and PCA is that autoencoders can span a nonlinear subspace, whereas PCA learns the principle subspace.
-Autoencoders that employ nonlinar encoder and decoder functions can create a more powerful generalization than PCA. However, an autoencoder model that is allowed too much capacity is at risk of reconstructing the input "too perfectly" without extracting any useful information.[3]
-\end{multicols}
 
-As \textcite{Goodfellow16} say, there's no reason...
-\textcite{Jolliffe02}
-\textcite{NAAQS09}
+We used two different methods to reduce the dimensionality of our data - Principle Component
+Analysis and Undercomplete Autoencoders. A simple linear regression was performed on 
+the encoded data that was generated by both the PCA and AE models. Additionally, we performed
+a linear regression on the unencoded values for comparison. Each model's goodness of fit
+was evaluated using the percentage of explained variance for the three linear regressions. 
+
+% pipeline
+\begin{figure}[h]
+\includegraphics[width=\textwidth, height=6cm]{/home/nicks/Documents/paper-draft/images/pipeline.png}
+\caption{Data Pipeline}
+\label{fig:pipeline}
+\end{figure}
+
+\subsection{Data Collection and Preprocessing}
+The dataset was created using OpenWeather's Air Pollution API. The dataset includes data for 
+eight polluting gases and particulates: CO, NO, NO$_2$, O$_3$, SO$_2$, NH$_3$, PM$_{2.5}$, 
+and PM$_{10}$. The dataset also includes the hourly timestamp, the latitude and longitude (part of the input),
+and the air quality index, the latter of which we did not end up using.\par
+We initially looked at data for the eight pollutants over a six-and-a-half month time 
+frame: January 27th, 2020 through July 6th, 2021. However, we found that we achieved
+better results with just four months of of data for our input features. Our final 
+dataset included just over eighteen thousand cities in the United States and other U.S. 
+territories. Additionally, we found it easier to focus on a single gas when developing 
+the models, so we chose to concentrate on CO during the engineering process. Given
+enough time and computational power, the techniques performed on the CO model would be 
+easily extensible and transferable to the other seven pollutants.
+
+
+% dataset characteristics table
+\begin{table}[h!]
+    \caption{Dataset Characteristics}
+    \label{tab:table1}
+    \vspace{0.1cm}
+    \begin{tabular}{p{4cm}p{7cm}}
+        \hline
+        \multicolumn{2}{c}{OpenWeather Pollution API} \\
+        \hline
+        Time period  & 6.5 months    \\
+        Time frequency & Daily  \\
+        $\#$ of cities & 18,526 \\
+        $\#$ of features & 120 (originally 190) \\
+        $\#$ of component gases & 8 \\
+        Dependent variable & Single day of time series (3/27/21) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+OpenWeather's Pollution API ordinarily returns hourly values, but we opted to use the daily
+average pollution levels as our feature set. We resolved to feature engineer the daily 
+averages and to reduce the time scale to four months in order to keep the data 
+proportional to the number of features and thus avoid the curse of dimensionality. 
+\parencite{Trunk79}. \note{Idk about this} \par
+We separated the dependent from the input before unit normalizing the input. 
+The normalized data was then encoded by each model. 
+
+\subsection{Autoencoder and PCA Models}
+The autoencoder model used consists of an encoded and decoded layer. We performed
+a grid search for the CO model to determine the optimal hyperparameters. The following 
+hyperparameters were tested:
+\begin{itemize}
+    \item \textit{Learning Rate:} 0.0001, 0.001, 0.01, 0.1
+    \item \textit{Batch Size:} 32, 64, 128, 256
+    \item \textit{Epochs:} 10, 50, 75, 100
+\end{itemize}
+We used the parameters that appeared most frequently over the one hundred twenty dimensions and 
+applied them over the entire range so as not to overfit.\note{$\leftarrow$ not sure if this is correct}
+
+\begin{table}[h!]
+    \caption{Dataset Characteristics}
+    \label{tab:table1}
+    \vspace{0.1cm}
+    \begin{tabular}{p{4cm}p{7cm}}
+        \hline
+        \multicolumn{2}{c}{Optimal Hyperparameters for Carbon Monoxide (CO)} \\
+        \hline
+        Activation function & Leaky ReLU \\
+        Loss function & Mean Squared Error  \\
+        Optimizer & Adam \\
+        Learning rate & 0.001 \\
+        Batch size & 64 \\
+        Epochs & 150 \\ 
+        \hline
+    \end{tabular}
+\end{table}
+
+The PCA model was trained with k-fold cross-validation using five folds. The dataset was
+split into a training, validation, and hold-out test set.
+
+\section{Results}
+First, we wanted to explore the correlation between days in our dataset. We calculated
+the correlation coefficients and created a correlation matrix of the days that had
+correlation coefficients of the highest magnitude.\par
+
+% pipeline
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{/home/nicks/Documents/paper-draft/images/corr_matrix_25.png}
+\caption{Correlation Matrix}
+\label{fig:pipeline}
+\end{figure}
+
+We compared the percent explained variance across one hundred twenty dimensions for
+the encoded values generated by the PCA and autoencoder models as well as for the unencoded
+values by using a simple linear regression. While PCA was overall less noisy, we found that
+the autoencoder model achieved a much higher explainable variance for the first few dimensions.
+\\ \note{Note that results graphs are placeholders}
+% ae vs pca linegraph
+\begin{figure}[h!]
+
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.1\linewidth, height=4cm]{/home/nicks/Documents/paper-draft/images/ae_all_dims.png} 
+    \caption{Autoencoder Dimensionality Reduction}
+    \label{fig:ae_dim_reduction}
+\end{subfigure}% <- % sign must be here!
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.1\linewidth, height=4cm]{/home/nicks/Documents/paper-draft/images/ae_all_dims.png}
+    \caption{PCA Dimensionality Reduction}
+    \label{fig:pca_dim_reduction}
+\end{subfigure}
+
+\caption{Graph of autoencoder and PCA reduced representations of air pollutants}
+\label{fig:ae_vs_pca}
+\end{figure}
+
+\par We clustered the cities based on the first two latent dimensions in order to see how
+the model characterizes each city
+
+% co scatter
+\begin{figure}[h!]
+
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.1\linewidth, height=5cm]{/home/nicks/Documents/paper-draft/images/co_scatter_ae_wlist.png} 
+    \caption{Outlier Cities}
+    \label{fig:outliers}
+\end{subfigure}% <- % sign must be here!
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.1\linewidth, height=5cm]{/home/nicks/Documents/paper-draft/images/co_scatter_ae_large_cities.png}
+    \caption{Densely Populated Cities}
+    \label{fig:dense_cities}
+\end{subfigure}
+
+\caption{Scatter plots of outlier and highly-populated cities over first two dimensions}
+\label{fig:outliers_vs_dense_cities}
+\end{figure}
+
+By selecting from a list the top two hundred highly-populated cities, we found that nearly
+all of them were located near the center of the clustering. Conversely, we found that many 
+of the outliers were smaller cities in rural locations.
+
+\section{Discussion}
+
+\section{Conclusion}
 
 \printbibliography
 

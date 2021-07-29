@@ -21,24 +21,21 @@
   \datalist[entry]{nyt/global//global/global}
     \entry{NAAQS09}{article}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=2d7111116e44b6a72e017f0dc3152e05}{%
-           family={Agency},
-           familyi={A\bibinitperiod},
-           given={U.S.\bibnamedelimi Environmental\bibnamedelima Protection},
-           giveni={U\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim P\bibinitperiod},
-           givenun=0}}%
+        {{un=0,uniquepart=base,hash=de3b5f3f3e4dcccb9bdf618270327bf0}{%
+           family={EPA},
+           familyi={E\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
         {Research Triangle Park, NC 27711}%
       }
-      \strng{namehash}{2d7111116e44b6a72e017f0dc3152e05}
-      \strng{fullhash}{2d7111116e44b6a72e017f0dc3152e05}
-      \strng{bibnamehash}{2d7111116e44b6a72e017f0dc3152e05}
-      \strng{authorbibnamehash}{2d7111116e44b6a72e017f0dc3152e05}
-      \strng{authornamehash}{2d7111116e44b6a72e017f0dc3152e05}
-      \strng{authorfullhash}{2d7111116e44b6a72e017f0dc3152e05}
-      \field{sortinit}{A}
-      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \strng{namehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{fullhash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{bibnamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authorbibnamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authornamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authorfullhash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
@@ -87,32 +84,51 @@
       \field{title}{Deep Learning}
       \field{year}{2016}
     \endentry
-    \entry{Jolliffe02}{book}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=52e21501d20cb537e349fb16dca2c1f2}{%
-           family={Jolliffe},
-           familyi={J\bibinitperiod},
-           given={I.T.},
-           giveni={I\bibinitperiod},
+    \entry{Wang19}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=b2eccb185095fccfeb40fdffd8b2105f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod},
            givenun=0}}%
+        {{un=0,uniquepart=base,hash=03c5816e75d6a70697a75cc5d3e184d2}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Chengye},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=38a17359db2f4fc7444ba94263768ed8}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Chengzhong},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=38026ba4ee6b102b47bf3ffb41325c8f}{%
+           family={al.},
+           familyi={a\bibinitperiod},
+           prefix={et},
+           prefixi={e\bibinitperiod},
+           prefixun=0}}%
       }
       \list{publisher}{1}{%
-        {Library of Congress}%
+        {Environ Health}%
       }
-      \strng{namehash}{52e21501d20cb537e349fb16dca2c1f2}
-      \strng{fullhash}{52e21501d20cb537e349fb16dca2c1f2}
-      \strng{bibnamehash}{52e21501d20cb537e349fb16dca2c1f2}
-      \strng{authorbibnamehash}{52e21501d20cb537e349fb16dca2c1f2}
-      \strng{authornamehash}{52e21501d20cb537e349fb16dca2c1f2}
-      \strng{authorfullhash}{52e21501d20cb537e349fb16dca2c1f2}
-      \field{sortinit}{J}
-      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \strng{namehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{fullhash}{3dc4e785fe243e22073fd329caf4dfad}
+      \strng{bibnamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authorbibnamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authornamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authorfullhash}{3dc4e785fe243e22073fd329caf4dfad}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Principle Component Analysis -- 2nd Ed.}
-      \field{year}{2002}
+      \field{note}{\url{https://ehjournal.biomedcentral.com/articles/10.1186/s12940-019-0477-3}}
+      \field{title}{Carbon Monoxide and risk of outpatient visits due to cause-specific diseases}
+      \field{year}{2019}
     \endentry
   \enddatalist
 \endrefsection
