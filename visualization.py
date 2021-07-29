@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import seaborn as sns
+import itertools
 
 
 def linegraph(f_name, type, dims, component_names, colors_list):
@@ -17,15 +18,15 @@ def linegraph(f_name, type, dims, component_names, colors_list):
     '''
     
     num_of_comp = list(range(2,dims+1))
+    # Plot results
     plt.figure(figsize=(12,10))
-    plt.rcParams.update({'font.size': 18})
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
-            file_name = '%s/autoencoders/trial2/%s_ae_results.csv' % (f_name, component)
+            file_name = '{FILE}{COMPONENT}_ae_results_gs.csv'.format(FILE=f_name, COMPONENT=component)
             plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            file_name = '%s/autoencoders/trial2/%s_pca_results.csv' % (f_name, component)
+            file_name = '{FILE}{COMPONENT}_pca_results_gs.csv'.format(FILE=f_name, COMPONENT=component)
             plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
@@ -36,12 +37,17 @@ def linegraph(f_name, type, dims, component_names, colors_list):
         variance = model['{}_var'.format(component)]
         r2 = model['{}_r2'.format(component)]
         
-        # Plot results
+
         plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
         plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
-        plt.xlabel('Dimension')
-        plt.ylabel('% Explained Variance')
-        plt.title(plt_title)
+        plt.rcParams.update({'font.size': 22})
+        plt.tick_params(axis='both', which='major', labelsize=28)
+       # plt.xlabel('Dimension')
+       # plt.ylabel('% Explained Variance')
+        plt.xlabel('')
+        plt.ylabel('')
+        #plt.title(plt_title)
+        plt.ylim([0,1])
         plt.legend()
     plt.show()
 
@@ -58,9 +64,9 @@ def scatter(f_name, type, component, color):
 
     # Read in X_train values for first two dimensions from model results
     if type == 'ae':
-        file_name = '%s/autoencoders/trail1/%s_ae_results.csv' % (f_name, component)
+        file_name = '%s/autoencoders/trail1/%s_ae_results_gs.csv' % (f_name, component)
     elif type == 'pca':
-        file_name = '%s/autoencoders/trial1/%s_pca_results.csv' % (f_name, component)
+        file_name = '%s/autoencoders/trial1/%s_pca_results_gs.csv' % (f_name, component)
     else:
         print('Type must be "ae" or "pca"')
         quit()
@@ -147,16 +153,49 @@ def heatmap(component):
     fig.colorbar(heat)
     plt.show()
 
+def correlation(f_name, component):
+    SIZE = 25
+    
+    # Read in normalized data
+    model_data = pd.read_csv(filepath_or_buffer=f_name)
+    matrix = []
+    norm_labels = ['dim_{}'.format(i) for i in range(1, SIZE+1)]
+    col_size = len(norm_labels) #len(model_data.columns) 
+
+    for i in range(col_size):
+        feature = model_data[norm_labels[i]][:SIZE]
+        matrix.append(feature)
+    coefs = np.corrcoef(matrix)
+
+    # Plot figure
+    plt.rcParams.update({'font.size': 18})
+    fig, ax = plt.subplots(figsize=(12,10))
+    mat = ax.matshow(coefs)
+
+    # Set ticks
+    ax.set_xticks(np.arange(SIZE)) #np.arange(SIZE)
+    ax.set_yticks(np.arange(SIZE))
+    ax.set_xticklabels(norm_labels)
+    ax.set_yticklabels(norm_labels)
+    
+    # Show every Nth label
+    for i in range(len(norm_labels)):
+        if i % 5 != 0:
+            norm_labels[i] = ''
+        ax.set_xticklabels(norm_labels)
+        ax.set_yticklabels(norm_labels)
+    fig.colorbar(mat)
+    plt.title('Correlation Matrix for {}'.format(component))
+    plt.show()
+    
 
 ### RUN ###
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co']
+COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
 DIMS = 120
-F_NAME = '/home/nicks/Documents/model_tuning_results'
-#scatter('ae', 'co', 'r')
-linegraph(F_NAME, 'ae', DIMS, COMPONENT_NAMES, COLORS_LIST)
-#heatmap(COMPONENT_NAMES[0])
+F_NAME = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
 
+correlation(F_NAME, 'co')

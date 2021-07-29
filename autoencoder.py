@@ -1,10 +1,8 @@
 import numpy as np
 import pandas as pd
 import itertools
-import matplotlib.pyplot as plt
 import csv
 
-from numpy.core.numeric import NaN
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import Adam
@@ -40,14 +38,14 @@ def autoencoder(dfx, y, dim, component, activation, lr=0.0001, batch=128, epochs
     # Training and test splits
     train, dev, train_labels, dev_labels = train_test_split(dfx, y, test_size=0.20, random_state=40)
     train, test, train_labels, test_labels = train_test_split(train, train_labels, test_size=0.20, random_state=40)
-    input_data = Input(shape=(121,))
+    input_data = Input(shape=(191,))
 
     x_train = train.loc[:, train.columns]
     x_test = test.loc[:, test.columns]
     x_dev = dev.loc[:, dev.columns]
 
     encoded = Dense(dim, activation=activation[0], name='bottleneck')(input_data)
-    decoded = Dense(121, activation=activation[1])(encoded)
+    decoded = Dense(191, activation=activation[1])(encoded)
 
     autoencoder = Model(input_data, decoded)
 
@@ -102,18 +100,26 @@ def ae_run(dims, component_names):
         # Features list and removal of city, lat, lon
         features = list(df.columns.values)
         del features[:3] 
-        #del features[-1]
-        del features[121:]
-
+        del features[-1]
+        #del features[121:]
+        
         # y value list using last day of 7-month data
-        y = df.loc[:, ['{}_2021_03_28'.format(component)]].values
-        print(features)
+        y = df.loc[:, ['{}_2021_06_06'.format(component)]].values
         
         # Normalize x values; save in data frame
         x = df.loc[:, features].values
         x = Normalizer().fit_transform(x)
         dfx = pd.DataFrame(x)
 
+        ### Uncomment code below to save normalized data ###
+        # TODO: ^better solution for this; incorporate better
+        #norm_labels = ['dim_{}'.format(i) for i in range(1, dims+2)]
+        #dfx.columns = norm_labels
+        #
+        #file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/{}_data_norm.csv'.format(component)
+        #write_data = pd.DataFrame(data=dfx)
+        #write_data.to_csv(path_or_buf=file_name, index=False)
+           
         # Train Autoencoder model
         variance_list = []
         r2_list = []
@@ -125,10 +131,10 @@ def ae_run(dims, component_names):
                 y=y, 
                 dim=i, 
                 component=component, 
-                activation=('tanh', 'tanh'),
-                lr=0.0001,  # <<< Temp values
-                batch=128,
-                epochs=100
+                activation=('LeakyReLU', 'LeakyReLU'),
+                lr=0.001,  # <<< Temp values
+                batch=64,
+                epochs=150
             )
             # Add r2/variance to lists
             variance_list.append(variance)
@@ -147,12 +153,12 @@ def ae_run(dims, component_names):
             '{}_var'.format(component) : var_norm,
             '{}_r2'.format(component) : r2_norm
         }
-
+        
         # Write entry to file
-        file_name = '/home/nicks/Documents/model_tuning_results/autoencoders/test/{}_ae_results.csv'.format(component)
+        file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/{}_results.csv'.format(component)
         write_data = pd.DataFrame(data=output_dict)
         write_data.to_csv(path_or_buf=file_name, index=False)
-
+        
 
 def grid_search(component, iter_dims, param_vec):
     
@@ -209,11 +215,11 @@ def grid_search(component, iter_dims, param_vec):
     
 ### RUN ###
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co']
+COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
-DIMS = 3
+DIMS = 190
 # Grid search params
 LR = [0.0001, 0.001, 0.01, 0.1]
 BATCH = [32, 64, 128, 256]
@@ -221,9 +227,9 @@ EPOCH = [10, 50, 75, 100]
 # Param vector
 PARAM_VEC = list(itertools.product(LR,BATCH,EPOCH))
 # List of key dimensions
-ITER_DIMS = np.concatenate((np.arange(14,26,1), np.array([30,40,50,60,80,100,120])), axis=0)
+ITER_DIMS = np.concatenate((np.arange(1,26,1), np.array([30,40,50,60,80,100,120])), axis=0)
 
 # Method tests
-#ae_run(DIMS, COMPONENT_NAMES)
-grid_search('co', ITER_DIMS, PARAM_VEC)
+ae_run(DIMS, COMPONENT_NAMES)
+#grid_search('co', ITER_DIMS, PARAM_VEC)
 

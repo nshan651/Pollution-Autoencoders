@@ -4,13 +4,9 @@
 
 **Pollution Autoencoders** uses a deep autoencoder neural network to characterize cities in the United States based on time-series readings of various polluting gases and particulates. We compared the [Autoencoders](https://www.deeplearningbook.org/contents/autoencoders.html) method with [Principle Component Analysis (PCA)](https://www.sartorius.com/en/knowledge/science-snippets/what-is-principal-component-analysis-pca-and-how-it-is-used-507186), an older technique for reducing the dimensionality of a data set. 
 
-<table align=center><tr>
-<td><img src=images/pipeline/pollution_graphic.jpg alt="ae architecture" width=400px height=200px ></td></td>
-<td><img src=images/pipeline/berkeley_aqi.png alt="ae architecture" width=400px height=200px ></td>
-</tr></table>
-<p align=right style="font-size:8px"> <b>[right]</b> PM2.5 Air Pollution Concentration (μg/mg³), Berkely Earth
+<p align="center">
+  <img src=images/pipeline/pollution_graphic.jpg alt="ae architecture" width=400px height=200px ></td></td>
 </p>
-
 
 
 The main advantage of Autoencoders have over PCA is in their capability of discovering non-linear relationships between polluting gases. Autoencoders are able to capture more of the explained variance because of this increased flexibility.

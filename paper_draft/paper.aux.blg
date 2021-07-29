@@ -1,5 +1,0 @@
-[0] Config.pm:312> INFO - This is Biber 2.15
-[0] Config.pm:315> INFO - Logfile is 'paper.aux.blg'
-[67] biber:330> INFO - === Mon Jul 12, 2021, 14:05:38
-[141] Utils.pm:411> ERROR - Cannot find 'paper.aux.bcf'!
-[141] Biber.pm:132> INFO - ERRORS: 1
