@@ -1,24 +1,22 @@
 import requests
 import json
 import pandas as pd
-import config
-import matplotlib.pyplot as plt
 import datetime
 import asyncio
+import os
+from dotenv import load_dotenv
 from csv import writer
 
-# Version 2 of preprocessing
-# generalizes and obtains lists for each particulate/gas component
-
+load_dotenv()   # Load environment variables
 
 def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
     '''
     Generate data for a given gas/particulate for a given city over a set time period and write to csv
 
     @params: 
-        name: name of location
-        lat, lon: latitude and longitude in decimal degrees
-        t_start, t_end: starting and ending epoch in Unix time
+        name: Name of location
+        lat, lon: Latitude and longitude in decimal degrees
+        t_start, t_end: Starting and ending epoch in Unix time
     '''
     
     # Connect to endpoint and load data
@@ -27,7 +25,7 @@ def gen_daily_data(name, lat, lon, t_start, t_end, component_names):
         LON=lon,
         START=t_start,
         END=t_end,
-        KEY=config.OPEN_WEATHER_KEY
+        KEY=os.getenv('OPEN_WEATHER_KEY')
     )
     page = requests.get(url=endpoint)
     content = json.loads(page.content)
@@ -64,13 +62,13 @@ def gen_cols(t_start, t_end, component):
     Derive number of entries from start and end
 
     @params:
-        t_start, t_end: start and end times in unix time
-        element: string to represent the gas/particulate name to use
+        t_start, t_end: Start and end times in unix time
+        element: String to represent the gas/particulate name to use
     '''
 
     # Change in epoch to number of hours gets us total entries
     num_entries = int((t_end - t_start) / 86400)
-    time_step = T_START
+    time_step = t_start
     col_names = ['city', 'lat', 'lon']
 
     for i in range(num_entries):
@@ -85,20 +83,21 @@ def gen_cols(t_start, t_end, component):
     return col_names
 
 
-def batch_request(city_df, component_names):
+def batch_request(f_name, t_start, t_end, city_df, component_names):
     ''' 
     Places a batch request for gas/particulate levels on every minute 
 
     @params:
-        col_names: list of columns including city_name, lat/lon, and PM2.5 features
-        city_df: data frame containing city information
+        f_name: Name of files to write to
+        col_names: List of columns including city_name, lat/lon, and PM2.5 features
+        city_df: Data frame containing city information
     '''
     
     # Set up event loop
     loop = asyncio.get_event_loop()
     
     try:
-        loop.run_until_complete(request_buffer(city_df, component_names))
+        loop.run_until_complete(request_buffer(f_name, t_start, t_end, city_df, component_names))
     except KeyboardInterrupt:
         pass
     finally:
@@ -106,10 +105,12 @@ def batch_request(city_df, component_names):
         loop.close()
     
     
-async def request_buffer(city_df, component_names):
+async def request_buffer(f_name, t_start, t_end, city_df, component_names):
     ''' Async function to buffer API requests to 60/min 
         @params:
-            city_df: data frame containing city information
+            f_name: name of files to write to
+            city_df: Data frame containing city information
+            component names: List of component gases
     '''
 
     curr_index = 0
@@ -126,13 +127,12 @@ async def request_buffer(city_df, component_names):
             city_info = [city_name]
 
             # Retrieve particulate dict
-            entry = gen_daily_data(name=city_name, lat=city_lat, lon=city_lon, t_start=T_START, t_end=T_END, component_names=component_names)
+            entry = gen_daily_data(name=city_name, lat=city_lat, lon=city_lon, t_start=t_start, t_end=t_end, component_names=component_names)
             
             # Cycle through each component and write to file
-            for component in component_names:
+            for i, component in enumerate(component_names):
                 # Write entry to file
-                file_name = 'C:\\github_repos\\Pollution-Autoencoders\\data\\gases\\{}.csv'.format(component)
-                with open(file_name, 'a', newline='') as f_open:
+                with open(f_name[i], 'a', newline='') as f_open:
                     writer_obj = writer(f_open)
                     city_info+=entry[component]
                     writer_obj.writerow(city_info)
@@ -151,29 +151,46 @@ async def request_buffer(city_df, component_names):
     
     # Finish running
     return 0
-      
     
-### Retrieve data for list of cities ###
-city_df = pd.read_csv(filepath_or_buffer='C:\\github_repos\\Pollution-Autoencoders\\data\\city_lat_lon.csv')
-city_count = len(city_df)
 
-# Start and ending times. Testing for Dec 2020
-T_START = 1606456800
-T_END = 1623128400
-COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+def main():
+    ''' 
+    Main function to pull data csv data from OpenWeather
 
-# Generate column names
-col_names_dict = {}
+    Function call order: 
+        main() > batch_request() > request_buffer() > gen_daily_data()
+    
+    '''
 
-# Write headers for each component
-for component in COMPONENT_NAMES:
-    # generate column names
-    col_names_dict[component] = list(gen_cols(T_START, T_END, component))
-    file_name = 'C:\\github_repos\\Pollution-Autoencoders\\data\\gases\\{COMPONENT}.csv'.format(COMPONENT=component)
-    with open(file_name, 'w', newline='') as f_open:
-        writer_obj = writer(f_open)
-        writer_obj.writerow(col_names_dict[component][:])
-        f_open.close()
+    ### Retrieve data for list of cities ###
+    
+    city_df = pd.read_csv(filepath_or_buffer=f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/other/city_lat_lon.csv")
+    city_count = len(city_df)
+    
+    # Start and ending times
+    T_START = 1606456800
+    T_END = 1606496800
+    #T_END = 1623128400
+    # Component gases
+    COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+    #COMPONENT_NAMES = ['co']
+    # List of file names to write to
+    F_NAME = [f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/{component}_test.csv" for component in COMPONENT_NAMES]
+    # Column names
+    col_names_dict = {}
+    
+    # Write headers for each component
+    for i, component in enumerate(COMPONENT_NAMES):
+        # generate column names
+        col_names_dict[component] = list(gen_cols(T_START, T_END, component))
+        with open(F_NAME[i], 'w', newline='') as f_open:
+            writer_obj = writer(f_open)
+            writer_obj.writerow(col_names_dict[component][:])
+            f_open.close()
 
-### Init batch request ###
-batch_request(city_df=city_df, component_names=COMPONENT_NAMES)
+    ### Init batch request ###
+    batch_request(F_NAME, T_START, T_END, city_df, COMPONENT_NAMES)
+    
+
+if __name__=='__main__':
+    main()
