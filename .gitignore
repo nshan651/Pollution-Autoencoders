@@ -8,11 +8,11 @@ _pycache_/
 /env
 
 # Latex
-paper-draft/*
-!paper-draft/images/*
-!paper-draft/paper.tex
-!paper-draft/ref.bib
-!paper-draft/paper.pdf
+*/paper-draft/*
+!*/paper-draft/images/*
+!*/paper-draft/paper.tex
+!*/paper-draft/ref.bib
+!*/paper-draft/paper.pdf
 
 #%.bbl
 #%.blg

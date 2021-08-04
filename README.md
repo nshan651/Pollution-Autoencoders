@@ -18,7 +18,7 @@ We measured the explained variance across 190 dimensions for each of the 8 pollu
 Clone the repository to the desired location.
 <pre><code>git clone https://github.com/nshan651/Pollution-Autoencoders.git</code></pre>
 Install the required packages.
-<pre><code>pip install pandas numpy matplotlib sklearn tensorflow requests</code></pre>
+<pre><code>pip install pandas numpy matplotlib sklearn tensorflow requests dotenv</code></pre>
 </p>
 
 ## A Brief Introduction to Autoencoders
