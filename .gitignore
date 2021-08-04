@@ -7,3 +7,25 @@ _pycache_/
 .env
 /env
 
+# Latex
+paper-draft/*
+!paper-draft/images/*
+!paper-draft/paper.tex
+!paper-draft/ref.bib
+!paper-draft/paper.pdf
+
+#%.bbl
+#%.blg
+#abstract.md
+#quick-notes.md
+#abstract.md.save
+#meeting.md.savepaper.aux
+#paper.aux.bbl
+#paper.aux.blg
+#paper.bbl
+#paper.bcf
+#paper.blg
+#paper.log
+#paper.run.xml
+
+
