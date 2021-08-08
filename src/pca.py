@@ -35,7 +35,7 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds=0, dev=False):
         res_sum_square= np.mean((model.predict(dev_pca) - dev_labels_pca ** 2))
         var_val=model.score(dev_pca, dev_labels_pca)
         Y_test_predict = model.predict(dev_pca)
-        r2_val=r2_score(dev_labels_pca,Y_test_predict)
+        r2_val=r2_score(dev_labels_pca, Y_test_predict)
         return (model.intercept_, model.coef_, res_sum_square, var_val, r2_val)
 
     # Linear regression on test set
@@ -46,7 +46,7 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds=0, dev=False):
         res_sum_square= np.mean((model.predict(X_test) - Y_test ** 2))
         var_val=model.score(X_test, Y_test)
         Y_test_predict = model.predict(X_test)
-        r2_val=r2_score(Y_test,Y_test_predict)
+        r2_val=r2_score(Y_test, Y_test_predict)
         return (var_val, r2_val, X_train)
 
 
@@ -80,7 +80,7 @@ def pca_run(dims, component_names):
         num_of_comp=list(range(2,dims+1))
 
         ### Cross Validation ### 
-
+    
         # k-fold cross validation; any cross-validation technique can be substituted here
         kfold = KFold(n_splits=2, shuffle=True)
         folds=0
@@ -132,10 +132,7 @@ def pca_run(dims, component_names):
                     best_r2 = R2
                     sets=i
             
-        # Graph PCA to test set with best components
-        # using the best set to call PCA function to use the test set with all components
-        pca_r2=[]
-        pca_variance=[]
+
 
         # Obtain optimal PCA variance and R2 scores and add to list
         for i in train_test_comp:
@@ -149,7 +146,11 @@ def pca_run(dims, component_names):
                         Y_ttbest=train_test_comp[sets][j]
                     elif 'Y_train'==j:
                         Y_tnbest=train_test_comp[sets][j]
-
+        
+        # Graph PCA to test set with best components
+        # using the best set to call PCA function to use the test set with all components
+        pca_r2=[]
+        pca_variance=[]
         # Test set for pca
         for i in num_of_comp:   
             variance, R2, X_train = pca(i, X_tnbest, X_ttbest, Y_tnbest ,Y_ttbest, folds, dev=False)

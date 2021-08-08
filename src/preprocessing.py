@@ -210,7 +210,7 @@ def main():
     city_count = len(city_df)
     
     # Start and ending times
-    # Defaults are 2020-11-27 to 2021-05-07
+    # Defaults are 2020-11-27 to 2021-06-06
     T_START = 1606456800
     T_END = 1623128400
     # Component gases
