@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import sys
 import operator
 from numpy.core.numeric import NaN
 from tensorflow.keras.models import Model
@@ -14,7 +15,7 @@ from sklearn.metrics import r2_score
 
 def linreg(X_train, X_test, Y_train, Y_test, component, folds=0, dev=False):
     '''
-    Simple linear regression on uncompressed values
+    Simple linear regression
 
     @params:
         dfx: DataFrame of normalized x values
@@ -48,51 +49,48 @@ def linreg(X_train, X_test, Y_train, Y_test, component, folds=0, dev=False):
         return (var_val, r2_val, X_train)
 
 
-def linreg_run(component_names, dims):
+def xcross(x, y, splits, component, dims=1):
     '''
-    Run the linear regression for each component gas
-    Uses k-fold cross validation strategy
+    Run the linear regression for a single gas
+    using k-fold cross validation strategy
 
     @params:
+        x: x input values 
+        y: Response values
+        splits: Number of folds for k-fold cross val
         component_names: Gas/particulate name list
+        dims: number of dimensions to test over. Default is 1
     '''
 
-    for component in component_names:
-        print('---------- Beginning Linear Regression for {} ----------'.format(component))
-        # Open normalized data
-        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
-        # y value list using last day of 7-month data
-        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
-        x = dfx.values
-        
-        y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
-        #y = dfx.loc[:, ['dim_191']].values
+    print(f'---------- Beginning Linear Regression for {component} ----------')
 
-        # k-fold cross validation
-        kfold = KFold(n_splits=5, shuffle=True)
-        folds=0
-        # Train/test and metrics for current component's set of data
-        train_test = {}
-        metrics={}
-        # Contains all train_test splits/metrics in REG for n components and 
-        # m sets of splits
-        train_test_dict = {}
-        metrics_dict = {}
-
-         # Loop through train/test data and save the best data with highest R2 scores
-        for training_index, test_index in kfold.split(x):
-            # Split X and Y train and test data
-            X_train, X_test = x[training_index, :], x[test_index, :]
-            Y_train, Y_test = y[training_index], y[test_index]
-            folds+=1
-            # Update dict with train/test values
-            train_test['X_train'] = X_train
-            train_test['X_test'] = X_test
-            train_test['Y_train'] = Y_train
-            train_test['Y_test'] = Y_test
-            # Save best sets of train/test data that have high R2 scores
-            train_test_dict[folds] = train_test.copy()
-            
+    # k-fold cross validation
+    kfold = KFold(n_splits=splits, shuffle=True)
+    folds=0
+    # Number of features to compare
+    num_of_dims=list(range(2,dims+1))
+    # Train/test and metrics for current component's set of data
+    train_test = {}
+    metrics={}
+    # Contains all train_test splits/metrics in REG for n sets of splits
+    train_test_dict = {}
+    metrics_dict = {}
+    metrics_dict_set = {}
+    # Loop through train/test data and save the best data with highest R2 scores
+    for training_index, test_index in kfold.split(x):
+        # Split X and Y train and test data
+        X_train, X_test = x[training_index, :], x[test_index, :]
+        Y_train, Y_test = y[training_index], y[test_index]
+        folds+=1
+        # Update dict with train/test values
+        train_test['X_train'] = X_train
+        train_test['X_test'] = X_test
+        train_test['Y_train'] = Y_train
+        train_test['Y_test'] = Y_test
+        # Save best sets of train/test data that have high R2 scores
+        train_test_dict[folds] = train_test.copy()
+        # Train regression and save list of metrics
+        for dim in num_of_dims:
             # Train regression model and save a list of metrics 
             model_intercept, model_coef, res_sum_square, variance_score, Rsquare = linreg(X_train, X_test, Y_train, Y_test, component, folds, dev=True)
             # Create metrics list for current comparison
@@ -101,74 +99,90 @@ def linreg_run(component_names, dims):
             metrics['res_sum_square']=res_sum_square
             metrics['variance_score']=variance_score
             metrics['Rsquare']=Rsquare
-            
-            # Save each metrics comparison for later
-            metrics_dict[folds] = metrics.copy()
-            #print(metrics_dict)
-        
-        # Calculate the best and worst R2 scores for each component
-        best_r2, worst_r2 = metrics_dict[1]['Rsquare'], metrics_dict[1]['Rsquare']
-        best_idx, worst_idx = 0, 0
-        for i in metrics_dict:
-            R2 = metrics_dict[i]['Rsquare']
-            if R2 >= best_r2:
+            metrics_dict[dim] = metrics.copy()
+        # Save each metrics comparison for later
+        metrics_dict_set[folds] = metrics_dict.copy()
+        #print(metrics_dict_set)
+    
+    # Calculate the best and worst R2 scores for each component
+    best_r2=worst_r2=metrics_dict_set[1][2]['Rsquare']
+    best_idx=worst_idx=0
+    for fold in metrics_dict_set:
+        for dim in metrics_dict_set[fold]:
+            R2 = metrics_dict_set[fold][dim]['Rsquare']
+            if R2 > best_r2:
                 best_r2 = R2
-                best_idx = i
+                best_idx = folds
             elif R2 < worst_r2:
                 worst_r2 = R2
-                worst_idx = i
+                worst_idx = fold
+    '''
+    # Obtain the values based off of the indexes of the best and worst R2 scores
+    X_tt_best=X_tn_best=Y_tt_best=Y_tn_best=X_tt_worst=X_tn_worst=Y_tt_worst=Y_tn_worst=train_test_dict[1]['X_test']
+    for i in train_test_dict:
+        if i == best_idx:
+            for set_type in train_test_dict[best_idx]:
+                if 'X_test'==set_type:
+                    X_tt_best=train_test_dict[best_idx][set_type]
+                elif 'X_train' == set_type:
+                    X_tn_best=train_test_dict[best_idx][set_type]
+                elif 'Y_test' == set_type:
+                    Y_tt_best=train_test_dict[best_idx][set_type]
+                elif 'Y_train' == set_type:
+                    Y_tn_best=train_test_dict[best_idx][set_type]
+        elif i == worst_idx:
+            for set_type in train_test_dict[worst_idx]:
+                if 'X_test'==set_type:
+                    X_tt_worst=train_test_dict[worst_idx][set_type]
+                elif 'X_train' ==set_type:
+                    X_tn_worst=train_test_dict[worst_idx][set_type]
+                elif 'Y_test' ==set_type:
+                    Y_tt_worst=train_test_dict[worst_idx][set_type]
+                elif 'Y_train'==set_type:
+                    Y_tn_worst=train_test_dict[worst_idx][set_type]
+ 
+    ### Perform the regression for the highest and lowest scores ###   
+    # Note: Sometimes the best-performing folds of training data perform worse
+    # on the test set
 
-        # Obtain the values based off of the indexes of the best and worst R2 scores
-        for i in train_test_dict:
-            if i == best_idx:
-                for sets in train_test_dict[best_idx]:
-                    if 'X_test'==sets:
-                        X_tt_best=train_test_dict[best_idx][sets]
-                    elif 'X_train' ==sets:
-                        X_tn_best=train_test_dict[best_idx][sets]
-                    elif 'Y_test' ==sets:
-                        Y_tt_best=train_test_dict[best_idx][sets]
-                    elif 'Y_train'==sets:
-                        Y_tn_best=train_test_dict[best_idx][sets]
-            elif i == worst_idx:
-                for sets in train_test_dict[worst_idx]:
-                    if 'X_test'==sets:
-                        X_tt_worst=train_test_dict[worst_idx][sets]
-                    elif 'X_train' ==sets:
-                        X_tn_worst=train_test_dict[worst_idx][sets]
-                    elif 'Y_test' ==sets:
-                        Y_tt_worst=train_test_dict[worst_idx][sets]
-                    elif 'Y_train'==sets:
-                        Y_tn_worst=train_test_dict[worst_idx][sets]
-        
-        ### Perform the regression for the highest and lowest scores ###   
-        # Note: Sometimes the best-performing folds of training data perform worse
-        # on the test set
-
+    best=worst={}
+    for dim in num_of_dims:
         # For the best values 
-        best_var, best_r2, best_X_vec = linreg(
+        high_var, high_r2, high_X_vec = linreg(
             X_train=X_tn_best, 
             X_test=X_tt_best, 
             Y_train=Y_tn_best, 
             Y_test=Y_tt_best, 
             component=component)
+        best[f'dim_{dim}'] = [high_var, high_r2, high_X_vec]
         # For the worst values
-        worst_var, worst_r2, worst_X_vec = linreg(
+        low_var, low_r2, low_X_vec = linreg(
             X_train=X_tn_worst, 
             X_test=X_tt_worst, 
             Y_train=Y_tn_worst, 
             Y_test=Y_tt_worst, 
             component=component)
-
-        print(f'best var: {best_var} -- best r2: {best_r2}')
-        print(f'worst var: {worst_var} -- best r2: {worst_r2}')
-        
+        worst[f'dim_{dim}'] = [low_var, low_r2, low_X_vec]
+        print(f'dim: {dim} -- best var: {high_var} -- best r2: {high_r2}')
+        print(f'dim: {dim} -- worst var: {low_var} -- worst r2: {low_r2}')
+    
+    return best, worst 
+    '''
+    
 ### RUN ###
 
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co']
+COMPONENT = 'co'
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
-DIMS = 190
+DIMS = 5
+SPLITS = 5
+# Open normalized data
+dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{COMPONENT}_data_norm.csv")
+# y value list using last day of 7-month data
+dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{COMPONENT}_data_clean.csv")
+x = dfx.values
+y = dfy.loc[:, [f'{COMPONENT}_2021_06_06']].values
+#y = dfx.loc[:, ['dim_191']].values
 
-linreg_run(COMPONENT_NAMES, DIMS)
+xcross(x, y, SPLITS, COMPONENT, DIMS)
 

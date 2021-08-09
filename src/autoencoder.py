@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import itertools
 import csv
-
+import linreg as reg  # linear regression with k-fold cross val
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import Adam
@@ -84,7 +84,7 @@ def autoencoder(dfx, y, dim, component, activation, lr=0.0001, batch=128, epochs
     return (variance, r2, encoded_data)
     
 
-def ae_run(dims, component_names):
+def ae_train(dims, component_names):
     '''
     Run and train the autoencoder model
     
@@ -95,14 +95,18 @@ def ae_run(dims, component_names):
 
     for component in component_names:
         print('---------- Beginning Autoencoder training for {} ----------'.format(component))
-      
-           
+        # Open normalized data
+        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
+        # y value list using last day of 7-month data
+        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+        # Set x as the normalized values, y as the daily average of final day
+        x = dfx.values
+        y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
+       
         # Train Autoencoder model
         variance_list = []
         r2_list = []
         num_of_comp = list(range(2,dims+1))
-        count=0
-        vectors = {}
         for i in num_of_comp:
             print('---------- Autoencoder dim {} for {} ----------'.format(i, component))
             variance, r2, X_train = autoencoder(
@@ -111,7 +115,7 @@ def ae_run(dims, component_names):
                 dim=i, 
                 component=component, 
                 activation=('tanh', 'tanh'),
-                lr=0.001,  # <<< Temp values
+                lr=0.001,  
                 batch=128,
                 epochs=100
             )
@@ -119,45 +123,46 @@ def ae_run(dims, component_names):
             variance_list.append(variance)
             r2_list.append(r2)
                             
-        ### Write all X_train data ###
-        # TODO: Integrate this better!!!
-        #file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
-        #norm_labels = ['dim_{}'.format(i) for i in range(1, dims+1)]
-        #vec_data = pd.DataFrame(data=X_train, columns=norm_labels)
-        #vec_data.to_csv(path_or_buf=file_name, index=False)
+        # Write all vector data 
+        file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
+        norm_labels = ['dim_{}'.format(i) for i in range(2, dims+1)]
+        vec_data = pd.DataFrame(data=X_train, columns=norm_labels)
+        vec_data.to_csv(path_or_buf=file_name, index=False)
         
-        # Normalize var and r2 so they are same length as ax1 and ax2
-        append_size = len(X_train[:,0]) - dims + 1
-        norm = np.empty(append_size)
-        norm[:] = np.NaN
-        var_norm = [*variance_list, *norm]
-        r2_norm = [*r2_list, *norm]
-
-        # Output dict to write 
-        output_dict = {
-            '{}_X_train_ax1'.format(component): X_train[:,0],
-            '{}_X_train_ax2'.format(component) : X_train[:,1],
-            '{}_var'.format(component) : var_norm,
-            '{}_r2'.format(component) : r2_norm
-        }
-        
-        # Write entry to file
-        file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/{}_results.csv'.format(component)
+        # Write variance and r2 scores of each gas for every dimension 
+        output_dict = {f'{component}_var' : var_norm, f'{component}_r2' : r2_norm}
+        file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/{component}_metrics.csv'
         write_data = pd.DataFrame(data=output_dict)
         write_data.to_csv(path_or_buf=file_name, index=False)
         
+
+def ae_test(dims, component_names)
+    '''
+    Test the autoencoder model by performing a cross-validated linear
+    regression on the encoded data
+    
+    @params:
+        dims: Number of dimensions
+        component_names: Gas/particulate list
+    '''
+
+    # Open embedding data
+    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv")
+    # y value list using last day of 7-month data
+    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+    # Set x as the normalized values, y as the daily average of final day
+    x = dfx.values
+    y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
+    splits = 5
+
+    # Run linear regression with k-fold cross validation
+    reg.xcross(x, y, splits, component_names, dims)
 
 def grid_search(component, iter_dims, param_vec):
     
     print('---------- Beginning Autoencoder training for {} ----------'.format(component))
     df = pd.read_csv('/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
     
-    # Features list and removal of city, lat, lon
-    features = list(df.columns.values)
-    del features[:3] 
-    del features[-1]
-    #del features[121:]
-
     # y value list using last day of 7-month data
     y = df.loc[:, ['{}_2021_06_06'.format(component)]].values
     
@@ -220,7 +225,7 @@ PARAM_VEC = list(itertools.product(LR,BATCH,EPOCH))
 ITER_DIMS = np.array([2,3,4,5,10,15,20,25,30,40,50,60,80,100,120])
 
 ### Function tests ###
-#ae_run(DIMS, COMPONENT_NAMES)
+#ae_train(DIMS, COMPONENT_NAMES)
 #grid_search('co', ITER_DIMS, PARAM_VEC)
 
 
