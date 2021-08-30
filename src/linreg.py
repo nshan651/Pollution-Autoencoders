@@ -13,6 +13,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.metrics import r2_score
 
+
 def linreg(X_train, X_test, Y_train, Y_test, component, folds=0, dev=False):
     '''
     Simple linear regression
@@ -65,10 +66,12 @@ def xcross(x, y, splits, component, dims=1):
     print(f'---------- Beginning Linear Regression for {component} ----------')
 
     # k-fold cross validation
-    kfold = KFold(n_splits=splits, shuffle=True)
+    kfold = KFold(n_splits=splits, shuffle=True, random_state=10)
     folds=0
+
     # Number of features to compare
-    num_of_dims=list(range(2,dims+1))
+    num_of_dims = np.arange(2, dims+1, 1) if dims!=1 else [1]
+
     # Train/test and metrics for current component's set of data
     train_test = {}
     metrics={}
@@ -76,6 +79,7 @@ def xcross(x, y, splits, component, dims=1):
     train_test_dict = {}
     metrics_dict = {}
     metrics_dict_set = {}
+
     # Loop through train/test data and save the best data with highest R2 scores
     for training_index, test_index in kfold.split(x):
         # Split X and Y train and test data
@@ -92,6 +96,7 @@ def xcross(x, y, splits, component, dims=1):
         # Train regression and save list of metrics
         for dim in num_of_dims:
             # Train regression model and save a list of metrics 
+            # TODO: change this to
             model_intercept, model_coef, res_sum_square, variance_score, Rsquare = linreg(X_train, X_test, Y_train, Y_test, component, folds, dev=True)
             # Create metrics list for current comparison
             metrics['model_intercept']=model_intercept
@@ -103,20 +108,30 @@ def xcross(x, y, splits, component, dims=1):
         # Save each metrics comparison for later
         metrics_dict_set[folds] = metrics_dict.copy()
         #print(metrics_dict_set)
-    
-    # Calculate the best and worst R2 scores for each component
-    best_r2=worst_r2=metrics_dict_set[1][2]['Rsquare']
+
+    # Calculate the best and worst R2 scores for each dimension 
+    # Set best and worst R2 to the first appearance of R2
+    if (dims==1):
+        best_r2=worst_r2=metrics_dict_set[1][1]['Rsquare']
+    else:
+        best_r2=worst_r2=metrics_dict_set[1][2]['Rsquare']
     best_idx=worst_idx=0
+    
+    # Best and worst R2 scores, [('position','score')]
+    best=worst=[]
+
     for fold in metrics_dict_set:
         for dim in metrics_dict_set[fold]:
             R2 = metrics_dict_set[fold][dim]['Rsquare']
-            if R2 > best_r2:
+            if R2 >= best_r2:
                 best_r2 = R2
-                best_idx = folds
-            elif R2 < worst_r2:
+                best_idx = fold
+            elif R2 <= worst_r2:
                 worst_r2 = R2
                 worst_idx = fold
-    '''
+            print(f' dim {dim} best: {best_r2}')
+            print(f'dim {dim} worst: {worst_r2}')
+    # Note: Not sure if block below is needed for cross val???       
     # Obtain the values based off of the indexes of the best and worst R2 scores
     X_tt_best=X_tn_best=Y_tt_best=Y_tn_best=X_tt_worst=X_tn_worst=Y_tt_worst=Y_tn_worst=train_test_dict[1]['X_test']
     for i in train_test_dict:
@@ -140,40 +155,13 @@ def xcross(x, y, splits, component, dims=1):
                     Y_tt_worst=train_test_dict[worst_idx][set_type]
                 elif 'Y_train'==set_type:
                     Y_tn_worst=train_test_dict[worst_idx][set_type]
- 
-    ### Perform the regression for the highest and lowest scores ###   
-    # Note: Sometimes the best-performing folds of training data perform worse
-    # on the test set
 
-    best=worst={}
-    for dim in num_of_dims:
-        # For the best values 
-        high_var, high_r2, high_X_vec = linreg(
-            X_train=X_tn_best, 
-            X_test=X_tt_best, 
-            Y_train=Y_tn_best, 
-            Y_test=Y_tt_best, 
-            component=component)
-        best[f'dim_{dim}'] = [high_var, high_r2, high_X_vec]
-        # For the worst values
-        low_var, low_r2, low_X_vec = linreg(
-            X_train=X_tn_worst, 
-            X_test=X_tt_worst, 
-            Y_train=Y_tn_worst, 
-            Y_test=Y_tt_worst, 
-            component=component)
-        worst[f'dim_{dim}'] = [low_var, low_r2, low_X_vec]
-        print(f'dim: {dim} -- best var: {high_var} -- best r2: {high_r2}')
-        print(f'dim: {dim} -- worst var: {low_var} -- worst r2: {low_r2}')
-    
-    return best, worst 
-    '''
-    
+   
+
 ### RUN ###
 
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 COMPONENT = 'co'
-COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 DIMS = 5
 SPLITS = 5
 # Open normalized data
@@ -182,7 +170,6 @@ dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/dat
 dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{COMPONENT}_data_clean.csv")
 x = dfx.values
 y = dfy.loc[:, [f'{COMPONENT}_2021_06_06']].values
-#y = dfx.loc[:, ['dim_191']].values
 
-xcross(x, y, SPLITS, COMPONENT, DIMS)
+xcross(x, y, SPLITS, COMPONENT)
 
