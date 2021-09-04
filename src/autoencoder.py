@@ -144,18 +144,6 @@ def ae_run(dims, component):
     # Write headers for model metrics and vecs; erase previous model
     metrics_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics.csv'
     vec_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
-    with open(metrics_file,'w', newline='') as f:
-        writer = csv.writer(f)
-        metrics_labels = ['dim', 'variance', 'r2']
-        writer.writerow(metrics_labels)
-        f.close()  
-    with open(vec_file,'w', newline='') as f:
-        writer = csv.writer(f)
-        dim_labels = [f'dim_{i}' for i in range(1, dims+1)]
-        dim_labels.insert(0, 'city')
-        writer.writerow(dim_labels)
-        f.close()
-
     
     # Set x as the normalized values, y as the daily average of final day
     x = dfx.values
@@ -170,7 +158,7 @@ def ae_run(dims, component):
     batch = param_grid['batch'][0]
     epochs = param_grid['epochs'][0]
     counter=0
-    
+
     vector = []
     var_list = []
     r2_list = []
@@ -222,18 +210,16 @@ def ae_run(dims, component):
         print (f'R Square {r2} for dim {dim}')
    
     # Write all vector data 
-    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
     vec_labels = [f'dim_{i}' for i in range(1, dims+1)]
     vector_data = pd.DataFrame(data=vector, columns=vec_labels)
     # Add city labels
     vector_data.insert(0, 'city', cities)
-    vector_data.to_csv(path_or_buf=file_name, index=None)
+    vector_data.to_csv(path_or_buf=vector_file, index=None)
     
     # Write variance and r2 scores of each gas for every dimension 
     output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
-    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics.csv'
     metrics_data = pd.DataFrame(data=output_dict)
-    metrics_data.to_csv(path_or_buf=file_name, index=False)
+    metrics_data.to_csv(path_or_buf=metrics_file, index=False)
     
 
 def grid_search(x, y, splits, component, iter_dims, param_vec):
@@ -317,7 +303,7 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 COMPONENT_NAMES = ['co']
 # Starting dimensions
-DIMS = 190
+DIMS = 5
 # Grid search params
 LR = [0.0001, 0.001, 0.01, 0.1]
 BATCH = [32, 64, 128, 256]
