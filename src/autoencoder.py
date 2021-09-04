@@ -65,7 +65,7 @@ def autoencoder(dfx, y, dim, component, activation, lr=0.0001, batch=128, epochs
     # Bottleneck representation
     # Separate encoder that maps input to its encoded representation
     encoder = Model(autoencoder.input, autoencoder.get_layer('bottleneck').output)
-    encoded_data = encoder.predict(x_train)    # << change to dfx
+    encoded_data = encoder.predict(x_train)    
     decoded_output = autoencoder.predict(x_train)  
     
     # Variance score explanation
@@ -122,7 +122,7 @@ def ae_train(dims, component):
         r2_list.append(r2)
 
 
-def ae_run(dims, component, activation, lr=0.0001, batch=128, epochs=50):
+def ae_run(dims, component):
     '''
     Run the autoencoder model by performing a cross-validated linear
     regression on the encoded data
@@ -132,20 +132,58 @@ def ae_run(dims, component, activation, lr=0.0001, batch=128, epochs=50):
         component_names: Gas/particulate list
     '''
     
-    ### TODO: Merge this with corresponding list of city names!!!
-
     # Open normalized data
     dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
     # y value list using last day of 7-month data
     dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+    # City names to append
+    cities = dfy['city'].values
+    # Grid params to create model with
+    param_grid = pd.read_csv(f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
+    
+    # Write headers for model metrics and vecs; erase previous model
+    metrics_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics.csv'
+    vec_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
+    with open(metrics_file,'w', newline='') as f:
+        writer = csv.writer(f)
+        metrics_labels = ['dim', 'variance', 'r2']
+        writer.writerow(metrics_labels)
+        f.close()  
+    with open(vec_file,'w', newline='') as f:
+        writer = csv.writer(f)
+        dim_labels = [f'dim_{i}' for i in range(1, dims+1)]
+        dim_labels.insert(0, 'city')
+        writer.writerow(dim_labels)
+        f.close()
+
+    
     # Set x as the normalized values, y as the daily average of final day
     x = dfx.values
     y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
     splits = 5
     # Number of features to compare
-    num_of_dims=list(range(2,dims+1))
+    num_of_dims=list(range(1,dims+1))
     
+    # Define hyperparams and counter
+    # Change to next set of hyperparams every 10 dims
+    lr = param_grid['lr'][0]
+    batch = param_grid['batch'][0]
+    epochs = param_grid['epochs'][0]
+    counter=0
+    
+    vector = []
+    var_list = []
+    r2_list = []
+
     for dim in num_of_dims:
+        # Change to next set of hyperparams every 10 dims
+        print(f'lr: {lr} batch: {batch} epochs: {epochs}')
+        if dim%10==0 and dim<120:
+            counter+=1
+            lr = param_grid['lr'][counter]
+            batch = param_grid['batch'][counter]
+            epochs = param_grid['epochs'][counter]
+            
         # Define the linear regression model
         regr = LinearRegression()
         print('---------- Autoencoder dim {} for {} ----------'.format(dim, component))
@@ -153,8 +191,8 @@ def ae_run(dims, component, activation, lr=0.0001, batch=128, epochs=50):
         input_data = Input(shape=(191,))
 
         # Create dense AE layers
-        encoded = Dense(dim, activation=activation[0], name='bottleneck')(input_data)
-        decoded = Dense(191, activation=activation[1])(encoded)
+        encoded = Dense(dim, activation='tanh', name='bottleneck')(input_data)
+        decoded = Dense(191, activation='tanh')(encoded)
 
         autoencoder = Model(input_data, decoded)
 
@@ -172,26 +210,31 @@ def ae_run(dims, component, activation, lr=0.0001, batch=128, epochs=50):
         regr.fit(encoded_data, y)
 
         encoded_data_test = encoder.predict(x)
-        y_pred = regr.predict(encoded_data_test) # << Pass x_test to get predicitons for original uncompressed
+        y_pred = regr.predict(encoded_data_test) 
         
         # Variance and r2 scores for the regression model
-        variance = regr.score(encoded_data_test, y) # << pass in x test for uncompressed values
+        variance = regr.score(encoded_data_test, y) 
         r2 = r2_score(y, y_pred)
+        var_list.append(variance)
+        r2_list.append(r2)
+        vector = list(encoded_data)
         print (f'Variance score: {variance} for dim {dim}')
         print (f'R Square {r2} for dim {dim}')
-        
-        # Write all vector data 
-        file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
-        norm_labels = ['dim_{}'.format(i) for i in range(2, dims+1)]
-        vec_data = pd.DataFrame(data=X_train, columns=norm_labels)
-        vec_data.to_csv(path_or_buf=file_name, index=False)
-        
-        # Write variance and r2 scores of each gas for every dimension 
-        output_dict = {f'{component}_var' : var_norm, f'{component}_r2' : r2_norm}
-        file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/{component}_metrics.csv'
-        write_data = pd.DataFrame(data=output_dict)
-        write_data.to_csv(path_or_buf=file_name, index=False)
-
+   
+    # Write all vector data 
+    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
+    vec_labels = [f'dim_{i}' for i in range(1, dims+1)]
+    vector_data = pd.DataFrame(data=vector, columns=vec_labels)
+    # Add city labels
+    vector_data.insert(0, 'city', cities)
+    vector_data.to_csv(path_or_buf=file_name, index=None)
+    
+    # Write variance and r2 scores of each gas for every dimension 
+    output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
+    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics.csv'
+    metrics_data = pd.DataFrame(data=output_dict)
+    metrics_data.to_csv(path_or_buf=file_name, index=False)
+    
 
 def grid_search(x, y, splits, component, iter_dims, param_vec):
     '''
@@ -212,7 +255,7 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
     kfold = KFold(n_splits=splits, shuffle=True, random_state=10)
     folds=0
     # File name
-    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec_dim2'
+    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec_dim3'
     # Train/test and metrics for current component's set of data
     train_test = {}
     metrics={}
@@ -266,17 +309,15 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
             with open(file_name,'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(grid_list)
-                f.close() 
-         
+                f.close()         
         
     
 ### RUN ###
 
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 COMPONENT_NAMES = ['co']
-COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
-# Starting dimensions; Change this to edit
-DIMS = 191 
+# Starting dimensions
+DIMS = 190
 # Grid search params
 LR = [0.0001, 0.001, 0.01, 0.1]
 BATCH = [32, 64, 128, 256]
@@ -301,7 +342,7 @@ dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/dat
 x = dfx.values
 y = dfy.loc[:, ['co_2021_06_06']].values
 SPLITS = 5
-grid_search(x, y, SPLITS, 'co', ITER_DIMS, PARAM_VEC)
+#grid_search(x, y, SPLITS, 'co', ITER_DIMS, PARAM_VEC)
 
 #ae_train(DIMS, COMPONENT_NAMES)
-#ae_run(DIMS, 'co', ('tanh', 'tanh'), lr=0.0001, batch=128, epochs=50)
+ae_run(DIMS, 'co') 
