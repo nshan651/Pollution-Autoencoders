@@ -1,0 +1,136 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{NAAQS09}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=de3b5f3f3e4dcccb9bdf618270327bf0}{%
+           family={EPA},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Research Triangle Park, NC 27711}%
+      }
+      \strng{namehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{fullhash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{bibnamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authorbibnamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authornamehash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \strng{authorfullhash}{de3b5f3f3e4dcccb9bdf618270327bf0}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{\url{https://www.epa.gov/sites/production/files/2020-07/documents/2009_04_coscopeandmethodsplan.pdf}}
+      \field{title}{Carbon Monoxide NAAQS: Scope and Methods Plan for Health Risk and Exposure Assessment}
+      \field{year}{2009}
+    \endentry
+    \entry{Goodfellow16}{book}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=5d2585c11210cf1d4512e6e0a03ec315}{%
+           family={Goodfellow},
+           familyi={G\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=40a8e4774982146adc2688546f54efb2}{%
+           family={Bengio},
+           familyi={B\bibinitperiod},
+           given={Yoshua},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ccec1ccd2e1aa86960eb2e872c6b7020}{%
+           family={Courville},
+           familyi={C\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{fullhash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{bibnamehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{authorbibnamehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{authornamehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{authorfullhash}{3ae53fe582e8a815b118d26947eaa326}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{\url{http://www.deeplearningbook.org}}
+      \field{title}{Deep Learning}
+      \field{year}{2016}
+    \endentry
+    \entry{Wang19}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=b2eccb185095fccfeb40fdffd8b2105f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=03c5816e75d6a70697a75cc5d3e184d2}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Chengye},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=38a17359db2f4fc7444ba94263768ed8}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Chengzhong},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=38026ba4ee6b102b47bf3ffb41325c8f}{%
+           family={al.},
+           familyi={a\bibinitperiod},
+           prefix={et},
+           prefixi={e\bibinitperiod},
+           prefixun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Environ Health}%
+      }
+      \strng{namehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{fullhash}{3dc4e785fe243e22073fd329caf4dfad}
+      \strng{bibnamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authorbibnamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authornamehash}{732f5c87479ec410ccda984af68db0bf}
+      \strng{authorfullhash}{3dc4e785fe243e22073fd329caf4dfad}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{\url{https://ehjournal.biomedcentral.com/articles/10.1186/s12940-019-0477-3}}
+      \field{title}{Carbon Monoxide and risk of outpatient visits due to cause-specific diseases}
+      \field{year}{2019}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
