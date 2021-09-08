@@ -17,16 +17,18 @@ def linegraph(f_name, type, dims, component_names, colors_list):
         colors_list: List of colors to be used
     '''
     
-    num_of_comp = list(range(2,dims+1))
+    num_of_comp = list(range(2,dims+1)) # TODO: delete this later
+    num_of_dims = list(range(1, dims+1))
     # Plot results
     plt.figure(figsize=(12,10))
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
-            file_name = '{FILE}{COMPONENT}_ae_results_gs.csv'.format(FILE=f_name, COMPONENT=component)
+            #file_name = f'{f_name}{component}_metrics.csv'
+            file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/test_metrics.csv'
             plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            file_name = '{FILE}{COMPONENT}_pca_results_gs.csv'.format(FILE=f_name, COMPONENT=component)
+            file_name = f'{f_name}{component}_metrics.csv'
             plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
@@ -34,8 +36,8 @@ def linegraph(f_name, type, dims, component_names, colors_list):
 
         # Read in model results
         model = pd.read_csv(filepath_or_buffer=file_name)
-        variance = model['{}_var'.format(component)]
-        r2 = model['{}_r2'.format(component)]
+        variance = model['variance']
+        r2 = model['r2']
         
 
         plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
@@ -217,16 +219,17 @@ def correlation(X_data_file, Y_data_file, component):
     plt.show()
     '''
 
-### RUN ###
+### Function Calls ###
 
 COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 #COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
-DIMS = 120
-#F_NAME = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+DIMS = 190
+F_NAME = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/'
+linegraph(F_NAME, 'ae', DIMS, ['co'], COLORS_LIST)
 
-# Correlation Matrix
-X_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
-Y_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
-correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
+### Correlation Matrix ###
+#X_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+#Y_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
+#correlation(X_DATA_FILE, Y_DATA_FILE, 'co')

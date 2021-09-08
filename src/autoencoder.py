@@ -129,7 +129,7 @@ def ae_run(dims, component):
     
     @params:
         dims: Number of dimensions
-        component_names: Gas/particulate list
+        component: Gas/particulate 
     '''
     
     # Open normalized data
@@ -142,8 +142,8 @@ def ae_run(dims, component):
     param_grid = pd.read_csv(f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
     
     # Write headers for model metrics and vecs; erase previous model
-    metrics_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics.csv'
-    vec_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec.csv'
+    metrics_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics_ten.csv'
+    vec_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_ten.csv'
     
     # Set x as the normalized values, y as the daily average of final day
     x = dfx.values
@@ -157,21 +157,24 @@ def ae_run(dims, component):
     lr = param_grid['lr'][0]
     batch = param_grid['batch'][0]
     epochs = param_grid['epochs'][0]
+    # List of key dimensions to advance counter
+    param_dims = list(param_grid['dim'])
     counter=0
 
     vector = []
     var_list = []
     r2_list = []
-
+    
     for dim in num_of_dims:
         # Change to next set of hyperparams every 10 dims
         print(f'lr: {lr} batch: {batch} epochs: {epochs}')
-        if dim%10==0 and dim<120:
-            counter+=1
+
+        if dim in param_dims:
             lr = param_grid['lr'][counter]
             batch = param_grid['batch'][counter]
             epochs = param_grid['epochs'][counter]
-            
+            counter+=1
+        
         # Define the linear regression model
         regr = LinearRegression()
         print('---------- Autoencoder dim {} for {} ----------'.format(dim, component))
@@ -179,8 +182,8 @@ def ae_run(dims, component):
         input_data = Input(shape=(191,))
 
         # Create dense AE layers
-        encoded = Dense(dim, activation='tanh', name='bottleneck')(input_data)
-        decoded = Dense(191, activation='tanh')(encoded)
+        encoded = Dense(dim, activation='LeakyReLU', name='bottleneck')(input_data)
+        decoded = Dense(191, activation='LeakyReLU')(encoded)
 
         autoencoder = Model(input_data, decoded)
 
@@ -214,13 +217,13 @@ def ae_run(dims, component):
     vector_data = pd.DataFrame(data=vector, columns=vec_labels)
     # Add city labels
     vector_data.insert(0, 'city', cities)
-    vector_data.to_csv(path_or_buf=vector_file, index=None)
+    vector_data.to_csv(path_or_buf=vec_file, index=None)
     
     # Write variance and r2 scores of each gas for every dimension 
     output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
     metrics_data = pd.DataFrame(data=output_dict)
     metrics_data.to_csv(path_or_buf=metrics_file, index=False)
-    
+
 
 def grid_search(x, y, splits, component, iter_dims, param_vec):
     '''
@@ -241,7 +244,7 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
     kfold = KFold(n_splits=splits, shuffle=True, random_state=10)
     folds=0
     # File name
-    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec_dim3'
+    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec_10'
     # Train/test and metrics for current component's set of data
     train_test = {}
     metrics={}
@@ -278,7 +281,7 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
                     y=y, 
                     dim=dim, 
                     component=component, 
-                    activation=('tanh', 'tanh'),
+                    activation=('LeakyReLU', 'LeakyReLU'),
                     lr=vec[0], 
                     batch=vec[1],
                     epochs=vec[2]
@@ -298,27 +301,22 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
                 f.close()         
         
     
-### RUN ###
+### Constants ###
 
 #COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
 COMPONENT_NAMES = ['co']
 # Starting dimensions
-DIMS = 5
+DIMS = 3
 # Grid search params
 LR = [0.0001, 0.001, 0.01, 0.1]
 BATCH = [32, 64, 128, 256]
 EPOCH = [10, 50, 75, 100, 150]
-
 # Param vector
 PARAM_VEC = list(itertools.product(LR,BATCH,EPOCH))
-#PARAM_VEC = list(itertools.product([0.01], [32], [10])) # test param vec
-# List of key dimensions
-#ITER_DIMS = np.array([2,3,4,5,10,15,20,25,30,40,50,60,80,100,120])
-ITER_DIMS = np.arange(10, 121, 10)
+# List of key dimensions to perform grid search on
+ITER_DIMS = np.arange(1, 6, 1)
 
-### Function tests ###
-
-## Grid Search ##
+### Grid Search ###
 
 # Open normalized data
 dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
@@ -328,7 +326,9 @@ dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/dat
 x = dfx.values
 y = dfy.loc[:, ['co_2021_06_06']].values
 SPLITS = 5
-#grid_search(x, y, SPLITS, 'co', ITER_DIMS, PARAM_VEC)
+
+grid_search(x, y, SPLITS, 'co', ITER_DIMS, PARAM_VEC)
 
 #ae_train(DIMS, COMPONENT_NAMES)
-ae_run(DIMS, 'co') 
+#ae_run(DIMS, 'co') 
+
