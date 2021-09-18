@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import csv
-
+import os
+import linreg # src/linreg.py
 from sklearn.decomposition import PCA
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.metrics import r2_score
@@ -10,62 +10,37 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import Normalizer
 from sklearn.cluster import KMeans
 
-
-def pca(i, X_train, X_test, Y_train, Y_test, component, dev=False):
+def pca(i, X_train, Y_train, component):
     '''
     Perform Linear Regression on either train/validation set or on test set for PCA
 
     @params:
-        i: number of components
-        X_train, X_test, Y_train, Y_test: testing/training lists
-        dev: set to true if doing validation testing; false if using test set data      
+        i: Number of components
+        X_train, Y_train: Training data
+        component: Gas/particulate 
     '''
 
-    # Define the models
+    # Define the model and fit the trained embedding
     pca = PCA(n_components=i)
-    regr = LinearRegression()
-
-    # Encode data
     encoded_X_train = pca.fit_transform(X_train)
-    #encoded_X_test = pca.transform(X_test)
     
-    # Validate the data using an embedding
-    print(f'\nLinear regression -- component {component}')
-    regr.fit(encoded_X_train, Y_train)
+    return pca, encoded_X_train
 
-    Y_test_predict = regr.predict(encoded_X_test)
 
-    variance = regr.score(encoded_X_test, Y_test)
-    r2 = r2_score(Y_test, Y_test_predict)
-
-    return (variance, r2, encoded_X_test)
-    
-def linreg(encoded_train_data, X_train, X_test, Y_train, Y_test):
-    ''' 
-    Perform a linear regression 
-    
-    @params:
-        encoded_train_data: Data used to fit the regression
-        X_train, X_test, Y_train, Y_test: testing/training lists
-    @return:
-        variance, r2: The variance/r2 scores of the encoded test set
-    '''  
-
-def pca_train(x, y, folds, dims, component):
+def pca_train_test(dims, x, y, folds, component):
     ''' 
     Run PCA using k-fold cross validation strategy
 
     @params:
-        x: Normalized data to encode
-        y: Dependent variable
+        dims: Number of dimensions to train
+        x, y: Independent/dependent data used for k-fold split
         folds: Number of folds to iterate through
-        dims: Number of starting dimensions
         component: The name of the gas/particulate
     '''
     
-    # File name
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/{component}_test_metrics'
-    # Headers for grid search
+    # Metrics file
+    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics'
+    # Headers 
     test_metrics_list = ['fold', 'dim', 'variance', 'r2']
     # Write header
     with open(file_name,'w', newline='') as f:
@@ -76,16 +51,8 @@ def pca_train(x, y, folds, dims, component):
     # k-fold cross validation; any cross-validation technique can be substituted here
     kfold = KFold(n_splits=folds, shuffle=True)
     # Number of features to compare
-    num_of_comp=list(range(2,dims+1))
+    num_of_comp=list(range(1,dims+1))
     fold_count=0
-    # Train/test and metrics for current component's set of data
-    train_test_dict = {}
-    metrics={}
-    # Contains all train_test splits/metrics in PCA for n components and 
-    # m sets of splits
-    train_test_comp = {}
-    metrics_comp = {}
-    metrics_comp_set = {}
 
     print(f'---------- Beginning PCA for gas {component} ----------')
     # Loop through train/test data and save the best data with highest R2 scores
@@ -97,17 +64,27 @@ def pca_train(x, y, folds, dims, component):
 
         # Train PCA and save a list of metrics 
         for i in num_of_comp:
-            variance, r2, _ = pca(i, X_train, X_test, Y_train, Y_test, component, dev=True)
+            # Train pca model
+            model, encoded_train_data = pca(
+                i=i, 
+                X_train=X_train,  
+                Y_train=Y_train, 
+                component=component)
+            # Create the test embedding
+            encoded_test_data = model.transform(X_test)
+            # Perform linear regression
+            variance, r2 = linreg.regression(encoded_train_data, encoded_test_data, Y_train, Y_test)
+            # Print result
             print(f'fold {fold_count} || dim {i} || variance {variance} || r2 {r2} \n')
-            test_metrics_list = [fold_count, i, variance, r2]
-            
             # Update test metrics file
+            test_metrics_list = [fold_count, i, variance, r2]
             with open(file_name,'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(test_metrics_list)
                 f.close() 
 
 
+# TODO: FIX THIS MONSTROSITY!!!!!
 def interpolate(component):
     ''' Function to derive the best and worst fold for a given dimension '''
 
@@ -161,95 +138,69 @@ def interpolate(component):
             writer = csv.writer(f)
             writer.writerow(worst_list)
             f.close() 
+            
 
-
-def pca_run(x, y, splits, dims, component):
+def pca_run(dim, X, X_train, Y_train, component, cities):
     ''' 
     Run PCA using k-fold cross validation strategy
 
     @params:
-        x: Normalized data to encode
-        y: Dependent variable
-        dims: Number of starting dimensions
-        component: The names of the gases/particulate
+        dim: Dimension to embed
+        X: Normalized data to encode
+        X_train, Y_train: Train data used in model creation
+        component: Gas/particulate 
+        cities: List of cities to append to the embedding
     '''
 
-    # Retrieve list of city names to append
-    df = pd.read_csv(f'home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv')
-    cities = df['city'].values
-    
-    # Write headers for model metrics and vecs; erase previous model
-    metrics_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics.csv'
     vec_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/pca/{component}_vec.csv'
+
+    # Train pca model
+    model, encoded_train_data = pca(
+        i=dim, 
+        X_train=X_train, 
+        Y_train=Y_train, 
+        component=component)
     
-    # Number of features to compare
-    num_of_dims=list(range(1,dims+1))
+    # Create full embedding
+    encoded_data = model.transform(X)
 
-    vector = []
-    var_list = []
-    r2_list = []
-    print(f'---------- Beginning PCA for gas {component} ----------')
-    for i in num_of_dims:
-        print(f'---------- Component {i} ----------')
-        # Define the models
-        pca = PCA(n_components=i)
-        regr = LinearRegression()
-        
-        # Encode data
-        #X_train = pca.fit_transform(X_train)
-        encoded_data = pca.transform(x)
-
-        # Validate the embedding by performing a linear regression
-        regr.fit(encoded_data, y)
-        
-        Y_pred = regr.predict(encoded_data)
-
-        # Variance and r2 scores
-        variance = regr.score(encoded_data, y)
-        r2 = r2_score(y, Y_pred)
-        # Save values for each comp dim
-        var_list.append(variance)
-        r2_list.append(r2)
-        vector = list(encoded_data)
-        print (f'Variance score: {variance} for component {i}')
-        print (f'R Square {r2} for component {i}')
-
-    # Write all vector data 
-    vec_labels = [f'dim_{i}' for i in range(1, dims+1)]
-    vector_data = pd.DataFrame(data=vector, columns=vec_labels)
-    # Add city labels
+    # Add city labels and save encoded data
+    vec_labels = [f'dim_{i}' for i in range(1, dim+1)]
+    vector_data = pd.DataFrame(data=encoded_data, columns=vec_labels)
     vector_data.insert(0, 'city', cities)
     vector_data.to_csv(path_or_buf=vec_file, index=None)
-    
-    # Write variance and r2 scores of each gas for every dimension 
-    output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
-    metrics_data = pd.DataFrame(data=output_dict)
-    metrics_data.to_csv(path_or_buf=metrics_file, index=False)
 
 
 def main():
-    ''' Set up sources, call functions as needed '''
-
-    # Constants
+    ''' Set up soures and constants, call functions as needed '''
+    
+    ### Constants ###
     #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-    test_component = 'co'
-    colors_list = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
-    dims = 190
+    component_test = 'co'
+    # Starting dimensions
+    dims = 50
+    # K-fold folds
     folds = 5
-    # Open normalized data; y value list using last day of 7-month data
-    dfx = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/{test_component}_data_norm.csv')
-    dfy = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{test_component}_data_clean.csv')
-    # Set x as the normalized values, y as the daily average of final day
-    x = dfx.values
-    # Non-normalized data for y
-    y = dfy.loc[:, [f'{test_component}_2021_06_06']]
+
+    ### Input files ###
+    # Open normalized data and dependent, non-normalized data
+    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    # City names to append
+    cities = dfy['city'].values
+    
+    # Set x as the normalized values, y (non-normalized) as the daily average of final day
+    X = dfx.values
+    Y = dfy.loc[:, ['co_2021_06_06']].values
+    # Split into train/test data
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
     ### Function calls ###
-    interpolate('co')
-    #pca_train(x, y, folds, dims, test_component)
-    #pca_run(dims, component)
-    
+
+    #pca_train_test(dims, X, Y, folds, component_test)
+    pca_run(dims, X, X_train, Y_train, component_test, cities)
+    #linreg.regression(X_train, X_test, Y_train, Y_test)
+
 
 if __name__ == '__main__':
     main()
-

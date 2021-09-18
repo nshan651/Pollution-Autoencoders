@@ -69,11 +69,13 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
     
     @params:
         dims: Number of dimensions to train
+        X_train, X_test, Y_train, Y_test: train/test data used for model
         component: Gas/particulate
         param_grid: List of key hyperparameters to test 
-        production: Boolean to determine whether to train/test or to create full embedding
     '''
 
+    # Metrics file
+    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics'
     # Train Autoencoder model
     variance_list = []
     r2_list = []
@@ -119,7 +121,7 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
     # Write variance and r2 scores of each gas for every dimension 
     output_dict = {'dim': num_of_dims, 'variance' : variance_list, 'r2' : r2_list}
     metrics_data = pd.DataFrame(data=output_dict)
-    metrics_data.to_csv(path_or_buf=metrics_file, index=False)
+    metrics_data.to_csv(path_or_buf=file_name, index=False)
 
 
 def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
@@ -129,6 +131,8 @@ def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
      
     @params:
         dim: Dimension to embed
+        X: Normalized data to encode
+        X_train, Y_train: Train data used in model creation
         component: Gas/particulate 
         cities: List of cities to append to the embedding
         param_grid: The correct hyperparameters to be used. Note the dimensions that were tested in the 
@@ -271,7 +275,7 @@ def main():
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
     ### Function calls ###
-    
+
     #grid_search(X, Y, folds, 'co', iter_dims, key_params)
     #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
     #ae_run(dims, X, X_train, Y_train, 0.01, 64, 75, component_test, cities)
