@@ -11,7 +11,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn.cluster import KMeans
 
 
-def pca(i, X_train, X_test, Y_train, Y_test, folds, component, dev=False):
+def pca(i, X_train, X_test, Y_train, Y_test, component, dev=False):
     '''
     Perform Linear Regression on either train/validation set or on test set for PCA
 
@@ -27,12 +27,12 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds, component, dev=False):
 
     # Encode data
     encoded_X_train = pca.fit_transform(X_train)
-    encoded_X_test = pca.transform(X_test)
+    #encoded_X_test = pca.transform(X_test)
     
     # Validate the data using an embedding
     print(f'\nLinear regression -- component {component}')
     regr.fit(encoded_X_train, Y_train)
-    #res_sum_square = np.mean((regr.predict(encoded_X_test) - Y_test ** 2))
+
     Y_test_predict = regr.predict(encoded_X_test)
 
     variance = regr.score(encoded_X_test, Y_test)
@@ -40,32 +40,16 @@ def pca(i, X_train, X_test, Y_train, Y_test, folds, component, dev=False):
 
     return (variance, r2, encoded_X_test)
     
-    # TODO: Remove code below (maybe?)
-    '''
-    # Linear regression on validation/train set
-    if dev == True:
-        if i%10 == 0:
-            print('PCA validation -- fold {} -- component {}'.format(folds,i))
-        train_pca, dev_pca, train_labels_pca, dev_labels_pca = train_test_split(X_train, Y_train, test_size=0.33, random_state=42)
-        model.fit(train_pca, train_labels_pca)
-        res_sum_square= np.mean((model.predict(dev_pca) - dev_labels_pca ** 2))
-        var_val=model.score(dev_pca, dev_labels_pca)
-        Y_test_predict = model.predict(dev_pca)
-        r2_val=r2_score(dev_labels_pca, Y_test_predict)
-        return (model.intercept_, model.coef_, res_sum_square, var_val, r2_val)
-
-    # Linear regression on test set
-    else:
-        if i%10 == 0:
-            print('PCA Test -- component {}'.format(i))
-        model.fit(X_train, Y_train)
-        res_sum_square= np.mean((model.predict(X_test) - Y_test ** 2))
-        var_val=model.score(X_test, Y_test)
-        Y_test_predict = model.predict(X_test)
-        r2_val=r2_score(Y_test, Y_test_predict)
-        return (var_val, r2_val, X_train)
-    '''
-
+def linreg(encoded_train_data, X_train, X_test, Y_train, Y_test):
+    ''' 
+    Perform a linear regression 
+    
+    @params:
+        encoded_train_data: Data used to fit the regression
+        X_train, X_test, Y_train, Y_test: testing/training lists
+    @return:
+        variance, r2: The variance/r2 scores of the encoded test set
+    '''  
 
 def pca_train(x, y, folds, dims, component):
     ''' 
@@ -110,17 +94,10 @@ def pca_train(x, y, folds, dims, component):
         X_train, X_test = x[training_index, :], x[test_index, :]
         Y_train, Y_test = y[training_index], y[test_index]
         fold_count+=1
-        # Update dict with train/test values
-        train_test_dict['X_train'] = X_train
-        train_test_dict['X_test'] = X_test
-        train_test_dict['Y_train'] = Y_train
-        train_test_dict['Y_test'] = Y_test
-        # Save best sets of train/test data that have high R2 scores
-        train_test_comp[fold_count] = train_test_dict.copy()
-        
+
         # Train PCA and save a list of metrics 
         for i in num_of_comp:
-            variance, r2, _ = pca(i, X_train, X_test, Y_train, Y_test, folds, component, dev=True)
+            variance, r2, _ = pca(i, X_train, X_test, Y_train, Y_test, component, dev=True)
             print(f'fold {fold_count} || dim {i} || variance {variance} || r2 {r2} \n')
             test_metrics_list = [fold_count, i, variance, r2]
             
@@ -129,73 +106,6 @@ def pca_train(x, y, folds, dims, component):
                 writer = csv.writer(f)
                 writer.writerow(test_metrics_list)
                 f.close() 
-
-            # Create metrics list for current comparison
-            #metrics['variance_score']=variance_score
-            #metrics['Rsquare']=Rsquare
-            #metrics_comp[i] = metrics.copy()
-        # Save each metrics comparison for later
-        #metrics_comp_set[folds] = metrics_comp.copy()
-'''
-    # Calculate the R2 score for each component
-    best_r2 = -100
-    sets = 0
-    for i in metrics_comp_set:
-        for j in metrics_comp_set[i]:
-            R2 = metrics_comp_set[i][j]['Rsquare']
-            #print('set : ' + str(i) + ' ' + 'comp' + ' ' + 
-            #    str(j) + ' ' + 'Rsquare' + ' ' + str(R2))
-            if R2 >= best_r2:
-                best_r2 = R2
-                sets=i
-        
-
-
-    # Obtain optimal PCA variance and R2 scores and add to list
-    for i in train_test_comp:
-        if i == sets:
-            for j in train_test_comp[sets]:
-                if 'X_test'==j:
-                    X_ttbest=train_test_comp[sets][j]
-                elif 'X_train' ==j:
-                    X_tnbest=train_test_comp[sets][j]
-                elif 'Y_test' ==j:
-                    Y_ttbest=train_test_comp[sets][j]
-                elif 'Y_train'==j:
-                    Y_tnbest=train_test_comp[sets][j]
-    
-    # Graph PCA to test set with best components
-    # using the best set to call PCA function to use the test set with all components
-    pca_r2=[]
-    pca_variance=[]
-    
-    # Test set for pca
-    for i in num_of_comp:   
-        variance, R2, X_train = pca(i, X_tnbest, X_ttbest, Y_tnbest ,Y_ttbest, folds, dev=False)
-        pca_variance.append(variance)
-        pca_r2.append(R2)
-        #pca_X_train.append(X_train)
-            
-    # Normalize var and r2 so they are same length as ax1 and ax2
-    append_size = len(X_train[:,0]) - dims + 1
-    norm = np.empty(append_size)
-    norm[:] = np.NaN
-    var_norm = [*pca_variance, *norm]
-    r2_norm = [*pca_r2, *norm]
-
-    # Output dict to write 
-    output_dict = {
-        '{}_X_train_ax1'.format(component): X_train[:,0],
-        '{}_X_train_ax2'.format(component) : X_train[:,1],
-        '{}_var'.format(component) : var_norm,
-        '{}_r2'.format(component) : r2_norm
-    }
-    
-    # Write entry to file
-    file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_results/pca/{}_pca_results.csv'.format(component)
-    write_data = pd.DataFrame(data=output_dict)
-    write_data.to_csv(path_or_buf=file_name, index=False)
-'''
 
 
 def interpolate(component):
@@ -290,14 +200,13 @@ def pca_run(x, y, splits, dims, component):
         encoded_data = pca.transform(x)
 
         # Validate the embedding by performing a linear regression
-        #res_sum_square = np.mean((regr.predict(x) - y ** 2))
         regr.fit(encoded_data, y)
         
-        Y_test_predict = regr.predict(encoded_data)
+        Y_pred = regr.predict(encoded_data)
 
         # Variance and r2 scores
         variance = regr.score(encoded_data, y)
-        r2 = r2_score(y, Y_test_predict)
+        r2 = r2_score(y, Y_pred)
         # Save values for each comp dim
         var_list.append(variance)
         r2_list.append(r2)
@@ -316,24 +225,6 @@ def pca_run(x, y, splits, dims, component):
     output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
     metrics_data = pd.DataFrame(data=output_dict)
     metrics_data.to_csv(path_or_buf=metrics_file, index=False)
-        
-    
-def pca_kmeans(component, colors_list):
-    ''' kmeans clustering on a single gas '''
-
-    plt.figure(figsize=(10,10))
-    plt.rcParams.update({'font.size': 18})
-    # Run PCA
-    *_, X_train = pca_run('co')
-    # Perform KMeans
-    kmeans = KMeans(n_clusters=3)
-    # Compute cluster centers and predict cluster indicies
-    X_cluster = kmeans.fit_predict(X_train)
-
-    label_color = [colors_list[i] for i in X_cluster]
-    plt.scatter(X_train[:,0], X_train[:,2], c=label_color, alpha=0.5)
-    plt.title('K-means Clustering of CO')
-    plt.show()
 
 
 def main():
@@ -350,7 +241,8 @@ def main():
     dfy = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{test_component}_data_clean.csv')
     # Set x as the normalized values, y as the daily average of final day
     x = dfx.values
-    y = dfy.loc[:, ['{}_2021_06_06'.format(test_component)]].values
+    # Non-normalized data for y
+    y = dfy.loc[:, [f'{test_component}_2021_06_06']]
 
     ### Function calls ###
     interpolate('co')

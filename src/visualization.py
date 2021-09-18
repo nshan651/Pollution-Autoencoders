@@ -54,6 +54,59 @@ def linegraph(f_name, type, dims, component_names, colors_list):
     plt.show()
 
 
+def metrics_comparison(type, dims, component_names, colors_list):
+    ''' 
+    Plot the explained variance across dimensions using the model results
+
+    @params:
+        type: Type of reduction method, pca or autoencoders
+        dims: Number of dimensions
+        component_names: Gas/particulate list
+        colors_list: List of colors to be used
+    '''
+     
+    num_of_comp = list(range(2,dims+1)) # TODO: delete this later
+    num_of_dims = list(range(1, dims+1))
+    # Plot results
+    plt.figure(figsize=(12,10))
+    for i, component in enumerate(component_names):
+        # AE or PCA
+        if type == 'ae':
+            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/ae/derived/{component}_best_metrics.csv'
+            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/ae/derived/{component}_worst_metrics.csv'
+            plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
+        elif type == 'pca':
+            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_best_metrics.csv'
+            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_worst_metrics.csv'
+            plt_title = 'PCA Reduced Representation of Air Pollutants'
+        else:
+            print('Type must be "ae" or "pca"')
+            quit()
+
+        # Read in model results
+        best = pd.read_csv(filepath_or_buffer=high_file)
+        worst = pd.read_csv(filepath_or_buffer=low_file)
+        # Best and worst scores read in
+        best_variance = best['variance']
+        best_r2 = best['r2']
+        worst_variance = worst['variance']
+        worst_r2 = worst['r2']
+
+        # Plots
+        plt.plot(num_of_comp, best_variance[:dims-1], label = f'{component} high variance', linestyle = '-', marker = '+', color = 'green')
+        plt.plot(num_of_comp, best_r2[:dims-1], linestyle = '-.', marker = 'H', color = 'green')
+        plt.plot(num_of_comp, worst_variance[:dims-1], label = f'{component} low variance', linestyle = '-', marker = '+', color = 'red')
+        plt.plot(num_of_comp, worst_r2[:dims-1], linestyle = '-.', marker = 'H', color = 'red')
+        plt.rcParams.update({'font.size': 22})
+        plt.tick_params(axis='both', which='major', labelsize=28)
+
+        plt.xlabel('Dimension')
+        plt.ylabel('% Explained Variance')
+        plt.title('High-low variance scores')
+        plt.ylim([0,1])
+        plt.legend()
+    plt.show()
+
 def scatter(f_name, type, component, color):
     '''
     Autoencoder scatter plot of multiple components for the first two dimensions
@@ -221,14 +274,14 @@ def correlation(X_data_file, Y_data_file, component):
 
 ### Function Calls ###
 
-COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-#COMPONENT_NAMES = ['co']
+#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
 DIMS = 190
 F_NAME = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/'
-linegraph(F_NAME, 'ae', DIMS, ['co'], COLORS_LIST)
-
+#linegraph(F_NAME, 'ae', DIMS, ['co'], COLORS_LIST)
+metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
 #X_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
 #Y_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/vec/vec.csv'

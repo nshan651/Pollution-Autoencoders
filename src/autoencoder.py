@@ -3,6 +3,7 @@ import pandas as pd
 import itertools
 import csv
 import os
+import linreg # src/linreg.py
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import Adam
@@ -12,148 +13,73 @@ from sklearn.model_selection import KFold, train_test_split
 from sklearn.metrics import r2_score
 
 
-def autoencoder(dfx, y, dim, component, activation, lr=0.0001, batch=128, epochs=50):
+def autoencoder(dim, X_train, Y_train, component, activation, lr, batch, epochs):
     '''
     Autoencoder model
     
     @params:
-        dfx: DataFrame of normalized x values
-        y: Dependent variable to be predicted
         dim: Current dimension
+        X_train, Y_train: training data
         component: Name of gas or particulate
         activation: Activation function represented as a tuple pair
-        lr: Learning rate, default of 0.0001
-        batch: Batch size, default of 128
-        epochs: Number of epochs, default of 50
+        lr: Learning rate
+        batch: Batch size
+        epochs: Number of epochs
     @return:
-        variance_list: List of explainable variance scores
-        r2_list: List of R squared scores
-        encoded_data: The encoded X training data
+        encoded_layer: The encoded layer responsible for encoding the data
+        encoded_train_data: Training embeddings needed to fit the regression model
+        Y_train: The reduced Y training data to match size of the encoded training data
     '''
 
-    # Define the linear regression model
-    regr = LinearRegression()
-
-    print('---------- Autoencoder dim {} for {} ----------'.format(dim, component))
-    # Training and test splits
-    train, dev, train_labels, dev_labels = train_test_split(dfx, y, test_size=0.20, random_state=40)
-    train, test, train_labels, test_labels = train_test_split(train, train_labels, test_size=0.20, random_state=40)
+    # Additional split of train/test data; keep dev set for validation
+    X_train, X_dev, Y_train, Y_dev = train_test_split(X_train, Y_train, test_size=0.20, random_state=40)
     input_data = Input(shape=(191,))
 
-    x_train = train.loc[:, train.columns]
-    x_test = test.loc[:, test.columns]
-    x_dev = dev.loc[:, dev.columns]
-
+    # Create layers
     encoded = Dense(dim, activation=activation[0], name='bottleneck')(input_data)
     decoded = Dense(191, activation=activation[1])(encoded)
 
+    # Define the autoencoder model
     autoencoder = Model(input_data, decoded)
 
     # Compile the autoencoder
     autoencoder.compile(loss='mean_squared_error', optimizer=Adam(learning_rate=lr))
     autoencoder.summary()
     
-    trained_model = autoencoder.fit(
-        x_train, 
-        x_train, 
+    # Fit the model
+    autoencoder.fit(
+        X_train, 
+        X_train, 
         batch_size=batch, 
         epochs=epochs, 
         verbose=1,
-        validation_data=(x_dev, x_dev)
+        validation_data=(X_dev, X_dev)  # Test on dev set, update weights
     )
-    
-    # Bottleneck representation
-    # Separate encoder that maps input to its encoded representation
-    encoder = Model(autoencoder.input, autoencoder.get_layer('bottleneck').output)
-    encoded_data = encoder.predict(x_train)    
-    decoded_output = autoencoder.predict(x_train)  
-    
-    # Variance score explanation
-    regr.fit(encoded_data, train_labels)
 
-    encoded_data_test = encoder.predict(x_test)
-    y_pred = regr.predict(encoded_data_test) # << Pass x_test to get predicitons for original uncompressed
+    # Compare encode layer embeddings to training data
+    encoded_layer = Model(autoencoder.input, autoencoder.get_layer('bottleneck').output)
+    encoded_train_data = encoded_layer.predict(X_train)  
     
-    # Variance and r2 scores for the regression model
-    variance = regr.score(encoded_data_test, test_labels) # << pass in x test for uncompressed values
-    r2 = r2_score(test_labels, y_pred)
-    print ('Variance score: %.2f' % variance)
-    print ('R Square', r2)    
+    return encoded_layer, encoded_train_data, Y_train
 
-    return (variance, r2, encoded_data)
-    
 
-def ae_train(dims, component):
-    '''
-    Train the autoencoder model using cross-validation and grid search 
+def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid):
+    ''' 
+    Train and test autoencoder model 
     
     @params:
-        dims: Number of dimensions
-        component_names: Gas/particulate list
+        dims: Number of dimensions to train
+        component: Gas/particulate
+        param_grid: List of key hyperparameters to test 
+        production: Boolean to determine whether to train/test or to create full embedding
     '''
 
-    print('---------- Beginning Autoencoder training for {} ----------'.format(component))
-    # Open normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
-    # y value list using last day of 7-month data
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
-    # Set x as the normalized values, y as the daily average of final day
-    x = dfx.values
-    y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
-    
     # Train Autoencoder model
     variance_list = []
     r2_list = []
-    num_of_comp = list(range(2,dims+1))
-    for i in num_of_comp:
-        print('---------- Autoencoder dim {} for {} ----------'.format(i, component))
-        variance, r2, X_train = autoencoder(
-            dfx=dfx, 
-            y=y, 
-            dim=i, 
-            component=component, 
-            activation=('tanh', 'tanh'),
-            lr=0.001,  
-            batch=128,
-            epochs=100
-        )
-        # Add r2/variance to lists
-        variance_list.append(variance)
-        r2_list.append(r2)
+    num_of_dims = list(range(2,dims+1))
 
-
-def ae_run(dims, component):
-    '''
-    Run the autoencoder model by performing a cross-validated linear
-    regression on the encoded data
-    
-    @params:
-        dims: Number of dimensions
-        component: Gas/particulate 
-    '''
-    
-    # Open normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
-    # y value list using last day of 7-month data
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
-    # City names to append
-    cities = dfy['city'].values
-    # Grid params to create model with
-    param_grid = pd.read_csv(f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
-    
-    # Write headers for model metrics and vecs; erase previous model
-    metrics_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/{component}_metrics_ten.csv'
-    vec_file = f'/home/nicks/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_ten.csv'
-    
-    # Set x as the normalized values, y as the daily average of final day
-    x = dfx.values
-    y = dfy.loc[:, ['{}_2021_06_06'.format(component)]].values
-    splits = 5
-    # Number of features to compare
-    num_of_dims=list(range(1,dims+1))
-    
     # Define hyperparams and counter
-    # Change to next set of hyperparams every 10 dims
     lr = param_grid['lr'][0]
     batch = param_grid['batch'][0]
     epochs = param_grid['epochs'][0]
@@ -161,97 +87,105 @@ def ae_run(dims, component):
     param_dims = list(param_grid['dim'])
     counter=0
 
-    vector = []
-    var_list = []
-    r2_list = []
-    
     for dim in num_of_dims:
-        # Change to next set of hyperparams every 10 dims
-        print(f'lr: {lr} batch: {batch} epochs: {epochs}')
-
+        print(f'dim {dim} || lr: {lr} || batch: {batch} || epochs: {epochs}')
+        # Use key hyperparameters in the training process
         if dim in param_dims:
             lr = param_grid['lr'][counter]
             batch = param_grid['batch'][counter]
             epochs = param_grid['epochs'][counter]
             counter+=1
-        
-        # Define the linear regression model
-        regr = LinearRegression()
-        print('---------- Autoencoder dim {} for {} ----------'.format(dim, component))
-        
-        input_data = Input(shape=(191,))
+        # Train the model
+        encoded_layer, encoded_train_data, Y_reduced_train = autoencoder(
+            dim=dim,
+            X_train=X_train,
+            Y_train=Y_train,
+            component=component,
+            activation=('tanh', 'tanh'),
+            lr=lr, 
+            batch=batch,
+            epochs=epochs
+        )
 
-        # Create dense AE layers
-        encoded = Dense(dim, activation='LeakyReLU', name='bottleneck')(input_data)
-        decoded = Dense(191, activation='LeakyReLU')(encoded)
+        # Encode test data
+        encoded_test_data = encoded_layer.predict(X_test)
+        # Perform a linear regression based off encoded data
+        variance, r2 = linreg.regression(encoded_train_data, encoded_test_data, Y_reduced_train, Y_test)
 
-        autoencoder = Model(input_data, decoded)
-
-        # Compile the autoencoder
-        autoencoder.compile(loss='mean_squared_error', optimizer=Adam(learning_rate=lr))
-        autoencoder.summary()
-        
-        # Bottleneck representation
-        # Separate encoder that maps input to its encoded representation
-        encoder = Model(autoencoder.input, autoencoder.get_layer('bottleneck').output)
-        encoded_data = encoder.predict(x)    
-        decoded_output = autoencoder.predict(x)  
-        
-        # Variance score explanation
-        regr.fit(encoded_data, y)
-
-        encoded_data_test = encoder.predict(x)
-        y_pred = regr.predict(encoded_data_test) 
-        
-        # Variance and r2 scores for the regression model
-        variance = regr.score(encoded_data_test, y) 
-        r2 = r2_score(y, y_pred)
-        var_list.append(variance)
+        # Save model metrics
+        variance_list.append(variance)
         r2_list.append(r2)
-        vector = list(encoded_data)
-        print (f'Variance score: {variance} for dim {dim}')
-        print (f'R Square {r2} for dim {dim}')
-   
-    # Write all vector data 
-    vec_labels = [f'dim_{i}' for i in range(1, dims+1)]
-    vector_data = pd.DataFrame(data=vector, columns=vec_labels)
-    # Add city labels
-    vector_data.insert(0, 'city', cities)
-    vector_data.to_csv(path_or_buf=vec_file, index=None)
-    
+
     # Write variance and r2 scores of each gas for every dimension 
-    output_dict = {'dim': num_of_dims, 'variance' : var_list, 'r2' : r2_list}
+    output_dict = {'dim': num_of_dims, 'variance' : variance_list, 'r2' : r2_list}
     metrics_data = pd.DataFrame(data=output_dict)
     metrics_data.to_csv(path_or_buf=metrics_file, index=False)
 
 
-def grid_search(x, y, splits, component, iter_dims, param_vec):
+def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
+    '''
+    Run the autoencoder model by performing a cross-validated linear
+    regression on the encoded data
+     
+    @params:
+        dim: Dimension to embed
+        component: Gas/particulate 
+        cities: List of cities to append to the embedding
+        param_grid: The correct hyperparameters to be used. Note the dimensions that were tested in the 
+            grid search. If dimension was not tested for it, use hyperparams of last tested dimension
+    '''
+
+    # File to save model metrics to
+    vec_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_{dim}.csv'
+
+    # Train the model that will be used to create the embedding based on desired input dimensions
+    encoded_layer, *_ = autoencoder(
+        dim=dim,
+        X_train=X_train,
+        Y_train=Y_train,
+        component=component,
+        activation=('tanh', 'tanh'),
+        lr=lr, 
+        batch=batch,
+        epochs=epochs
+    )
+   
+    # Create encoded data based off full dataset
+    encoded_data = encoded_layer.predict(X)
+    
+    # Add city labels and save encoded data
+    vec_labels = [f'dim_{i}' for i in range(1, dim+1)]
+    vector_data = pd.DataFrame(data=encoded_data, columns=vec_labels)
+    vector_data.insert(0, 'city', cities)
+    vector_data.to_csv(path_or_buf=vec_file, index=None)
+
+
+def grid_search(x, y, folds, component, iter_dims, key_params):
     '''
     Run the linear regression for a single gas
     using k-fold cross validation strategy
 
     @params:
-        x: x input values 
-        y: Response values
-        splits: Number of folds for k-fold cross val
-        component_names: Gas/particulate name list
-        dims: number of dimensions to test over. Default is 1
+        x: The normalized x values to be used in the embedding
+        y: The dependent variable
+        folds: Number of folds to test
+        component: Name of gas or particulate
+        activation: Activation function represented as a tuple pair
+        lr: Learning rate
+        batch: Batch size
+        epochs: Number of epochs        
+        iter_dims: Key dimensions to perform the grid search on
+        key_params: list of key parameters to test
     '''
 
     print(f'---------- Beginning Linear Regression for {component} ----------')
 
     # k-fold cross validation
-    kfold = KFold(n_splits=splits, shuffle=True, random_state=10)
-    folds=0
+    kfold = KFold(n_splits=folds, shuffle=True, random_state=10)
+    fold_count=0
     # File name
-    file_name = f'/home/nicks/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec_10'
-    # Train/test and metrics for current component's set of data
-    train_test = {}
-    metrics={}
-    # Contains all train_test splits/metrics in REG for n sets of splits
-    train_test_dict = {}
-    metrics_dict = {}
-    metrics_dict_set = {}
+    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec.csv'
+    
     # Headers for grid search
     grid_list = ['fold', 'dim', 'variance', 'r2', 'lr', 'batch', 'epochs']
     # Write header
@@ -259,76 +193,90 @@ def grid_search(x, y, splits, component, iter_dims, param_vec):
         writer = csv.writer(f)
         writer.writerow(grid_list)
         f.close() 
+
     # Loop through train/test data and save the best data with highest R2 scores
     for training_index, test_index in kfold.split(x):
         # Split X and Y train and test data
         X_train, X_test = x[training_index, :], x[test_index, :]
         Y_train, Y_test = y[training_index], y[test_index]
-        folds+=1
-        # Update dict with train/test values
-        train_test['X_train'] = X_train
-        train_test['X_test'] = X_test
-        train_test['Y_train'] = Y_train
-        train_test['Y_test'] = Y_test
-        # Save best sets of train/test data that have high R2 scores
-        train_test_dict[folds] = train_test.copy()
+        fold_count+=1
+
         # Perform a grid search
         for dim in iter_dims:
             best_var = -100
-            for vec in param_vec:
-                variance, r2, _ = autoencoder(
-                    dfx=dfx, 
-                    y=y, 
-                    dim=dim, 
-                    component=component, 
-                    activation=('LeakyReLU', 'LeakyReLU'),
-                    lr=vec[0], 
-                    batch=vec[1],
-                    epochs=vec[2]
+            for vec in key_params:
+                # Train model
+                encoded_layer, encoded_train_data, Y_reduced_train = autoencoder(
+                    dim=dim,
+                    X_train=X_train,
+                    Y_train=Y_train,
+                    component=component,
+                    activation=('tanh', 'tanh'),
+                    lr=lr, 
+                    batch=batch,
+                    epochs=epochs
                 )
+
+                # Encode test data
+                encoded_test_data = encoded_layer.predict(X_test)
+                # Perform a linear regression based off the encoded data
+                variance, r2 = linreg.regression(encoded_train_data, encoded_test_data, Y_reduced_train, Y_test)
+                
                 # Update with current highest variance
                 if variance > best_var:
                     best_var = variance
-                    grid_list = [folds, dim, variance, r2, vec[0], vec[1], vec[2]]
+                    grid_list = [fold_count, dim, variance, r2, vec[0], vec[1], vec[2]]
                 
-            print('--------------------')
             print(f'Best params for fold {grid_list[0]} dim {grid_list[1]}: variance={grid_list[2]} lr={grid_list[4]} batch={grid_list[5]} epochs={grid_list[6]}')        
-            print('--------------------')
+            
             # Update grid params files
             with open(file_name,'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(grid_list)
-                f.close()         
-        
+                f.close()
+
+
+def main():
+    ''' Set up soures and constants, call functions as needed '''
     
-### Constants ###
+    ### Constants ###
+    #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+    component_test = 'co'
+    # Starting dimensions
+    dims = 50
+    # K-fold folds
+    folds = 5
+    # Grid search params
+    lr = [0.0001, 0.001, 0.01, 0.1]
+    batch = [32, 64, 128, 256]
+    epochs = [10, 50, 75, 100, 150]
+    # Param vector
+    key_params = list(itertools.product(lr,batch,epochs))
+    # List of key dimensions to perform grid search on
+    iter_dims = np.arange(1, 11, 1)
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co']
-# Starting dimensions
-DIMS = 3
-# Grid search params
-LR = [0.0001, 0.001, 0.01, 0.1]
-BATCH = [32, 64, 128, 256]
-EPOCH = [10, 50, 75, 100, 150]
-# Param vector
-PARAM_VEC = list(itertools.product(LR,BATCH,EPOCH))
-# List of key dimensions to perform grid search on
-ITER_DIMS = np.arange(1, 6, 1)
+    ### Input files ###
+    # Open normalized data and dependent, non-normalized data
+    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    # City names to append
+    cities = dfy['city'].values
+    # Grid params to create model with
+    param_grid = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
+    
+    # Set x as the normalized values, y (non-normalized) as the daily average of final day
+    X = dfx.values
+    Y = dfy.loc[:, ['co_2021_06_06']].values
+    # Split into train/test data
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
-### Grid Search ###
+    ### Function calls ###
+    
+    #grid_search(X, Y, folds, 'co', iter_dims, key_params)
+    #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
+    #ae_run(dims, X, X_train, Y_train, 0.01, 64, 75, component_test, cities)
+    #linreg.regression(X_train, X_test, Y_train, Y_test)
 
-# Open normalized data
-dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-# y value list using last day of 7-month data
-dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
-# Set x as the normalized values, y as the daily average of final day
-x = dfx.values
-y = dfy.loc[:, ['co_2021_06_06']].values
-SPLITS = 5
 
-grid_search(x, y, SPLITS, 'co', ITER_DIMS, PARAM_VEC)
-
-#ae_train(DIMS, COMPONENT_NAMES)
-#ae_run(DIMS, 'co') 
-
+if __name__ == '__main__':
+    main()
