@@ -5,7 +5,7 @@ import seaborn as sns
 import itertools
 
 
-def linegraph(f_name, type, dims, component_names, colors_list):
+def linegraph(type, dims, component_names, colors_list):
     ''' 
     Plot the explained variance across dimensions using the model results
 
@@ -18,17 +18,17 @@ def linegraph(f_name, type, dims, component_names, colors_list):
     '''
     
     num_of_comp = list(range(2,dims+1)) # TODO: delete this later
-    num_of_dims = list(range(1, dims+1))
+    num_of_dims = list(range(2, dims+1))
     # Plot results
     plt.figure(figsize=(12,10))
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
             #file_name = f'{f_name}{component}_metrics.csv'
-            file_name = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/test_metrics.csv'
+            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics.csv'
             plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            file_name = f'{f_name}{component}_metrics.csv'
+            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics'
             plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
@@ -39,15 +39,25 @@ def linegraph(f_name, type, dims, component_names, colors_list):
         variance = model['variance']
         r2 = model['r2']
         
-
-        plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
-        plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
+        # sns
+        ax = sns.lineplot(x=num_of_dims, y=variance[:dims-1], linewidth=1, label=f'{component}', color=colors_list[i])
+        sns.lineplot(x=num_of_dims, y=r2[:dims-1], linewidth=5, linestyle = '-.', marker = 'H', label=f'{component}', color=colors_list[i])
+        sns.despine()
+        
         plt.rcParams.update({'font.size': 22})
         plt.tick_params(axis='both', which='major', labelsize=28)
-       # plt.xlabel('Dimension')
-       # plt.ylabel('% Explained Variance')
-        plt.xlabel('')
-        plt.ylabel('')
+        ax.set_xlabel('Dimension', fontsize='large')
+        ax.set_ylabel('% Explained Variance', fontsize='large')
+        plt.title(plt_title)
+
+        #plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
+        #plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
+        #plt.rcParams.update({'font.size': 22})
+        #plt.tick_params(axis='both', which='major', labelsize=28)
+        #plt.xlabel('Dimension')
+        #plt.ylabel('% Explained Variance')
+        #plt.xlabel('')
+        #plt.ylabel('')
         #plt.title(plt_title)
         plt.ylim([0,1])
         plt.legend()
@@ -72,12 +82,12 @@ def metrics_comparison(type, dims, component_names, colors_list):
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
-            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/ae/derived/{component}_best_metrics.csv'
-            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/ae/derived/{component}_worst_metrics.csv'
+            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/modle_metrics/ae/best_worst/{component}_best_metrics.csv'
+            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/best_worst/{component}_worst_metrics.csv'
             plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_best_metrics.csv'
-            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_worst_metrics.csv'
+            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
+            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
             plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
@@ -165,7 +175,7 @@ def heatmap(component):
     annotations = df['city']
 
     # Read in whitelist of cities to graph
-    wlist_data = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/other/outliers_whitelist.csv')
+    wlist_data = pd.read_csv(filepath_or_buffer='/home/nick/github_repos/Pollution-Autoencoders/data/other/outliers_whitelist.csv')
     wlist = pd.DataFrame(data=wlist_data[:10])
     
     # Remove lat/lon
@@ -209,55 +219,53 @@ def heatmap(component):
     plt.show()
 
 def correlation(X_data_file, Y_data_file, component):
-    SIZE = 12
+    SIZE = 190
     
     # Read in normalized data
     norm_data = pd.read_csv(filepath_or_buffer=X_data_file)
-    # Read in encoded values
-    vec_data = pd.read_csv(filepath_or_buffer=Y_data_file)
+   
     X_matrix, Y_matrix = [], []
-    norm_labels = ['dim_{}'.format(i) for i in range(1, 50+1)]
-    #col_size = len(norm_data.columns) 
-
+    norm_labels = ['dim_{}'.format(i) for i in range(1, 190+1)]
+    
+    
     for i in range(SIZE):
-        X_feature = norm_data[norm_labels[i]][:SIZE]
-        Y_feature = vec_data[norm_labels[i]][:SIZE]
-        X_matrix.append(X_feature)
-        Y_matrix.append(Y_feature)
-    coefs = np.corrcoef(X_matrix, Y_matrix)
+        X_matrix.append(norm_data[norm_labels[i]][:])
+    
+    coefs = np.corrcoef(X_matrix)
     print(coefs.shape)
 
     mask = np.zeros_like(coefs)
     mask[np.triu_indices_from(mask)] = True
-
-    plt.subplots(figsize=(12,10))
+    plt.rcParams.update({'font.size': 18})
+    plt.subplots(figsize=(15,12))
+    plt.title(f'Correlation Matrix for {component}')
     # Seaborn style
     ax = sns.heatmap(
         coefs, 
         mask=mask,
         vmin=-1, vmax=1, center=0,
-        #cmap=sns.diverging_palette(20, 220, n=200),
         cmap='coolwarm',
+        xticklabels=15,
+        yticklabels=15,
         square=True
     )
-    
     ax.set_xticklabels(
         ax.get_xticklabels(),
         rotation=45,
         horizontalalignment='right'
-    );
+    )
 
     plt.show()
-
-    '''
+    
+    ''' Matplot traditional graph
     # Plot figure
     plt.rcParams.update({'font.size': 18})
     fig, ax = plt.subplots(figsize=(12,10))
     mat = ax.matshow(coefs)
 
     # Set ticks
-    ax.set_xticks(np.arange(50)) #np.arange(SIZE)
-    ax.set_yticks(np.arange(50))
+    ax.set_xticks(np.arange(190)) 
+    ax.set_yticks(np.arange(190))
     ax.set_xticklabels(norm_labels)
     ax.set_yticklabels(norm_labels)
     
@@ -272,17 +280,30 @@ def correlation(X_data_file, Y_data_file, component):
     plt.show()
     '''
 
+def linreg_r2scores():
+    plt.rcParams.update({'font.size': 18})
+    comps = ['co','no','no2','o3','so2','pm2_5','pm10','nh3']
+    vals = [0.65, 0.36, 0.56, 0.92, 0.48, 0.49, 0.59, 0.63]
+    
+    ax = sns.barplot(comps, vals, ci=None, palette='mako')
+    sns.despine()
+    plt.bar_label(ax.containers[0])
+    plt.title('Variance Scores of Unencoded Data')
+   
+    plt.show()
+
 ### Function Calls ###
 
-#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-COMPONENT_NAMES = ['co']
+COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
 DIMS = 190
-F_NAME = '/home/nicks/github_repos/Pollution-Autoencoders/data/model_metrics/'
-#linegraph(F_NAME, 'ae', DIMS, ['co'], COLORS_LIST)
-metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
+
+linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
+#metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
-#X_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
-#Y_DATA_FILE = '/home/nicks/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
+X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
 #correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
+#linreg_r2scores()

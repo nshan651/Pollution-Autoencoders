@@ -19,6 +19,44 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{GeoEmbeddings}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=d42ab81c9463df2097e8e97eb8e02b67}{%
+           family={Crivellari},
+           familyi={C\bibinitperiod},
+           given={Alessandro},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=18f440f52881eb83a4710ff9739a5c74}{%
+           family={Beinat},
+           familyi={B\bibinitperiod},
+           given={Euro},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c489e41c23146a863189677c390367b2}
+      \strng{fullhash}{c489e41c23146a863189677c390367b2}
+      \strng{bibnamehash}{c489e41c23146a863189677c390367b2}
+      \strng{authorbibnamehash}{c489e41c23146a863189677c390367b2}
+      \strng{authornamehash}{c489e41c23146a863189677c390367b2}
+      \strng{authorfullhash}{c489e41c23146a863189677c390367b2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ISPRS International Journal of Geo-Information}
+      \field{month}{03}
+      \field{title}{From Motion Activity to Geo-Embeddings: Generating and Exploring Vector Representations of Locations, Traces and Visitors through Large-Scale Mobility Data}
+      \field{volume}{8}
+      \field{year}{2019}
+      \field{pages}{134}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/ijgi8030134
+      \endverb
+    \endentry
     \entry{NAAQS09}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=de3b5f3f3e4dcccb9bdf618270327bf0}{%
@@ -44,91 +82,500 @@
       \field{title}{Carbon Monoxide NAAQS: Scope and Methods Plan for Health Risk and Exposure Assessment}
       \field{year}{2009}
     \endentry
-    \entry{Goodfellow16}{book}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=5d2585c11210cf1d4512e6e0a03ec315}{%
-           family={Goodfellow},
-           familyi={G\bibinitperiod},
-           given={Ian},
-           giveni={I\bibinitperiod},
+    \entry{CommutingFlowPrediction}{article}{}
+      \name{author}{6}{}{%
+        {{un=1,uniquepart=given,hash=5451dd68f07a72c458e389b0d58b641a}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Zhicheng},
+           giveni={Z\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=f8ce2f8cc2b860a19e7a2702f4dd84fa}{%
+           family={Miranda},
+           familyi={M\bibinitperiod},
+           given={Fabio},
+           giveni={F\bibinitperiod},
            givenun=0}}%
-        {{un=0,uniquepart=base,hash=40a8e4774982146adc2688546f54efb2}{%
-           family={Bengio},
-           familyi={B\bibinitperiod},
-           given={Yoshua},
-           giveni={Y\bibinitperiod},
+        {{un=0,uniquepart=base,hash=1a11c79233e9d82c920ce1acb28fa5ec}{%
+           family={Xiong},
+           familyi={X\bibinitperiod},
+           given={Weiting},
+           giveni={W\bibinitperiod},
            givenun=0}}%
-        {{un=0,uniquepart=base,hash=ccec1ccd2e1aa86960eb2e872c6b7020}{%
-           family={Courville},
-           familyi={C\bibinitperiod},
-           given={Aaron},
-           giveni={A\bibinitperiod},
+        {{un=0,uniquepart=base,hash=442ede2991aba4dc3d549706d973882b}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Junyan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1b91ed439957c72ebefb56f65a235ae9}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Qiao},
+           giveni={Q\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fdca0104e74a69f54198c0e554977578}{%
+           family={Silva},
+           familyi={S\bibinitperiod},
+           given={Claudio},
+           giveni={C\bibinitperiod},
            givenun=0}}%
       }
-      \list{publisher}{1}{%
-        {MIT Press}%
-      }
-      \strng{namehash}{3ae53fe582e8a815b118d26947eaa326}
-      \strng{fullhash}{3ae53fe582e8a815b118d26947eaa326}
-      \strng{bibnamehash}{3ae53fe582e8a815b118d26947eaa326}
-      \strng{authorbibnamehash}{3ae53fe582e8a815b118d26947eaa326}
-      \strng{authornamehash}{3ae53fe582e8a815b118d26947eaa326}
-      \strng{authorfullhash}{3ae53fe582e8a815b118d26947eaa326}
-      \field{sortinit}{G}
-      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \strng{namehash}{95ecf0986730bf62b628e41d0d4fe484}
+      \strng{fullhash}{de272929957fe8c4a0088c820dce98d1}
+      \strng{bibnamehash}{95ecf0986730bf62b628e41d0d4fe484}
+      \strng{authorbibnamehash}{95ecf0986730bf62b628e41d0d4fe484}
+      \strng{authornamehash}{95ecf0986730bf62b628e41d0d4fe484}
+      \strng{authorfullhash}{de272929957fe8c4a0088c820dce98d1}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{\url{http://www.deeplearningbook.org}}
-      \field{title}{Deep Learning}
-      \field{year}{2016}
+      \field{journaltitle}{Proceedings of the AAAI Conference on Artificial Intelligence}
+      \field{month}{4}
+      \field{number}{01}
+      \field{title}{Learning Geo-Contextual Embeddings for Commuting Flow Prediction}
+      \field{volume}{34}
+      \field{year}{2020}
+      \field{pages}{808\bibrangedash 816}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1609/aaai.v34i01.5425
+      \endverb
+      \verb{urlraw}
+      \verb https://ojs.aaai.org/index.php/AAAI/article/view/5425
+      \endverb
+      \verb{url}
+      \verb https://ojs.aaai.org/index.php/AAAI/article/view/5425
+      \endverb
     \endentry
-    \entry{Wang19}{article}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=b2eccb185095fccfeb40fdffd8b2105f}{%
-           family={Wang},
-           familyi={W\bibinitperiod},
-           given={Yu},
+    \entry{DisentangledLocationEmbeddings}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=894dc7138d363316633afa8556b0b7cf}{%
+           family={Ouyang},
+           familyi={O\bibinitperiod},
+           given={Kun},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3fae8d744697d02705e16e955714a9e0}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={Yuxuan},
            giveni={Y\bibinitperiod},
            givenun=0}}%
-        {{un=0,uniquepart=base,hash=03c5816e75d6a70697a75cc5d3e184d2}{%
-           family={Yao},
+        {{un=0,uniquepart=base,hash=85c089c8214528c9323c49e380b773c7}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ye},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7e822c9479033f6d9ee45718122c9d28}{%
+           family={Rosenblum},
+           familyi={R\bibinitperiod},
+           given={David\bibnamedelima S.},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=41ad28f2021c61fad6fb4f27c5102217}{%
+           family={Yang},
            familyi={Y\bibinitperiod},
-           given={Chengye},
-           giveni={C\bibinitperiod},
+           given={Wenzhuo},
+           giveni={W\bibinitperiod},
            givenun=0}}%
-        {{un=0,uniquepart=base,hash=38a17359db2f4fc7444ba94263768ed8}{%
-           family={Xu},
-           familyi={X\bibinitperiod},
-           given={Chengzhong},
-           giveni={C\bibinitperiod},
+      }
+      \strng{namehash}{70202f517b397d7b1a1dc751917f319a}
+      \strng{fullhash}{7298cd369946aa9feeb9090e61eec578}
+      \strng{bibnamehash}{70202f517b397d7b1a1dc751917f319a}
+      \strng{authorbibnamehash}{70202f517b397d7b1a1dc751917f319a}
+      \strng{authornamehash}{70202f517b397d7b1a1dc751917f319a}
+      \strng{authorfullhash}{7298cd369946aa9feeb9090e61eec578}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2020 International Joint Conference on Neural Networks (IJCNN)}
+      \field{title}{Unsupervised Learning of Disentangled Location Embeddings}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 8}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/IJCNN48605.2020.9207324
+      \endverb
+    \endentry
+    \entry{Trunk79}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=30c58edd0c73a3e602306bc7076ac74c}{%
+           family={Trunk},
+           familyi={T\bibinitperiod},
+           given={G.\bibnamedelimi V.},
+           giveni={G\bibinitperiod\bibinitdelim V\bibinitperiod},
            givenun=0}}%
-        {{un=0,uniquepart=base,hash=38026ba4ee6b102b47bf3ffb41325c8f}{%
-           family={al.},
-           familyi={a\bibinitperiod},
-           prefix={et},
-           prefixi={e\bibinitperiod},
-           prefixun=0}}%
+      }
+      \strng{namehash}{30c58edd0c73a3e602306bc7076ac74c}
+      \strng{fullhash}{30c58edd0c73a3e602306bc7076ac74c}
+      \strng{bibnamehash}{30c58edd0c73a3e602306bc7076ac74c}
+      \strng{authorbibnamehash}{30c58edd0c73a3e602306bc7076ac74c}
+      \strng{authornamehash}{30c58edd0c73a3e602306bc7076ac74c}
+      \strng{authorfullhash}{30c58edd0c73a3e602306bc7076ac74c}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
+      \field{note}{\url{https://ieeexplore.ieee.org/document/4766926}}
+      \field{number}{3}
+      \field{title}{A Problem of Dimensionality: A Simple Example}
+      \field{volume}{PAMI-1}
+      \field{year}{1979}
+      \field{pages}{306\bibrangedash 307}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1109/TPAMI.1979.4766926
+      \endverb
+    \endentry
+    \entry{GeotaggedTweets}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=446dbaa550b254673e8cd24cdaaf74e0}{%
+           family={Wei},
+           familyi={W\bibinitperiod},
+           given={Hong},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7ac510aa1c5de666dfdc9facfc11f494}{%
+           family={Anjaria},
+           familyi={A\bibinitperiod},
+           given={Janit},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=78da52600a4b819c3df311320ebf2a24}{%
+           family={Samet},
+           familyi={S\bibinitperiod},
+           given={Hanan},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Chicago, IL, USA}%
       }
       \list{publisher}{1}{%
-        {Environ Health}%
+        {Association for Computing Machinery}%
       }
-      \strng{namehash}{732f5c87479ec410ccda984af68db0bf}
-      \strng{fullhash}{3dc4e785fe243e22073fd329caf4dfad}
-      \strng{bibnamehash}{732f5c87479ec410ccda984af68db0bf}
-      \strng{authorbibnamehash}{732f5c87479ec410ccda984af68db0bf}
-      \strng{authornamehash}{732f5c87479ec410ccda984af68db0bf}
-      \strng{authorfullhash}{3dc4e785fe243e22073fd329caf4dfad}
+      \strng{namehash}{09645f2cd3d56f51879d26f61470bb77}
+      \strng{fullhash}{09645f2cd3d56f51879d26f61470bb77}
+      \strng{bibnamehash}{09645f2cd3d56f51879d26f61470bb77}
+      \strng{authorbibnamehash}{09645f2cd3d56f51879d26f61470bb77}
+      \strng{authornamehash}{09645f2cd3d56f51879d26f61470bb77}
+      \strng{authorfullhash}{09645f2cd3d56f51879d26f61470bb77}
       \field{sortinit}{W}
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{\url{https://ehjournal.biomedcentral.com/articles/10.1186/s12940-019-0477-3}}
-      \field{title}{Carbon Monoxide and risk of outpatient visits due to cause-specific diseases}
+      \field{booktitle}{Proceedings of the 27th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems}
+      \field{isbn}{9781450369091}
+      \field{series}{SIGSPATIAL '19}
+      \field{title}{Learning Embeddings of Spatial, Textual and Temporal Entities in Geotagged Tweets}
       \field{year}{2019}
+      \field{pages}{484\bibrangedash 487}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1145/3347146.3359108
+      \endverb
+      \verb{urlraw}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3347146.3359108
+      \endverb
+      \verb{url}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3347146.3359108
+      \endverb
+      \keyw{Embeddings,Random Walking,Geotagged Tweets,Spatial Clustering,Cross-Modal Search,Twitter}
+    \endentry
+    \entry{Venue2Vec}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=d937971b587d7b6c271821f3cc9b71c8}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Shuai},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a55e19bfb453a7fde4e998fa53971626}{%
+           family={Cao},
+           familyi={C\bibinitperiod},
+           given={Jiuxin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3343884ec988ac9a38f5502ea484ce11}{%
+           family={Legg},
+           familyi={L\bibinitperiod},
+           given={Phil},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fa97927921a403cfe822973e31081dca}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1a13d292f4175bf3e1ced3d3fdc321b4}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Shancang},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5cc07bb0716c274f5c091d5f6434e336}
+      \strng{fullhash}{21450b3f73297397008b55954e029a71}
+      \strng{bibnamehash}{5cc07bb0716c274f5c091d5f6434e336}
+      \strng{authorbibnamehash}{5cc07bb0716c274f5c091d5f6434e336}
+      \strng{authornamehash}{5cc07bb0716c274f5c091d5f6434e336}
+      \strng{authorfullhash}{21450b3f73297397008b55954e029a71}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Systems Journal}
+      \field{number}{2}
+      \field{title}{Venue2Vec: An Efficient Embedding Model for Fine-Grained User Location Prediction in Geo-Social Networks}
+      \field{volume}{14}
+      \field{year}{2020}
+      \field{pages}{1740\bibrangedash 1751}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/JSYST.2019.2913080
+      \endverb
+    \endentry
+    \entry{PlaceDeduplication}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=1eae00cb583e941d0d1d59f23e11f581}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Carl},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cc689ec5957f9c1b58286b8f65ff811e}{%
+           family={Hoang},
+           familyi={H\bibinitperiod},
+           given={Do\bibnamedelima Huy},
+           giveni={D\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a2d359b12ca2fadf0b40136a73f021bb}{%
+           family={Mikolov},
+           familyi={M\bibinitperiod},
+           given={Tomas},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7cacfe272c4d395c979d6aecd2f5ec9c}{%
+           family={Han},
+           familyi={H\bibinitperiod},
+           given={Jiawei},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, CA, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{758805c89e3a02eece4d49186714ed45}
+      \strng{fullhash}{776a1a1a39f383a866aee50e70e580e9}
+      \strng{bibnamehash}{758805c89e3a02eece4d49186714ed45}
+      \strng{authorbibnamehash}{758805c89e3a02eece4d49186714ed45}
+      \strng{authornamehash}{758805c89e3a02eece4d49186714ed45}
+      \strng{authorfullhash}{776a1a1a39f383a866aee50e70e580e9}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The World Wide Web Conference}
+      \field{isbn}{9781450366748}
+      \field{series}{WWW '19}
+      \field{title}{Place Deduplication with Embeddings}
+      \field{year}{2019}
+      \field{pages}{3420\bibrangedash 3426}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1145/3308558.3313456
+      \endverb
+      \verb{urlraw}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3308558.3313456
+      \endverb
+      \verb{url}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3308558.3313456
+      \endverb
+      \keyw{metric learning,place deduplication,feature generation}
+    \endentry
+    \entry{GPS2Vec}{inproceedings}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=482f37caedd1d806ba9cf7b96a1ff579}{%
+           family={Yin},
+           familyi={Y\bibinitperiod},
+           given={Yifang},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc64d51812a020d69b3e68fbee1286c5}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Zhenguang},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f5acec98b29ee91fa6b08b85a6a0adad}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Ying},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6bf0d8a8573aa1ba9713d0e20811cdb7}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Sheng},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=679fb4545b45980206977c294e19634b}{%
+           family={Shah},
+           familyi={S\bibinitperiod},
+           given={Rajiv\bibnamedelima Ratn},
+           giveni={R\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f27e72e20246f57f530b3a80f3393661}{%
+           family={Zimmermann},
+           familyi={Z\bibinitperiod},
+           given={Roger},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Chicago, IL, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{29c14e459ab5f75b9a342f8c01d93fbc}
+      \strng{fullhash}{aa37658bcb01724deb97df0242263526}
+      \strng{bibnamehash}{29c14e459ab5f75b9a342f8c01d93fbc}
+      \strng{authorbibnamehash}{29c14e459ab5f75b9a342f8c01d93fbc}
+      \strng{authornamehash}{29c14e459ab5f75b9a342f8c01d93fbc}
+      \strng{authorfullhash}{aa37658bcb01724deb97df0242263526}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 27th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems}
+      \field{isbn}{9781450369091}
+      \field{series}{SIGSPATIAL '19}
+      \field{title}{GPS2Vec: Towards Generating Worldwide GPS Embeddings}
+      \field{year}{2019}
+      \field{pages}{416\bibrangedash 419}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1145/3347146.3359067
+      \endverb
+      \verb{urlraw}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3347146.3359067
+      \endverb
+      \verb{url}
+      \verb https://doi-org.libproxy.library.unt.edu/10.1145/3347146.3359067
+      \endverb
+      \keyw{semantic embedding,neural networks,GPS}
+    \endentry
+    \entry{featureredundancy}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2c466f963663fac7a97926815c50fa18}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=a83f8cd28a9f36e43dd5d017cd7fc8f4}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Huan},
+           giveni={H\bibinitperiod},
+           givenun=1}}%
+      }
+      \list{location}{1}{%
+        {Washington, D.C.}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{d6aee52deb46815a947d621118dfb12d}
+      \strng{fullhash}{d6aee52deb46815a947d621118dfb12d}
+      \strng{bibnamehash}{d6aee52deb46815a947d621118dfb12d}
+      \strng{authorbibnamehash}{d6aee52deb46815a947d621118dfb12d}
+      \strng{authornamehash}{d6aee52deb46815a947d621118dfb12d}
+      \strng{authorfullhash}{d6aee52deb46815a947d621118dfb12d}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{High-dimensional data poses a severe challenge for data mining. Feature selection is a frequently used technique in pre-processing high-dimensional data for successful data mining. Traditionally, feature selection is focused on removing irrelevant features. However, for high-dimensional data, removing redundant features is equally critical. In this paper, we provide a study of feature redundancy in high-dimensional data and propose a novel correlation-based approach to feature selection within the filter model. The extensive empirical study using real-world data shows that the proposed approach is efficient and effective in removing redundant and irrelevant features.}
+      \field{booktitle}{Proceedings of the Ninth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}
+      \field{isbn}{1581137370}
+      \field{series}{KDD '03}
+      \field{title}{Efficiently Handling Feature Redundancy in High-Dimensional Data}
+      \field{year}{2003}
+      \field{pages}{685\bibrangedash 690}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1145/956750.956840
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/956750.956840
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/956750.956840
+      \endverb
+      \keyw{high-dimensional data,redundancy,feature selection}
+    \endentry
+    \entry{DeepMove}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2ba74e19a950c5a40b85cc136538f42b}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c85126decc8fb002d0c215d2a31a306d}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Yan},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \strng{fullhash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \strng{bibnamehash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \strng{authorbibnamehash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \strng{authornamehash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \strng{authorfullhash}{f8f2d96b66b224cd20d860ca8cf26aa1}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2018 IEEE International Conference on Big Data (Big Data)}
+      \field{title}{DeepMove: Learning Place Representations through Large Scale Movement Data}
+      \field{year}{2018}
+      \field{pages}{2403\bibrangedash 2412}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/BigData.2018.8622444
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

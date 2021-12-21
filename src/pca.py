@@ -84,17 +84,21 @@ def pca_train_test(dims, x, y, folds, component):
                 f.close() 
 
 
-# TODO: FIX THIS MONSTROSITY!!!!!
-def interpolate(component):
+def interpolate(dims, component):
     ''' Function to derive the best and worst fold for a given dimension '''
 
-    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/{component}_test_metrics.csv')
+    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics')
     # Outputs
-    best_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_best_metrics.csv'
-    worst_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/test_metrics/pca/derived/{component}_worst_metrics.csv'
+    best_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
+    worst_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
     # Lists to write to file
     best_list=worst_list=['dim', 'variance', 'r2']
 
+    # Debug
+    #print('dim 1 ', df['variance'][0])
+    #print('dim 190 ', df['variance'][189])
+
+    
     # Write headers for best and worst metrics
     with open(best_metrics,'w', newline='') as f:
         writer = csv.writer(f)
@@ -104,15 +108,18 @@ def interpolate(component):
         writer = csv.writer(f)
         writer.writerow(worst_list)
         f.close() 
+    
 
-    for i in range(189):
+    # Fold range that describes indexes of all dimensions
+   
+    for i in range(dims):
         # Reset best and worst variance and index for every dim
         best_var, worst_var = 0, 100
         best_idx=worst_idx=0
 
         # Retrieve a dict of each fold's variance for a given dimension
-        fold_var = { i : df['variance'][i], i+189 : df['variance'][i+189], i+378 : df['variance'][i+378], 
-            i+567 : df['variance'][i+567], i+756 : df['variance'][i+756] }
+        fold_var = { i : df['variance'][i], i+dims : df['variance'][i+dims], i+(dims*2) : df['variance'][i+(dims*2)], 
+            i+(dims*3) : df['variance'][i+(dims*3)], i+(dims*4): df['variance'][i+(dims*4)] }
         
         # Search through the values for each given dim
         for key, val in fold_var.items():
@@ -124,11 +131,12 @@ def interpolate(component):
                 worst_idx=key
 
         # Save dim, variance, and r2 scores
-        best_list = [i+2, df['variance'][best_idx], df['r2'][best_idx]]
-        worst_list = [i+2, df['variance'][worst_idx], df['r2'][worst_idx]]
-        print(f'Best fold for dim {i+2} has a score of {best_var}')
-        print(f'Worst fold for dim {i+2} has a score of {worst_var}\n') 
+        best_list = [i+1, df['variance'][best_idx], df['r2'][best_idx]]
+        worst_list = [i+1, df['variance'][worst_idx], df['r2'][worst_idx]]
+        print(f'Best fold for dim {i+1} has a score of {best_var}')
+        print(f'Worst fold for dim {i+1} has a score of {worst_var}\n') 
 
+        
         # Write values
         with open(best_metrics,'a', newline='') as f:
             writer = csv.writer(f)
@@ -138,7 +146,7 @@ def interpolate(component):
             writer = csv.writer(f)
             writer.writerow(worst_list)
             f.close() 
-            
+           
 
 def pca_run(dim, X, X_train, Y_train, component, cities):
     ''' 
@@ -175,32 +183,46 @@ def main():
     ''' Set up soures and constants, call functions as needed '''
     
     ### Constants ###
-    #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+    component_names = ['co','no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
     component_test = 'co'
     # Starting dimensions
-    dims = 50
+    dims = 190
     # K-fold folds
     folds = 5
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    #dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    #dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
     # City names to append
-    cities = dfy['city'].values
+    #cities = dfy['city'].values
     
     # Set x as the normalized values, y (non-normalized) as the daily average of final day
-    X = dfx.values
-    Y = dfy.loc[:, ['co_2021_06_06']].values
+    #X = dfx.values
+    #Y = dfy.loc[:, ['co_2021_06_06']].values
     # Split into train/test data
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
+    #X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
     ### Function calls ###
+    #interpolate(dims, component_test)
+    #for component in component_names:
+    #    interpolate(dims, component)
+    #    pca_train_test(dims, X, Y, folds, component)
+    #pca_run(dims, X, X_train, Y_train, component_test, cities)
+    
+    for component in component_names:
+        # Open normalized data and dependent, non-normalized data
+        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
+        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+        cities = dfy['city'].values
 
-    #pca_train_test(dims, X, Y, folds, component_test)
-    pca_run(dims, X, X_train, Y_train, component_test, cities)
-    #linreg.regression(X_train, X_test, Y_train, Y_test)
-
+        X = dfx.values
+        Y = dfy.loc[:, [f'{component}_2021_06_06']].values
+        # Split into train/test data
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
+        print(f'\n{component}')
+        variance, r2 = linreg.regression(X_train, X_test, Y_train, Y_test)
+        
 
 if __name__ == '__main__':
     main()

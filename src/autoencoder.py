@@ -74,7 +74,7 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
         param_grid: List of key hyperparameters to test 
     '''
 
-    # Metrics file
+    # Metrics file to write to
     file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics'
     # Train Autoencoder model
     variance_list = []
@@ -164,12 +164,13 @@ def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
     vector_data.to_csv(path_or_buf=vec_file, index=None)
 
 
-def grid_search(x, y, folds, component, iter_dims, key_params):
+def grid_search(file_name, x, y, folds, component, iter_dims, key_params):
     '''
     Run the linear regression for a single gas
     using k-fold cross validation strategy
 
     @params:
+        file_name: The output file two write the gs results to
         x: The normalized x values to be used in the embedding
         y: The dependent variable
         folds: Number of folds to test
@@ -179,7 +180,6 @@ def grid_search(x, y, folds, component, iter_dims, key_params):
         batch: Batch size
         epochs: Number of epochs        
         iter_dims: Key dimensions to perform the grid search on
-        key_params: list of key parameters to test
     '''
 
     print(f'---------- Beginning Linear Regression for {component} ----------')
@@ -187,13 +187,11 @@ def grid_search(x, y, folds, component, iter_dims, key_params):
     # k-fold cross validation
     kfold = KFold(n_splits=folds, shuffle=True, random_state=10)
     fold_count=0
-    # File name
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_vec.csv'
     
     # Headers for grid search
     grid_list = ['fold', 'dim', 'variance', 'r2', 'lr', 'batch', 'epochs']
     # Write header
-    with open(file_name,'w', newline='') as f:
+    with open(file_name,'w+', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(grid_list)
         f.close() 
@@ -216,9 +214,9 @@ def grid_search(x, y, folds, component, iter_dims, key_params):
                     Y_train=Y_train,
                     component=component,
                     activation=('tanh', 'tanh'),
-                    lr=lr, 
-                    batch=batch,
-                    epochs=epochs
+                    lr=vec[0], 
+                    batch=vec[1],
+                    epochs=vec[2]
                 )
 
                 # Encode test data
@@ -245,9 +243,9 @@ def main():
     
     ### Constants ###
     #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-    component_test = 'co'
+    component_test = 'o3'
     # Starting dimensions
-    dims = 50
+    dims = 190
     # K-fold folds
     folds = 5
     # Grid search params
@@ -257,28 +255,37 @@ def main():
     # Param vector
     key_params = list(itertools.product(lr,batch,epochs))
     # List of key dimensions to perform grid search on
-    iter_dims = np.arange(1, 11, 1)
+    #iter_dims = np.append(np.arange(1, 10, 1), np.arange(10, 120, 10))
+    iter_dims = np.arange(1,10,1)
+    #iter_dims = np.arange(10,121,10)
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component_test}_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component_test}_data_clean.csv")
     # City names to append
     cities = dfy['city'].values
-    # Grid params to create model with
-    param_grid = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
     
     # Set x as the normalized values, y (non-normalized) as the daily average of final day
     X = dfx.values
-    Y = dfy.loc[:, ['co_2021_06_06']].values
+    Y = dfy.loc[:, [f'{component_test}_2021_06_06']].values
     # Split into train/test data
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
     ### Function calls ###
 
-    #grid_search(X, Y, folds, 'co', iter_dims, key_params)
+    ## Grid Search
+    output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_1_9.csv'
+    grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
+
+    ## Model Training
+    #param_grid = pd.read_csv(f'./data/hyperparams/{component_test}_hyperparams.csv')
     #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
+
+    ## Run Model
     #ae_run(dims, X, X_train, Y_train, 0.01, 64, 75, component_test, cities)
+
+    ## Regression Test
     #linreg.regression(X_train, X_test, Y_train, Y_test)
 
 

@@ -1,15 +1,17 @@
-[0] Config.pm:312> INFO - This is Biber 2.15
-[0] Config.pm:315> INFO - Logfile is 'paper.blg'
-[60] biber:330> INFO - === Mon Jul 19, 2021, 12:23:18
+[0] Config.pm:311> INFO - This is Biber 2.16
+[0] Config.pm:314> INFO - Logfile is 'paper.blg'
+[59] biber:340> INFO - === Tue Dec 21, 2021, 09:55:38
 [70] Biber.pm:415> INFO - Reading 'paper.bcf'
-[123] Biber.pm:952> INFO - Found 3 citekeys in bib section 0
-[134] Biber.pm:4334> INFO - Processing section 0
-[142] Biber.pm:4523> INFO - Looking for bibtex format file 'ref.bib' for section 0
-[142] bibtex.pm:1682> INFO - LaTeX decoding ...
-[147] bibtex.pm:1494> INFO - Found BibTeX data source 'ref.bib'
-[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[189] Biber.pm:4162> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[189] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
-[192] bbl.pm:651> INFO - Writing 'paper.bbl' with encoding 'UTF-8'
-[194] bbl.pm:754> INFO - Output to paper.bbl
+[122] Biber.pm:952> INFO - Found 11 citekeys in bib section 0
+[133] Biber.pm:4340> INFO - Processing section 0
+[141] Biber.pm:4531> INFO - Looking for bibtex format file 'ref.bib' for section 0
+[143] bibtex.pm:1689> INFO - LaTeX decoding ...
+[159] bibtex.pm:1494> INFO - Found BibTeX data source 'ref.bib'
+[243] Utils.pm:395> WARN - legacy month field 'Apr.' in entry 'CommutingFlowPrediction' is not an integer - this will probably not sort properly.
+[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[265] Biber.pm:4168> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[265] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-US'
+[278] bbl.pm:654> INFO - Writing 'paper.bbl' with encoding 'UTF-8'
+[287] bbl.pm:757> INFO - Output to paper.bbl
+[287] Biber.pm:128> INFO - WARNINGS: 1
