@@ -184,7 +184,21 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
 \subsection{Autoencoder Model}
 \par The autoencoder model used consists of a single encoded and decoded layer. The data was split into a train and test set at the beginning of the testing cycle, and was further separated into a validation set for each given dimension. The validation set was essential for updating the model weights after every epoch. After the model was trained and validated, we created the finalized embeddings using the full dataset. We created embeddings for several of the most significant dimensions based off their increase in explained variance scores.
 
-\subsubsection{Model Validation}
+\begin{table}[h!]
+    \caption{Model Splits}
+    \label{tab:table1}
+    \vspace{0.1cm}
+    \begin{tabular}{p{4cm}p{7cm}}
+        \hline
+        \multicolumn{2}{c}{Constant Hyperparameters}\\
+        \hline
+        Training Size & 14,080\\
+        Testing Size & 3,705\\
+        Validation Size & 741\\
+        Total Size & 18,526\\
+        \hline
+    \end{tabular}
+\end{table}
 \par A grid search was performed for each model to determine the optimal hyperparameters. The following hyperparameters were tested:
 \begin{itemize}
     \item \textit{Learning Rate:} 0.0001, 0.001, 0.01, 0.1
@@ -328,6 +342,8 @@ the model characterizes each city
 \par By selecting from a list the top two hundred most highly-populated cities in the US, we found that nearly all of them were located near the center of the clustering. Conversely, we found that many of the outliers were smaller cities in rural locations. 
 
 \section{Discussion}
+
+Although the model provides insights on the most succinct features that characterize urban air pollution, more specific external data is needed to uncover these features. One study \parencite{Bai2019} uses a stacked autoencoder approach and focuses on the seasonality of pm2.5 levels. The proposed model considers both the seasonality and temporality of pm2.5 levels and supporting meteorological data. The research group was able to accurately predict the pm2.5 levels to the hour for a given season.
 
 \section{Conclusion}
 

@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import itertools
+import pyparsing
+from mpl_toolkits import mplot3d
 
 
 def linegraph(type, dims, component_names, colors_list):
@@ -117,56 +119,6 @@ def metrics_comparison(type, dims, component_names, colors_list):
         plt.legend()
     plt.show()
 
-def scatter(f_name, type, component, color):
-    '''
-    Autoencoder scatter plot of multiple components for the first two dimensions
-
-    @params:
-        f_name: Name of the file
-        component: Name of gas or particulate
-        color: Scatter plot color
-    '''
-
-    # Read in X_train values for first two dimensions from model results
-    if type == 'ae':
-        file_name = '%s/autoencoders/trail1/%s_ae_results_gs.csv' % (f_name, component)
-    elif type == 'pca':
-        file_name = '%s/autoencoders/trial1/%s_pca_results_gs.csv' % (f_name, component)
-    else:
-        print('Type must be "ae" or "pca"')
-        quit()
-
-    model = pd.read_csv(filepath_or_buffer=file_name)
-    X_train = pd.DataFrame(data=model)
-    X = X_train['{}_X_train_ax1'.format(component)]
-    Y = X_train['{}_X_train_ax2'.format(component)]
-
-    # Read in city data frame and select list of cities
-    city_df = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
-    annotations = pd.DataFrame(data=city_df)
-   
-    # Read in whitelisted city data
-    # Whitelist can be top200 cities or the outliers
-    wlist_data = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/other/top200.csv')
-    wlist = pd.DataFrame(data=wlist_data[:20])
-    
-    # Plot figure
-    plt.figure(figsize=(14,14))
-    plt.rcParams.update({'font.size': 18})
-    plt.scatter(X, Y, label='{}'.format(component), c=color, alpha=0.1)
-
-    size = len(X_train)
-    plt.title('Carbon Monoxide Autoencoder in First Two Dimensions')
-    '''
-    # Annotate points (ad hoc)
-    for i in range(size):
-        for j in range(len(wlist)):
-            if annotations.iloc[i][0] == wlist.iloc[j][0]:
-                print(annotations.iloc[i][0])
-                plt.annotate(text=annotations.iloc[i][0], xy=(X[i],Y[i]))
-    '''
-    plt.show()
-
 
 def heatmap(component):
     # Read in component data and create an annotation list of cities
@@ -257,28 +209,123 @@ def correlation(X_data_file, Y_data_file, component):
 
     plt.show()
     
-    ''' Matplot traditional graph
-    # Plot figure
-    plt.rcParams.update({'font.size': 18})
-    fig, ax = plt.subplots(figsize=(12,10))
-    mat = ax.matshow(coefs)
 
-    # Set ticks
-    ax.set_xticks(np.arange(190)) 
-    ax.set_yticks(np.arange(190))
-    ax.set_xticklabels(norm_labels)
-    ax.set_yticklabels(norm_labels)
+def scatter(component):
+    '''
+    Autoencoder scatter plot of multiple components for the first two dimensions
+
+    @params:
+        f_name: Name of the file
+        component: Name of gas or particulate
+        color: Scatter plot color
+    '''
+
+    plt.rcParams.update({'font.size': 14})
+    df = pd.read_csv(f'./data/vec/{component}_vec_2.csv')
     
-    # Show every Nth label
-    for i in range(len(norm_labels)):
-        if i % 5 != 0:
-            norm_labels[i] = ''
-        ax.set_xticklabels(norm_labels)
-        ax.set_yticklabels(norm_labels)
-    fig.colorbar(mat)
-    plt.title('Correlation Matrix for {}'.format(component))
+    # whitelist labels
+    wlist = ['RedWing', 'NewYork', 'LosAngeles', 'Chicago']
+    #wlist = ['RedWing']
+
+    # 2 encoded dims
+    x = df['dim_1']
+    y = df['dim_2']
+
+    fig = plt.figure(figsize = (10,7))
+    ax = plt.axes()
+
+    # Creating color map
+    cmap = plt.get_cmap('hot')
+    sct = ax.scatter(x, y, cmap=cmap, c=(x+y), alpha=0.5)
+    ax.set_xlabel('dim_1')
+    ax.set_ylabel('dim_2')
+    fig.colorbar(sct, ax = ax, shrink = 0.5, aspect = 5)
+    plt.title(f'3D Scatter of latent dims for {component}')
+
+    # Ad hoc annotations
+    for i, city in enumerate(df['city']):
+        for target in wlist:
+            if city == target:
+                print(city)
+                plt.annotate(text=city, xy=(x[i],y[i]))
+    plt.show()
+
+    '''
+    # Read in X_train values for first two dimensions from model results
+    if type == 'ae':
+        file_name = '%s/autoencoders/trail1/%s_ae_results_gs.csv' % (f_name, component)
+    elif type == 'pca':
+        file_name = '%s/autoencoders/trial1/%s_pca_results_gs.csv' % (f_name, component)
+    else:
+        print('Type must be "ae" or "pca"')
+        quit()
+
+    model = pd.read_csv(filepath_or_buffer=file_name)
+    X_train = pd.DataFrame(data=model)
+    X = X_train['{}_X_train_ax1'.format(component)]
+    Y = X_train['{}_X_train_ax2'.format(component)]
+
+    # Read in city data frame and select list of cities
+    city_df = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
+    annotations = pd.DataFrame(data=city_df)
+   
+    # Read in whitelisted city data
+    # Whitelist can be top200 cities or the outliers
+    wlist_data = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/other/top200.csv')
+    wlist = pd.DataFrame(data=wlist_data[:20])
+    
+    # Plot figure
+    plt.figure(figsize=(14,14))
+    plt.rcParams.update({'font.size': 18})
+    plt.scatter(X, Y, label='{}'.format(component), c=color, alpha=0.1)
+
+    size = len(X_train)
+    plt.title('Carbon Monoxide Autoencoder in First Two Dimensions')
+    
+    # Annotate points (ad hoc)
+    for i in range(size):
+        for j in range(len(wlist)):
+            if annotations.iloc[i][0] == wlist.iloc[j][0]:
+                print(annotations.iloc[i][0])
+                plt.annotate(text=annotations.iloc[i][0], xy=(X[i],Y[i]))
     plt.show()
     '''
+    
+
+
+def scatter3D(component):
+    plt.rcParams.update({'font.size': 14})
+    df = pd.read_csv(f'./data/vec/{component}_vec_3.csv')
+    
+    # whitelist labels
+    wlist = ['RedWing', 'NewYork', 'LosAngeles', 'Chicago']
+    #wlist = ['RedWing']
+    # 3 encoded dims
+    x = df['dim_1']
+    y = df['dim_2']
+    z = df['dim_3']
+
+    fig = plt.figure(figsize = (10,7))
+    ax = plt.axes(projection = '3d')
+
+    # Creating color map
+    cmap = plt.get_cmap('hot')
+    #ax.scatter3D(df['dim_1'], df['dim_2'], df['dim_3'], color = 'g')
+    sct = ax.scatter3D(x, y, z, cmap=cmap, c=(x+y+z), alpha=0.4)
+    ax.set_xlabel('dim_1')
+    ax.set_ylabel('dim_2')
+    ax.set_zlabel('dim_3')
+    fig.colorbar(sct, ax = ax, shrink = 0.5, aspect = 5)
+    plt.title(f'3D Scatter of latent dims for {component}')
+
+    # Ad hoc annotations
+    for i, city in enumerate(df['city']):
+        for target in wlist:
+            if city == target:
+                print(city)
+                plt.annotate(text=city, xy=(x[i],y[i]))
+    plt.show()
+
 
 def linreg_r2scores():
     plt.rcParams.update({'font.size': 18})
@@ -300,10 +347,12 @@ COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', '
 # Starting dimensions; Change this to edit
 DIMS = 190
 
-linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
+#linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
-X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
-Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
+#X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+#Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
 #correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
 #linreg_r2scores()
+#scatter3D('o3')
+scatter('o3')

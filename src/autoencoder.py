@@ -124,7 +124,7 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
     metrics_data.to_csv(path_or_buf=file_name, index=False)
 
 
-def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
+def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, cities):
     '''
     Run the autoencoder model by performing a cross-validated linear
     regression on the encoded data
@@ -149,9 +149,9 @@ def ae_run(dim, X, X_train, Y_train, lr, batch, epochs, component, cities):
         Y_train=Y_train,
         component=component,
         activation=('tanh', 'tanh'),
-        lr=lr, 
-        batch=batch,
-        epochs=epochs
+        lr=optimal_hyperparams['lr'][dim], 
+        batch=optimal_hyperparams['batch'][dim],
+        epochs=optimal_hyperparams['epochs'][dim]
     )
    
     # Create encoded data based off full dataset
@@ -245,7 +245,7 @@ def main():
     #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
     component_test = 'o3'
     # Starting dimensions
-    dims = 190
+    dims = 2
     # K-fold folds
     folds = 5
     # Grid search params
@@ -256,8 +256,8 @@ def main():
     key_params = list(itertools.product(lr,batch,epochs))
     # List of key dimensions to perform grid search on
     #iter_dims = np.append(np.arange(1, 10, 1), np.arange(10, 120, 10))
-    iter_dims = np.arange(1,10,1)
-    #iter_dims = np.arange(10,121,10)
+    #iter_dims = np.arange(1,10,1)
+    iter_dims = np.arange(10,121,10)
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
@@ -275,15 +275,16 @@ def main():
     ### Function calls ###
 
     ## Grid Search
-    output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_1_9.csv'
-    grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
+    #output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_10_120.csv'
+    #grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
 
     ## Model Training
-    #param_grid = pd.read_csv(f'./data/hyperparams/{component_test}_hyperparams.csv')
+    #param_grid = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
     #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
 
     ## Run Model
-    #ae_run(dims, X, X_train, Y_train, 0.01, 64, 75, component_test, cities)
+    optimal_hyperparams = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
+    ae_run(dims, X, X_train, Y_train, optimal_hyperparams, component_test, cities)
 
     ## Regression Test
     #linreg.regression(X_train, X_test, Y_train, Y_test)
