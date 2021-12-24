@@ -2,6 +2,7 @@ import pandas as pd
 import googlemaps
 import urllib.request
 import json
+import keys
 #import dotenv
 
 # Reverse GeoCoding to populate data with state/country codes
@@ -33,7 +34,7 @@ def rev_geo(lat, lon, key):
         rev_geo_data = None
     return (state_code, country_code)
 
-KEY = 'AIzaSyCZr4o4NiY5tKHlWNVTh9ExeiKQ_O35UMc'
+KEY = key.GMAPS_KEY
 #LAT = 30.2671500
 #LON = -97.7430600
 component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
