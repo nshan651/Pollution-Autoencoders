@@ -243,9 +243,9 @@ def main():
     
     ### Constants ###
     #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-    component_test = 'o3'
+    component_test = 'nh3'
     # Starting dimensions
-    dims = 2
+    dims = 190
     # K-fold folds
     folds = 5
     # Grid search params
@@ -256,8 +256,8 @@ def main():
     key_params = list(itertools.product(lr,batch,epochs))
     # List of key dimensions to perform grid search on
     #iter_dims = np.append(np.arange(1, 10, 1), np.arange(10, 120, 10))
-    #iter_dims = np.arange(1,10,1)
-    iter_dims = np.arange(10,121,10)
+    iter_dims = np.arange(1,10,1)
+    #iter_dims = np.arange(10,121,10)
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
@@ -275,16 +275,16 @@ def main():
     ### Function calls ###
 
     ## Grid Search
-    #output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_10_120.csv'
-    #grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
+    output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_1_9.csv'
+    grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
 
     ## Model Training
     #param_grid = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
     #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
 
     ## Run Model
-    optimal_hyperparams = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
-    ae_run(dims, X, X_train, Y_train, optimal_hyperparams, component_test, cities)
+    #optimal_hyperparams = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
+    #ae_run(dims, X, X_train, Y_train, optimal_hyperparams, component_test, cities)
 
     ## Regression Test
     #linreg.regression(X_train, X_test, Y_train, Y_test)

@@ -12,7 +12,6 @@ def rev_geo(lat, lon, key):
     URL_PARAMS = f'latlng={lat},{lon}&key={key}'
     
     url = REVGEO_BASE_URL + "?" + URL_PARAMS
-    #print(f'url is {url}')
     # Read the contents of the generated url and decode the result
     with urllib.request.urlopen(url) as f:
         response = json.loads(f.read().decode())
@@ -32,24 +31,41 @@ def rev_geo(lat, lon, key):
         print(status)
         print(response['error_message'])
         rev_geo_data = None
-    return (state_code, country_code)
+    return state_code, country_code
 
-KEY = key.GMAPS_KEY
-#LAT = 30.2671500
-#LON = -97.7430600
-component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-states = countries = []
 
-for component in component_names:
-    df = pd.read_csv(f'./data/data_clean/{component}_data_clean.csv')
-    for lat, lon in zip(df['lat'], df['lon']):
-        #print(f'{lat} , {lon}')
-        state_code, country_code = rev_geo(lat, lon, KEY)
-        states.append(state_code)
-        countries.append(country_code)
-        
-    # Add new columns to the df
-    df.insert(loc = 1, column = 'state', value = states)
-    df.insert(loc = 2, column = 'country', value = countries)
-    df.to_csv(f'/home/nick/Downloads/revised_data/{component}_data_clean.csv')
-#print(data)
+def append_labels():
+    component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+    data_labels = pd.read_csv('/home/nick/Downloads/revised_data/data_labels.csv')
+    for component in component_names:
+        f_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv'
+        output_file = f'/home/nick/Downloads/revised_data/{component}_test.csv'
+        df = pd.read_csv(f_name)
+        df.insert(1, 'state', data_labels['state'])
+        df.insert(2, 'country', data_labels['country'])
+        df.to_csv(output_file, index=False)
+
+
+append_labels()
+'''
+KEY = keys.GMAPS_KEY
+
+cities = []
+states = []
+countries = []
+
+df = pd.read_csv(f'./data/data_clean/co_data_clean.csv')
+count = 0
+for city, lat, lon in zip(df["city"], df["lat"], df["lon"]):
+    print(f'{city}, {lat} , {lon}')
+    
+    state_code, country_code = rev_geo(lat, lon, KEY)
+    states.append(state_code)
+    countries.append(country_code)    
+    cities.append(city)
+
+# Add new columns to the df
+label_dict = {'city' : cities, 'state' : states, 'country' : countries}
+labeled_data = pd.DataFrame(data=label_dict)
+labeled_data.to_csv(f'/home/nick/Downloads/revised_data/data_labels.csv', index=False)
+'''
