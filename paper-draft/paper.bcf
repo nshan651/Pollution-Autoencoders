@@ -2358,6 +2358,7 @@
     <bcf:citekey order="10">Venue2Vec</bcf:citekey>
     <bcf:citekey order="11">CommutingFlowPrediction</bcf:citekey>
     <bcf:citekey order="12">Trunk79</bcf:citekey>
+    <bcf:citekey order="13">Bai2019</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

@@ -192,24 +192,28 @@ def main():
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
-    #dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-    #dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
     # City names to append
-    #cities = dfy['city'].values
+    cities = dfy['city'].values
     
+    # Drop df labels
+    dfx.drop(['city', 'state', 'country'], axis=1, inplace=True)
     # Set x as the normalized values, y (non-normalized) as the daily average of final day
-    #X = dfx.values
-    #Y = dfy.loc[:, ['co_2021_06_06']].values
+    X = dfx.values
+    Y = dfy.loc[:, ['co_2021_06_06']].values
     # Split into train/test data
-    #X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
 
     ### Function calls ###
     #interpolate(dims, component_test)
     #for component in component_names:
     #    interpolate(dims, component)
     #    pca_train_test(dims, X, Y, folds, component)
-    #pca_run(dims, X, X_train, Y_train, component_test, cities)
-    
+
+    pca_run(dims, X, X_train, Y_train, component_test, cities)
+
+    ''' 
     for component in component_names:
         # Open normalized data and dependent, non-normalized data
         dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
@@ -221,8 +225,9 @@ def main():
         # Split into train/test data
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
         print(f'\n{component}')
-        variance, r2 = linreg.regression(X_train, X_test, Y_train, Y_test)
-        
+        #variance, r2 = linreg.regression(X_train, X_test, Y_train, Y_test)
+        pca_run(dims
+      '''  
 
 if __name__ == '__main__':
     main()

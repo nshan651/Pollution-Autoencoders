@@ -38,12 +38,13 @@ def append_labels():
     component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
     data_labels = pd.read_csv('/home/nick/Downloads/revised_data/data_labels.csv')
     for component in component_names:
-        f_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv'
-        output_file = f'/home/nick/Downloads/revised_data/{component}_test.csv'
+        f_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv'
+        #output_file = f'/home/nick/Downloads/revised_data/{component}_test.csv'
         df = pd.read_csv(f_name)
-        df.insert(1, 'state', data_labels['state'])
-        df.insert(2, 'country', data_labels['country'])
-        df.to_csv(output_file, index=False)
+        df.insert(0, 'city', data_labels['city'])
+        #df.insert(1, 'state', data_labels['state'])
+        #df.insert(2, 'country', data_labels['country'])
+        df.to_csv(f_name, index=False)
 
 
 append_labels()

@@ -4,6 +4,7 @@ import itertools
 import csv
 import os
 import linreg # src/linreg.py
+import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import Adam
@@ -71,16 +72,15 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
         dims: Number of dimensions to train
         X_train, X_test, Y_train, Y_test: train/test data used for model
         component: Gas/particulate
-        param_grid: List of key hyperparameters to test 
+        param_grid: List of key hyperparameters to test with (found by gs)
     '''
 
     # Metrics file to write to
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics'
+    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics.csv'
     # Train Autoencoder model
     variance_list = []
     r2_list = []
-    num_of_dims = list(range(2,dims+1))
-
+    num_of_dims = list(range(1,dims+1))
     # Define hyperparams and counter
     lr = param_grid['lr'][0]
     batch = param_grid['batch'][0]
@@ -124,7 +124,7 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
     metrics_data.to_csv(path_or_buf=file_name, index=False)
 
 
-def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, cities):
+def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, label_tup):
     '''
     Run the autoencoder model by performing a cross-validated linear
     regression on the encoded data
@@ -134,7 +134,7 @@ def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, cities):
         X: Normalized data to encode
         X_train, Y_train: Train data used in model creation
         component: Gas/particulate 
-        cities: List of cities to append to the embedding
+        label_tup: Tupple of cities, states, and countries to append to embeddings
         param_grid: The correct hyperparameters to be used. Note the dimensions that were tested in the 
             grid search. If dimension was not tested for it, use hyperparams of last tested dimension
     '''
@@ -149,9 +149,9 @@ def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, cities):
         Y_train=Y_train,
         component=component,
         activation=('tanh', 'tanh'),
-        lr=optimal_hyperparams['lr'][dim], 
-        batch=optimal_hyperparams['batch'][dim],
-        epochs=optimal_hyperparams['epochs'][dim]
+        lr=optimal_hyperparams['lr'][20], 
+        batch=optimal_hyperparams['batch'][20],
+        epochs=optimal_hyperparams['epochs'][20]
     )
    
     # Create encoded data based off full dataset
@@ -160,17 +160,18 @@ def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, cities):
     # Add city labels and save encoded data
     vec_labels = [f'dim_{i}' for i in range(1, dim+1)]
     vector_data = pd.DataFrame(data=encoded_data, columns=vec_labels)
-    vector_data.insert(0, 'city', cities)
+    vector_data.insert(0, 'city', label_tup[0])
+    vector_data.insert(1, 'state', label_tup[1])
+    vector_data.insert(2, 'country', label_tup[2])
     vector_data.to_csv(path_or_buf=vec_file, index=None)
 
 
-def grid_search(file_name, x, y, folds, component, iter_dims, key_params):
+def grid_search(x, y, folds, component, iter_dims, key_params):
     '''
     Run the linear regression for a single gas
     using k-fold cross validation strategy
 
     @params:
-        file_name: The output file two write the gs results to
         x: The normalized x values to be used in the embedding
         y: The dependent variable
         folds: Number of folds to test
@@ -190,6 +191,8 @@ def grid_search(file_name, x, y, folds, component, iter_dims, key_params):
     
     # Headers for grid search
     grid_list = ['fold', 'dim', 'variance', 'r2', 'lr', 'batch', 'epochs']
+
+    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_1_9.csv'
     # Write header
     with open(file_name,'w+', newline='') as f:
         writer = csv.writer(f)
@@ -230,7 +233,7 @@ def grid_search(file_name, x, y, folds, component, iter_dims, key_params):
                     grid_list = [fold_count, dim, variance, r2, vec[0], vec[1], vec[2]]
                 
             print(f'Best params for fold {grid_list[0]} dim {grid_list[1]}: variance={grid_list[2]} lr={grid_list[4]} batch={grid_list[5]} epochs={grid_list[6]}')        
-            
+         
             # Update grid params files
             with open(file_name,'a', newline='') as f:
                 writer = csv.writer(f)
@@ -242,8 +245,9 @@ def main():
     ''' Set up soures and constants, call functions as needed '''
     
     ### Constants ###
-    #component_names = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-    component_test = 'nh3'
+    #components = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+    components = ['co', 'no', 'no2', 'o3', 'pm2_5', 'pm10', 'nh3'] # minus so2
+    #components = 'so2'
     # Starting dimensions
     dims = 190
     # K-fold folds
@@ -259,34 +263,33 @@ def main():
     iter_dims = np.arange(1,10,1)
     #iter_dims = np.arange(10,121,10)
 
-    ### Input files ###
-    # Open normalized data and dependent, non-normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component_test}_data_norm.csv")
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component_test}_data_clean.csv")
-    # City names to append
-    cities = dfy['city'].values
+    for component in components:
+        ### Setup ###
+        # Open normalized data and dependent, non-normalized data
+        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
+        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+        # City names to append
+        label_tup = (dfy['city'].values, dfy['state'].values, dfy['country'].values)
+        # Drop data labels
+        dfx.drop(['city','state','country'], axis=1, inplace=True) 
+        # Set x as the normalized values, y (non-normalized) as the daily average of final day
+        X = dfx.values
+        Y = dfy.loc[:, [f'{component}_2021_06_06']].values
+        # Split into train/test data
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
+        
+        ### Model Training ###
+        param_grid = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/hyperparams/{component}/{component}_hyperparams.csv')
+        ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
+
+    ### Grid Search ###
+    #grid_search(X, Y, folds, components, iter_dims, key_params)
     
-    # Set x as the normalized values, y (non-normalized) as the daily average of final day
-    X = dfx.values
-    Y = dfy.loc[:, [f'{component_test}_2021_06_06']].values
-    # Split into train/test data
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
+    ### Run Model ###
+    #optimal_hyperparams = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/hyperparams/{components}/{components}_hyperparams.csv')
+    #ae_run(dims, X, X_train, Y_train, optimal_hyperparams, components, label_tup)
 
-    ### Function calls ###
-
-    ## Grid Search
-    output_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component_test}_grid_params_1_9.csv'
-    grid_search(output_file, X, Y, folds, component_test, iter_dims, key_params)
-
-    ## Model Training
-    #param_grid = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
-    #ae_train_test(dims, X_train, X_test, Y_train, Y_test, component_test, param_grid)
-
-    ## Run Model
-    #optimal_hyperparams = pd.read_csv(f'./data/hyperparams/{component_test}/{component_test}_hyperparams.csv')
-    #ae_run(dims, X, X_train, Y_train, optimal_hyperparams, component_test, cities)
-
-    ## Regression Test
+    ### Regression Test ###
     #linreg.regression(X_train, X_test, Y_train, Y_test)
 
 

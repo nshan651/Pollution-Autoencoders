@@ -3,7 +3,8 @@
 \usepackage{blindtext}
 \usepackage{multicol}
 \usepackage[document]{ragged2e}
-\usepackage[pass, letterpaper]{geometry}
+%\usepackage[pass, letterpaper]{geometry}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{xcolor}
@@ -56,10 +57,11 @@ Autoencoders. The first two hidden dimensions represented
 a large percentage of the explained variance in the model, so we cluster
 the cities in an effort to extract any useful features. 
 \end{abstract}
+
 \vspace{0.25cm}
 \section{Introduction}
 
-\par Over the past several decades, air pollution has been a major concern for human health
+\par For the past several decades, air pollution has become a major concern for human health
 and the environment. The EPA sets national air quality standards for  six major air
 toxins: ground level Ozone (O$_3$), Carbon Monoxide (CO), Sulfur Dioxide (SO$_2$),
 Lead (Pb), Nitrogen Dioxide (NO$_2$), and particulate matter (PM). The sources of these emissions vary, but the two largest contributors are industrial processes and motorized vehicles. \parencite{NAAQS09}.
@@ -72,7 +74,7 @@ relfect redundancy and end up being a burden on the model. \parencite{featurered
 
 \section{Related Work}
 \par The idea of generating embeddings for a location is a highly potential expanse for
-research. The two major forces behind its competency are, the fact that large volumes of
+research. The two major forces behind its competency are the fact that large volumes of
 data is being effectively compressed and that these embeddings, when plugged into any
 model could effectively represent any given location.  A lot of research is being done 
 on location embeddings in recent times. 
@@ -138,10 +140,13 @@ factor in policy establishment and metro planning.
 
 % Correlation Matrix 
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.png}
-\caption{Correlation Matrix}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.png}
+\end{center}
+    \caption{Correlation Matrix for Carbon Monoxide (daily averages for cities throughout the US)}
 \label{fig:matrix}
 \end{figure}
+
 
 \par As previously mentioned in the introduction, the correlation between features was revealed to be rather high. In particular, days one hundred thirty-five to one hundred-eighty nearly all have a correlation coefficient greater than 0.75. This resulted in some overfitting which can be seen in the autoencoder and pca explainable variance scores, which were greater than the unencoded scores.
 
@@ -150,7 +155,9 @@ factor in policy establishment and metro planning.
 \begin{figure}[h!]
 \caption{Data Pipeline}
 \label{fig:pipeline}
-    \hspace{1.5cm}\includegraphics[width=10cm, height=13cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.png}
+    \begin{center}
+    \includegraphics[width=10cm, height=13cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.png}
+    \end{center}
 \end{figure}
 \end{Center}
 
@@ -162,6 +169,7 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
 
 % dataset characteristics table
 \begin{table}[h!]
+\begin{center}
     \caption{Dataset Characteristics}
     \label{tab:table1}
     \vspace{0.1cm}
@@ -177,6 +185,7 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
         Dependent variable & Last day of the period (06/05/21) \\
         \hline
     \end{tabular}
+\end{center}
 \end{table}
 \par OpenWeather's Pollution API ordinarily returns hourly values, but we opted to use the daily average pollution levels as our feature set in order to make the number of starting dimensons more manageable. The daily averages were also feature engineered to be proportional to the number of features so as to avoid the curse of dimensionality \parencite{Trunk79}. 
 \par The original data was unit normalized so that the gradient descents could converge more quickly while still preserving the original differences in range. Each step was saved separately to provide expeditious access to both the normalized and non-normalized data.
@@ -185,6 +194,7 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
 \par The autoencoder model used consists of a single encoded and decoded layer. The data was split into a train and test set at the beginning of the testing cycle, and was further separated into a validation set for each given dimension. The validation set was essential for updating the model weights after every epoch. After the model was trained and validated, we created the finalized embeddings using the full dataset. We created embeddings for several of the most significant dimensions based off their increase in explained variance scores.
 
 \begin{table}[h!]
+\begin{center}
     \caption{Model Splits}
     \label{tab:table1}
     \vspace{0.1cm}
@@ -198,6 +208,7 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
         Total Size & 18,526\\
         \hline
     \end{tabular}
+\end{center}
 \end{table}
 \par A grid search was performed for each model to determine the optimal hyperparameters. The following hyperparameters were tested:
 \begin{itemize}
@@ -209,6 +220,7 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
 \par After some preliminary testing, it was decided that the activation, optimizer, and loss functions should remain constant. The exponential increase in computing time this would have on the grid search drastically outweighed any minor performance gains that a thorough optimization of these functions may have yielded.
 
 \begin{table}[h!]
+\begin{center}
     \caption{Constant hyperparameters used across all autoencoder models}
     \label{tab:table1}
     \vspace{0.1cm}
@@ -221,10 +233,12 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
         Optimizer & Adam \\
         \hline
     \end{tabular}
+\end{center}
 \end{table}
 Moreover, grid search was only performed on a select number of key dimensions rather than on all one hundred ninety dimensions. The first ten dimensions, as well as every tenth dimension until one hundred-twenty were tuned. For each intermediary dimension that did not have a set of key hyperparameters, the hyperparameters of the previous key dimension was used. Once again, the tradeoff between minor performance gains and large compute times led us to adjust the scope of the  hyperparameter tuning.
 
 \begin{table}[h!]
+\begin{center}
     \caption{Grid Search Results for Carbon Monoxide}
     \label{tab:table2}
     \vspace{0.1cm}
@@ -245,8 +259,10 @@ Moreover, grid search was only performed on a select number of key dimensions ra
         10 & 0.62 & 0.0001 & 64 & 100\\
         \hline
     \end{tabular}
+\end{center}
 \end{table}
 \begin{table}[h!]
+\begin{center}
     \caption{Grid Search Results for Carbon Monoxide}
     \label{tab:table2}
     \vspace{0.1cm}
@@ -268,6 +284,7 @@ Moreover, grid search was only performed on a select number of key dimensions ra
         120 & 0.73 & 0.001 & 64 & 100\\
         \hline
     \end{tabular}
+\end{center}
 \end{table}
 \newpage
 
@@ -284,66 +301,118 @@ In addition to the PCA and Autoencoder models, a linear regression was performed
     \includegraphics[width=0.8\linewidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded_r2.png}
 \end{figure}
 
-\section{Results}
-We compared the percent explained variance across one hundred ninety dimensions for the encoded values generated by the PCA and autoencoder models. While PCA was overall less noisy, we found that the autoencoder model achieved a much higher explainable variance for the first several dimensions.
-\comment{
-\\ \note{Note that results graphs are placeholders}
-% ae vs pca linegraph
+\newpage
 
+\section{Results}
+
+\par We compared the percent explained variance across all one hundred ninety dimensions for the encoded values generated by the PCA and AE models. While PCA was overall less noisy, we found that the autoencoder model achieved a much higher explainable variance for the first several dimensions.
+
+\begin{center}
 \begin{figure}[h!]
-\begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=1.1\linewidth, height=4cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims.png} 
-    \caption{PCA Dimensionality Reduction}
-    \label{fig:ae_dim_reduction}
-\end{subfigure}% <- % sign must be here!
-\begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=1.1\linewidth, height=4cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/ae_all_dims.png}
+    \centering
+    \includegraphics[width=0.7\linewidth, height=7cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims.png} 
     \caption{PCA Dimensionality Reduction}
     \label{fig:pca_dim_reduction}
-\end{subfigure}
-\caption{Graph of autoencoder and PCA reduced representations of air pollutants}
-\label{fig:ae_vs_pca}
-\end{figure}
-}
-
-\begin{figure}[h!]
-    \includegraphics[width=\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims.png} 
-    \caption{PCA Dimensionality Reduction}
-    \label{fig:ae_dim_reduction}
 \end{figure}
 
 \begin{figure}[h!]
-    \includegraphics[width=\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims.png} 
+    \centering
+    \includegraphics[width=0.7\linewidth, height=7cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims.png} 
     \caption{Autoencoder Dimensionality Reduction\ \note{Placeholder for AE}}
-
     \label{fig:ae_dim_reduction}
 \end{figure}
+\end{center}
 
-\par We clustered the cities based on the first two latent dimensions in order to see how
-the model characterizes each city
+\par In nearly every case shown in figures \ref{fig:pca_dim_reduction} and \ref{fig:ae_dim_reduction}, the autoencoder model shows consistently higher explainability than the PCA. Tropospheric Ozone (O3) in particular shows a massive jump of over fifty percentage points explainable variance in the first two dimensions. For this reason, O3 was the primary model for the subsequent visualizations.
+\par In order to better visualize how the hidden layers distill information, we clustered the cities based on the first two encoded dimensions. Additionally, a number of location heuristics were applied to further understand the distribution of cities. Figure \ref{fig:heuristic_labels} shows how the embeddings are clustered by regions, as well as by individual states and territories.
 
 % co scatter
 \begin{figure}[h!]
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=1.1\linewidth, height=5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/co_scatter_ae_wlist.png} 
-    \caption{Outlier Cities}
-    \label{fig:outliers}
-\end{subfigure}% <- % sign must be here!
-\begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=1.1\linewidth, height=5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/co_scatter_ae_large_cities.png}
-    \caption{Densely Populated Cities}
-    \label{fig:dense_cities}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.png} 
+    \caption{Model characterization grouped by region}
 \end{subfigure}
-
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-us.png}
+    \caption{Model characterization of U.S. Territories}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/california.png} 
+    \caption{Model characterization of California}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.png} 
+    \caption{Model characterization of Texas}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york.png}
+    \caption{Model characterization of New York}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesota.png}
+    \caption{Model characterization of Minnesota}
+\end{subfigure}
 \caption{Scatter plots of outlier and highly-populated cities over first two dimensions}
-\label{fig:outliers_vs_dense_cities}
+\label{fig:heuristic_labels}
 \end{figure}
 
-\par By selecting from a list the top two hundred most highly-populated cities in the US, we found that nearly all of them were located near the center of the clustering. Conversely, we found that many of the outliers were smaller cities in rural locations. 
+\par The model's characterization appears to be heavily dependent on geographic location. When grouped by region, one can see that there is a fairly tight distribution, especially among the Midwest and Northeast regions. Puerto Rico is also tightly clustered, but the territory contains a limited 211 representative data points.
+
+\par Curiously enough, population size does not seem to be one of the most succint features of the model. Figure \ref{fig:population_comparison} shows the top two hundred most populous cities in the US for the first four dimensions of the model. The first four latent dimensions of O3 account for nearly 60\% of the total explainable variance. However, the top 200 cities appear to be randomly dispersed throughout, suggesting that population alone has less of an effect on the model. It is possible that population is represented indirectly
+
+\begin{figure}[h!]
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.0\linewidth, height=10cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population.png} 
+    \caption{Model characterization grouped by region}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=1.0\linewidth, height=10cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population_3and4.png}
+    \caption{Model characterization of U.S. Territories}
+\end{subfigure}
+\caption{Scatter plots of outlier and highly-populated cities over first two dimensions}
+\label{fig:population_comparison}
+\end{figure}
+
+\par It is difficult to determine why the model does not seem to consider population size. One reason for this may be that temperature and climate "overpowers" any influence a city's size may have. Any number of secondary effects related to climate and location could pull the model away from considering population. Moreover, The time frame of our data spans from winter 2020 to early summer of 2021, which is not long enough to fully capture seasonality. Given a larger data set, it is likely that both population and seasonality would play much larger roles.
+
+\par Due to the importance of geography in the embedding, we created several geographic scatter plots to visualize both the embedding values and pollution levels with respect to location.
+
+% Scattergeo 
+\begin{figure}[h!]
+    \caption{Geographic comparison of model embedding values versus daily pollution levels}
+    \label{fig:outliers_vs_dense_cities}
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth, height=8cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.png} 
+    \caption{O3 values of the first encoded dimension (units of compression)}
+    \label{fig:outliers}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth, height=8cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first.png}
+    \caption{O3 pollution values for the first day of data set ($\mu g/m^3$)}
+    \label{fig:dense_cities}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth, height=8cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2.png} 
+    \caption{O3 values of the second encoded dimension (units of compression)}
+    \label{fig:outliers}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth, height=8cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last.png}
+    \caption{O3 pollution values for the last day of data set ($\mu g/m^3$)}
+    \label{fig:dense_cities}
+\end{subfigure}
+\end{figure}
+
+\newpage
 
 \section{Discussion}
 
-Although the model provides insights on the most succinct features that characterize urban air pollution, more specific external data is needed to uncover these features. One study \parencite{Bai2019} uses a stacked autoencoder approach and focuses on the seasonality of pm2.5 levels. The proposed model considers both the seasonality and temporality of pm2.5 levels and supporting meteorological data. The research group was able to accurately predict the pm2.5 levels to the hour for a given season.
+\par The proposed model provides us with many insights on the most succinct features that characterize urban air pollution in US cities. Based on location identifiers such as city name, state, country, and the geograpic coordinates, we are able to infer much of the explainability of the model. However, more specific external data is needed to fully uncover these features. One study \parencite{Bai2019} uses a stacked autoencoder approach and focuses on the seasonality of pm2.5 levels. The model considers both the seasonality and temporality of pm2.5 levels and supporting meteorological data. The research group was able to accurately predict the pm2.5 levels to the hour for a given season. The pollution autoencoder models we created only consider half a year of data, so we were unable to fully account for seasonal variations in the dataset.
+\par Another study focusing on pm2.5 \parencite{doreswamy2021} uses autoencoders for spatio-temporal clustering analysis. The group looks at Taiwan for its massive air pollution problem, coupled with the fact that the area's unique topography makes it difficult to map the distribution of pollution. The model uses aproximately six years of censor data from Eastern Taiwan to analyze the spatio-temporal qualities of pm2.5, as well as the socioeconomic effects of its presence.
 
 \section{Conclusion}
 

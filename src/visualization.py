@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import itertools
 import pyparsing
-from mpl_toolkits import mplot3d
+import mplcursors
+from mpl_toolkits import mplot3d 
+import plotly.express as px
 
 
 def linegraph(type, dims, component_names, colors_list):
@@ -19,7 +21,6 @@ def linegraph(type, dims, component_names, colors_list):
         colors_list: List of colors to be used
     '''
     
-    num_of_comp = list(range(2,dims+1)) # TODO: delete this later
     num_of_dims = list(range(2, dims+1))
     # Plot results
     plt.figure(figsize=(12,10))
@@ -51,16 +52,6 @@ def linegraph(type, dims, component_names, colors_list):
         ax.set_xlabel('Dimension', fontsize='large')
         ax.set_ylabel('% Explained Variance', fontsize='large')
         plt.title(plt_title)
-
-        #plt.plot(num_of_comp, variance[:dims-1], label = '{}'.format(component), linestyle = '-', marker = '+', color = colors_list[i])
-        #plt.plot(num_of_comp, r2[:dims-1], linestyle = '-.', marker = 'H', color = colors_list[i])
-        #plt.rcParams.update({'font.size': 22})
-        #plt.tick_params(axis='both', which='major', labelsize=28)
-        #plt.xlabel('Dimension')
-        #plt.ylabel('% Explained Variance')
-        #plt.xlabel('')
-        #plt.ylabel('')
-        #plt.title(plt_title)
         plt.ylim([0,1])
         plt.legend()
     plt.show()
@@ -170,21 +161,21 @@ def heatmap(component):
     fig.colorbar(heat)
     plt.show()
 
+
 def correlation(X_data_file, Y_data_file, component):
     SIZE = 190
     
     # Read in normalized data
     norm_data = pd.read_csv(filepath_or_buffer=X_data_file)
    
-    X_matrix, Y_matrix = [], []
+    X_matrix = []
     norm_labels = ['dim_{}'.format(i) for i in range(1, 190+1)]
     
     
     for i in range(SIZE):
         X_matrix.append(norm_data[norm_labels[i]][:])
-    
+    print('X_matrix', X_matrix) 
     coefs = np.corrcoef(X_matrix)
-    print(coefs.shape)
 
     mask = np.zeros_like(coefs)
     mask[np.triu_indices_from(mask)] = True
@@ -199,98 +190,150 @@ def correlation(X_data_file, Y_data_file, component):
         cmap='coolwarm',
         xticklabels=15,
         yticklabels=15,
-        square=True
+        square=True,
+        cbar_kws={'label': 'Correlation strength'}
     )
     ax.set_xticklabels(
         ax.get_xticklabels(),
         rotation=45,
         horizontalalignment='right'
     )
-
+    #ax.set_xlabel('dim_1')
+    #ax.set_ylabel('dim_2')
     plt.show()
     
 
-def scatter(component):
+def scatter(component, title, mask=False, hover=False):
     '''
     Autoencoder scatter plot of multiple components for the first two dimensions
 
     @params:
-        f_name: Name of the file
         component: Name of gas or particulate
-        color: Scatter plot color
+        title: Part of the graph title 
+        mask: Flag to apply a custom color mask (defaults to pre-made color gradient)
+        hover: Flag to apply a hover effect to the graph (defaults to false)
     '''
 
-    plt.rcParams.update({'font.size': 14})
-    df = pd.read_csv(f'./data/vec/{component}_vec_2.csv')
-    
+    plt.rcParams.update({'font.size': 16})
+    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_4.csv')
+    top200_data = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/other/top200.csv')
+    top200 = [i for i in top200_data['city']]
     # whitelist labels
     wlist = ['RedWing', 'NewYork', 'LosAngeles', 'Chicago']
-    #wlist = ['RedWing']
+    # Region lists
+    west = ['CA', 'OR', 'WA', 'MT', 'OH', 'NV', 'AZ', 'UT', 'NM', 'WY', 'CO', 'AK', 'HI', 'ID']
+    midwest = ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD']
+    south = ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'WV', 'AL', 'KY', 'MS','TN','AR','LA', 'OK', 'TX', 'DC']
+    north_east = ['PA', 'NY', 'RI', 'MD', 'CT', 'NJ', 'MA', 'VT', 'NH', 'ME']
+    # Encoded dims
+    x = df['dim_3']
+    y = df['dim_4']
 
-    # 2 encoded dims
-    x = df['dim_1']
-    y = df['dim_2']
+    fig, ax = plt.subplots(figsize = (10,7))
 
-    fig = plt.figure(figsize = (10,7))
-    ax = plt.axes()
+    if mask:
+        # Initialize color masking
+        cmask = {'State cities': {'x' : [], 'y' : []},
+            'Other cities' : {'x' : [], 'y' : []}
+        }
+        '''
+        cmask = {'West': {'x' : [], 'y' : []},
+            'Northeast': {'x' : [], 'y' : []},
+            'South' : {'x' : [], 'y' : []}, 
+            'Midwest' : {'x' : [], 'y' : []}, 
+            'Outside US' : {'x' : [], 'y' : []}
+        }
+        '''
+        temp = 0 
+        # Create color mask based on conditions
+        for i in range(len(x)):
+            #if df['state'][i] == 'AZ':
+            if df['state'][i] not in (west+midwest+south+north_east):
+                #if df['country'][i] != 'PR':
+                    #print(df['country'][i])
+                temp+=1 
+            if df['city'][i] in top200:
+                cmask['State cities']['x'].append(x[i])
+                cmask['State cities']['y'].append(y[i])
+            else:
+                cmask['Other cities']['x'].append(x[i])
+                cmask['Other cities']['y'].append(y[i])
 
-    # Creating color map
-    cmap = plt.get_cmap('hot')
-    sct = ax.scatter(x, y, cmap=cmap, c=(x+y), alpha=0.5)
-    ax.set_xlabel('dim_1')
-    ax.set_ylabel('dim_2')
-    fig.colorbar(sct, ax = ax, shrink = 0.5, aspect = 5)
-    plt.title(f'3D Scatter of latent dims for {component}')
+            '''
+            if df['state'][i] in west:
+                #cmask['Cities in US']['x'].append(x[i])
+                #cmask['Cities in US']['y'].append(y[i])
+                cmask['West']['x'].append(x[i])
+                cmask['West']['y'].append(y[i])
+            elif df['state'][i] in north_east:
+                #cmask['Cities in US']['x'].append(x[i])
+                #cmask['Cities in US']['y'].append(y[i])
+                cmask['Northeast']['x'].append(x[i])
+                cmask['Northeast']['y'].append(y[i])
+            elif df['state'][i] in south: 
+                #cmask['Cities in US']['x'].append(x[i])
+                #cmask['Cities in US']['y'].append(y[i])
+                cmask['South']['x'].append(x[i])
+                cmask['South']['y'].append(y[i])
+            elif df['state'][i] in midwest:
+                #cmask['Cities in US']['x'].append(x[i])
+                #cmask['Cities in US']['y'].append(y[i])
+                cmask['Midwest']['x'].append(x[i])
+                cmask['Midwest']['y'].append(y[i])
+            else:
+                cmask['Outside US']['x'].append(x[i])
+                cmask['Outside US']['y'].append(y[i])
+            '''
+            ''' 
+               #print(f'{df["city"][i]},{df["state"][i]}')
+                #if i%20==0:
+                #    ann = ax.annotate(text=f"{df['city'][i]},{df['state'][i]}", xy=(x[i],y[i]))
+            ''' 
+        '''
+        # Create scatter based on custom color mask
+        ax.scatter(cmask['West']['x'], cmask['West']['y'], color='blue', alpha=0.3)
+        ax.scatter(cmask['Northeast']['x'], cmask['Northeast']['y'], color='yellow', alpha=0.3)
+        ax.scatter(cmask['South']['x'], cmask['South']['y'], color='red', alpha=0.3)
+        ax.scatter(cmask['Midwest']['x'], cmask['Midwest']['y'], color='green', alpha=0.3)
+        ax.scatter(cmask['Outside US']['x'], cmask['Outside US']['y'], color='gray', alpha=0.3)
+        '''
+        ax.scatter(cmask['Other cities']['x'], cmask['Other cities']['y'], color='gray', alpha=0.3)
+        ax.scatter(cmask['State cities']['x'], cmask['State cities']['y'], color='orange', alpha=0.5)
 
-    # Ad hoc annotations
-    for i, city in enumerate(df['city']):
-        for target in wlist:
-            if city == target:
-                print(city)
-                plt.annotate(text=city, xy=(x[i],y[i]))
-    plt.show()
-
-    '''
-    # Read in X_train values for first two dimensions from model results
-    if type == 'ae':
-        file_name = '%s/autoencoders/trail1/%s_ae_results_gs.csv' % (f_name, component)
-    elif type == 'pca':
-        file_name = '%s/autoencoders/trial1/%s_pca_results_gs.csv' % (f_name, component)
     else:
-        print('Type must be "ae" or "pca"')
-        quit()
+        # Else, use a pre-made color map
+        cmap = plt.get_cmap('hot')
+        sct = ax.scatter(x, y, cmap=cmap, c=(x+y), alpha=0.5)
+        fig.colorbar(sct, ax = ax, shrink = 0.5, aspect = 5)
+    # Mouse-over annotations
+    if hover:
+        # Annotate points
+        dlabel = []
+        for city, state in zip(df['city'], df['state']):
+            dlabel.append(f'{city},{state}')
+        # Cursor Object
+        cursor = mplcursors.cursor(hover=True)
+        cursor.connect('add', lambda sel: sel.annotation.set_text(dlabel[sel.target.index]))
 
-    model = pd.read_csv(filepath_or_buffer=file_name)
-    X_train = pd.DataFrame(data=model)
-    X = X_train['{}_X_train_ax1'.format(component)]
-    Y = X_train['{}_X_train_ax2'.format(component)]
-
-    # Read in city data frame and select list of cities
-    city_df = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
-    annotations = pd.DataFrame(data=city_df)
-   
-    # Read in whitelisted city data
-    # Whitelist can be top200 cities or the outliers
-    wlist_data = pd.read_csv(filepath_or_buffer='/home/nicks/github_repos/Pollution-Autoencoders/data/other/top200.csv')
-    wlist = pd.DataFrame(data=wlist_data[:20])
-    
-    # Plot figure
-    plt.figure(figsize=(14,14))
-    plt.rcParams.update({'font.size': 18})
-    plt.scatter(X, Y, label='{}'.format(component), c=color, alpha=0.1)
-
-    size = len(X_train)
-    plt.title('Carbon Monoxide Autoencoder in First Two Dimensions')
-    
-    # Annotate points (ad hoc)
-    for i in range(size):
-        for j in range(len(wlist)):
-            if annotations.iloc[i][0] == wlist.iloc[j][0]:
-                print(annotations.iloc[i][0])
-                plt.annotate(text=annotations.iloc[i][0], xy=(X[i],Y[i]))
-    plt.show()
     '''
+    # Full annotations
+    elif mode == 'full':
+        for i, (city, state) in enumerate(zip(df['city'], df['state'])):
+            if i%200==0:
+                ann = ax.annotate(text=f'{city},{state}', xy=(x[i],y[i]))
+        ann.set_visible(False)
     
+    else:
+        raise Exception('Mode is not valid')
+    '''
+    ax.set_xlabel('dim_3')
+    ax.set_ylabel('dim_4')
+    sns.despine(ax=ax, offset=0)
+    plt.title(f'Dimensions 3 and 4 of {component} {title}')
+    #ax.legend(['West', 'Northeast', 'South', 'Midwest', 'Outside US'])
+    ax.legend(['Other cities','Top 200 most populous cities'])
+    #plt.show()
+    print(f'number of cities in PR {temp}')
 
 
 def scatter3D(component):
@@ -339,6 +382,36 @@ def linreg_r2scores():
    
     plt.show()
 
+
+def scattergeo(component):
+    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv')
+    df2 = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_2.csv')
+    mcolor = df2['dim_2']
+    #mcolor = df['o3_2021_06_06']
+    #mcolor = df['o3_2020_11_27']
+    #bar_title = 'Embedding Value'
+    #bar_title = 'μg/m3'
+    #title = 'O3 First Encoded Dimension'
+    #title = 'O3 Pollution Values 2021.06.06'
+    fig = px.scatter_geo(
+        data_frame=df,
+        lat = df['lat'],
+        lon = df['lon'],
+        color=mcolor,
+        color_continuous_scale='portland'
+    )
+
+    fig.layout.coloraxis.colorbar.title = ''
+    fig.layout.coloraxis.colorbar.tickfont.size = 18
+    #fig.update_coloraxes(showscale=False)
+
+    fig.update_layout(
+        #title = title,
+        geo_scope='usa'
+    )
+    
+    fig.show()
+
 ### Function Calls ###
 
 COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
@@ -350,9 +423,10 @@ DIMS = 190
 #linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
-#X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
-#Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
+X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
 #correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
 #linreg_r2scores()
 #scatter3D('o3')
-scatter('o3')
+scatter('o3', 'for top 200 most populous cities in US', mask=True, hover=False)
+#scattergeo('o3')
