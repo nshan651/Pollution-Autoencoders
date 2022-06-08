@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, mean_squared_error
 
 
 def regression(train_data, test_data, train_labels, test_labels):
@@ -29,6 +29,9 @@ def regression(train_data, test_data, train_labels, test_labels):
     # Variance and r2 scores for the regression model
     variance = regr.score(test_data, test_labels) 
     r2 = r2_score(test_labels, Y_pred)    
+    mse = mean_squared_error(test_labels, Y_pred)
+
+    print('Mean Squared Error: %.2f' % mse)
     print ('Variance score: %.2f' % variance)
     print ('R Square: %.2f' % r2)
 

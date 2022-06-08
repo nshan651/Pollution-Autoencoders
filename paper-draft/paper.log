@@ -1,30 +1,30 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2022.1.15)  24 JAN 2022 16:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.4.30)  8 JUN 2022 09:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2021-11-22>
+L3 programming layer <2022-04-10>
 (/usr/share/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/usr/share/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count183
-\c@section=\count184
-\c@subsection=\count185
-\c@subsubsection=\count186
-\c@paragraph=\count187
-\c@subparagraph=\count188
-\c@figure=\count189
-\c@table=\count190
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
 )
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2020/12/31 v3.16 programmable bibliographies (PK/MW)
+Package: biblatex 2022/02/02 v3.17 programmable bibliographies (PK/MW)
 
 (/usr/share/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
@@ -34,7 +34,7 @@ Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 (/usr/share/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2020/03/06 v1.0d TeX engine tests
+Package: iftex 2022/02/03 v1.0f TeX engine tests
 )
 (/usr/share/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
@@ -45,7 +45,7 @@ Package pdftexcmds Info: \pdfdraftmode found.
 )
 (/usr/share/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count191
+\etb@tempcnta=\count193
 )
 (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
@@ -59,7 +59,7 @@ Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 ))
 (/usr/share/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count192
+\lrq@indent=\count194
 
 (/usr/share/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
@@ -71,48 +71,48 @@ Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-\c@tabx@nest=\count193
-\c@listtotal=\count194
-\c@listcount=\count195
-\c@liststart=\count196
-\c@liststop=\count197
-\c@citecount=\count198
-\c@citetotal=\count199
-\c@multicitecount=\count266
-\c@multicitetotal=\count267
-\c@instcount=\count268
-\c@maxnames=\count269
-\c@minnames=\count270
-\c@maxitems=\count271
-\c@minitems=\count272
-\c@citecounter=\count273
-\c@maxcitecounter=\count274
-\c@savedcitecounter=\count275
-\c@uniquelist=\count276
-\c@uniquename=\count277
-\c@refsection=\count278
-\c@refsegment=\count279
-\c@maxextratitle=\count280
-\c@maxextratitleyear=\count281
-\c@maxextraname=\count282
-\c@maxextradate=\count283
-\c@maxextraalpha=\count284
-\c@abbrvpenalty=\count285
-\c@highnamepenalty=\count286
-\c@lownamepenalty=\count287
-\c@maxparens=\count288
-\c@parenlevel=\count289
-\blx@tempcnta=\count290
-\blx@tempcntb=\count291
-\blx@tempcntc=\count292
-\blx@maxsection=\count293
-\blx@maxsegment@0=\count294
-\blx@notetype=\count295
-\blx@parenlevel@text=\count296
-\blx@parenlevel@foot=\count297
-\blx@sectionciteorder@0=\count298
-\blx@entrysetcounter=\count299
-\blx@biblioinstance=\count300
+\c@tabx@nest=\count195
+\c@listtotal=\count196
+\c@listcount=\count197
+\c@liststart=\count198
+\c@liststop=\count199
+\c@citecount=\count266
+\c@citetotal=\count267
+\c@multicitecount=\count268
+\c@multicitetotal=\count269
+\c@instcount=\count270
+\c@maxnames=\count271
+\c@minnames=\count272
+\c@maxitems=\count273
+\c@minitems=\count274
+\c@citecounter=\count275
+\c@maxcitecounter=\count276
+\c@savedcitecounter=\count277
+\c@uniquelist=\count278
+\c@uniquename=\count279
+\c@refsection=\count280
+\c@refsegment=\count281
+\c@maxextratitle=\count282
+\c@maxextratitleyear=\count283
+\c@maxextraname=\count284
+\c@maxextradate=\count285
+\c@maxextraalpha=\count286
+\c@abbrvpenalty=\count287
+\c@highnamepenalty=\count288
+\c@lownamepenalty=\count289
+\c@maxparens=\count290
+\c@parenlevel=\count291
+\blx@tempcnta=\count292
+\blx@tempcntb=\count293
+\blx@tempcntc=\count294
+\c@blx@maxsection=\count295
+\c@blx@maxsegment@0=\count296
+\blx@notetype=\count297
+\blx@parenlevel@text=\count298
+\blx@parenlevel@foot=\count299
+\c@blx@sectionciteorder@0=\count300
+\blx@entrysetcounter=\count301
+\blx@biblioinstance=\count302
 \labelnumberwidth=\skip49
 \labelalphawidth=\skip50
 \biblabelsep=\skip51
@@ -124,87 +124,87 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \blx@bcfin=\read2
 \blx@bcfout=\write3
 \blx@langwohyphens=\language87
-\c@mincomprange=\count301
-\c@maxcomprange=\count302
-\c@mincompwidth=\count303
+\c@mincomprange=\count303
+\c@maxcomprange=\count304
+\c@mincompwidth=\count305
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2020/12/31 v3.16 biblatex localization (PK/MW)
+File: blx-dm.def 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear-icomp.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count304
-\c@savedafterword=\count305
-\c@annotator=\count306
-\c@savedannotator=\count307
-\c@author=\count308
-\c@savedauthor=\count309
-\c@bookauthor=\count310
-\c@savedbookauthor=\count311
-\c@commentator=\count312
-\c@savedcommentator=\count313
-\c@editor=\count314
-\c@savededitor=\count315
-\c@editora=\count316
-\c@savededitora=\count317
-\c@editorb=\count318
-\c@savededitorb=\count319
-\c@editorc=\count320
-\c@savededitorc=\count321
-\c@foreword=\count322
-\c@savedforeword=\count323
-\c@holder=\count324
-\c@savedholder=\count325
-\c@introduction=\count326
-\c@savedintroduction=\count327
-\c@namea=\count328
-\c@savednamea=\count329
-\c@nameb=\count330
-\c@savednameb=\count331
-\c@namec=\count332
-\c@savednamec=\count333
-\c@translator=\count334
-\c@savedtranslator=\count335
-\c@shortauthor=\count336
-\c@savedshortauthor=\count337
-\c@shorteditor=\count338
-\c@savedshorteditor=\count339
-\c@labelname=\count340
-\c@savedlabelname=\count341
-\c@institution=\count342
-\c@savedinstitution=\count343
-\c@lista=\count344
-\c@savedlista=\count345
-\c@listb=\count346
-\c@savedlistb=\count347
-\c@listc=\count348
-\c@savedlistc=\count349
-\c@listd=\count350
-\c@savedlistd=\count351
-\c@liste=\count352
-\c@savedliste=\count353
-\c@listf=\count354
-\c@savedlistf=\count355
-\c@location=\count356
-\c@savedlocation=\count357
-\c@organization=\count358
-\c@savedorganization=\count359
-\c@origlocation=\count360
-\c@savedoriglocation=\count361
-\c@origpublisher=\count362
-\c@savedorigpublisher=\count363
-\c@publisher=\count364
-\c@savedpublisher=\count365
-\c@language=\count366
-\c@savedlanguage=\count367
-\c@origlanguage=\count368
-\c@savedoriglanguage=\count369
-\c@pageref=\count370
-\c@savedpageref=\count371
+\c@afterword=\count306
+\c@savedafterword=\count307
+\c@annotator=\count308
+\c@savedannotator=\count309
+\c@author=\count310
+\c@savedauthor=\count311
+\c@bookauthor=\count312
+\c@savedbookauthor=\count313
+\c@commentator=\count314
+\c@savedcommentator=\count315
+\c@editor=\count316
+\c@savededitor=\count317
+\c@editora=\count318
+\c@savededitora=\count319
+\c@editorb=\count320
+\c@savededitorb=\count321
+\c@editorc=\count322
+\c@savededitorc=\count323
+\c@foreword=\count324
+\c@savedforeword=\count325
+\c@holder=\count326
+\c@savedholder=\count327
+\c@introduction=\count328
+\c@savedintroduction=\count329
+\c@namea=\count330
+\c@savednamea=\count331
+\c@nameb=\count332
+\c@savednameb=\count333
+\c@namec=\count334
+\c@savednamec=\count335
+\c@translator=\count336
+\c@savedtranslator=\count337
+\c@shortauthor=\count338
+\c@savedshortauthor=\count339
+\c@shorteditor=\count340
+\c@savedshorteditor=\count341
+\c@labelname=\count342
+\c@savedlabelname=\count343
+\c@institution=\count344
+\c@savedinstitution=\count345
+\c@lista=\count346
+\c@savedlista=\count347
+\c@listb=\count348
+\c@savedlistb=\count349
+\c@listc=\count350
+\c@savedlistc=\count351
+\c@listd=\count352
+\c@savedlistd=\count353
+\c@liste=\count354
+\c@savedliste=\count355
+\c@listf=\count356
+\c@savedlistf=\count357
+\c@location=\count358
+\c@savedlocation=\count359
+\c@organization=\count360
+\c@savedorganization=\count361
+\c@origlocation=\count362
+\c@savedoriglocation=\count363
+\c@origpublisher=\count364
+\c@savedorigpublisher=\count365
+\c@publisher=\count366
+\c@savedpublisher=\count367
+\c@language=\count368
+\c@savedlanguage=\count369
+\c@origlanguage=\count370
+\c@savedoriglanguage=\count371
+\c@pageref=\count372
+\c@savedpageref=\count373
 \shorthandwidth=\skip57
 \shortjournalwidth=\skip58
 \shortserieswidth=\skip59
@@ -223,51 +223,51 @@ Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
+File: blx-compat.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
-\c@textcitecount=\count372
-\c@textcitetotal=\count373
-\c@textcitemaxnames=\count374
-\c@biburlbigbreakpenalty=\count375
-\c@biburlbreakpenalty=\count376
-\c@biburlnumpenalty=\count377
-\c@biburlucpenalty=\count378
-\c@biburllcpenalty=\count379
+File: biblatex.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
+\c@textcitecount=\count374
+\c@textcitetotal=\count375
+\c@textcitemaxnames=\count376
+\c@biburlbigbreakpenalty=\count377
+\c@biburlbreakpenalty=\count378
+\c@biburlnumpenalty=\count379
+\c@biburlucpenalty=\count380
+\c@biburllcpenalty=\count381
 \biburlbigskip=\muskip17
 \biburlnumskip=\muskip18
 \biburlucskip=\muskip19
 \biburllcskip=\muskip20
-\c@smartand=\count380
+\c@smartand=\count382
 )
 Package biblatex Info: Trying to load bibliography style 'authoryear-icomp'...
 Package biblatex Info: ... file 'authoryear-icomp.bbx' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/bbx/authoryear-icomp.bbx
-File: authoryear-icomp.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
+File: authoryear-icomp.bbx 2022/02/02 v3.17 biblatex bibliography style (PK/MW)
 
 Package biblatex Info: Trying to load bibliography style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.bbx' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
-File: authoryear.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
+File: authoryear.bbx 2022/02/02 v3.17 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count381
-\c@bbx:relatedtotal=\count382
+File: standard.bbx 2022/02/02 v3.17 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count383
+\c@bbx:relatedtotal=\count384
 )))
 Package biblatex Info: Trying to load citation style 'authoryear-icomp'...
 Package biblatex Info: ... file 'authoryear-icomp.cbx' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/cbx/authoryear-icomp.cbx
-File: authoryear-icomp.cbx 2020/12/31 v3.16 biblatex citation style (PK/MW)
+File: authoryear-icomp.cbx 2022/02/02 v3.17 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
@@ -286,6 +286,28 @@ Package biblatex Info: ... file 'biblatex.cfg' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Document encoding is UTF8 ....
+
+(/usr/share/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2022-04-10 L3 programming layer (loader) 
+
+(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-04-14 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count385
+\l__pdf_internal_box=\box50
+))
+Package biblatex Info: ... and expl3
+(biblatex)             2022-04-10 L3 programming layer (loader) 
+(biblatex)             is new enough (at least 2020/04/06),
+(biblatex)             setting 'casechanger=expl3'.
+
+(/usr/share/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
+(/usr/share/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2022-01-12 L3 Experimental document command parser
+)
+Package: blx-case-expl3 2022/02/02 v3.17 expl3 case changing code for biblatex
 ))
 (/usr/share/texmf-dist/tex/latex/blindtext/blindtext.sty
 Package: blindtext 2012/01/06 V2.0 blindtext-Package
@@ -293,49 +315,48 @@ Package: blindtext 2012/01/06 V2.0 blindtext-Package
 (/usr/share/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-\c@blindtext=\count383
-\c@Blindtext=\count384
-\c@blind@countparstart=\count385
-\blind@countxx=\count386
-\blindtext@numBlindtext=\count387
-\blind@countyy=\count388
-\c@blindlist=\count389
-\c@blindlistlevel=\count390
-\c@blindlist@level=\count391
-\blind@listitem=\count392
-\c@blind@listcount=\count393
-\c@blind@levelcount=\count394
-\blind@mathformula=\count395
-\blind@Mathformula=\count396
-\c@blind@randomcount=\count397
-\c@blind@randommax=\count398
-\c@blind@pangramcount=\count399
-\c@blind@pangrammax=\count400
+\c@blindtext=\count386
+\c@Blindtext=\count387
+\c@blind@countparstart=\count388
+\blind@countxx=\count389
+\blindtext@numBlindtext=\count390
+\blind@countyy=\count391
+\c@blindlist=\count392
+\c@blindlistlevel=\count393
+\c@blindlist@level=\count394
+\blind@listitem=\count395
+\c@blind@listcount=\count396
+\c@blind@levelcount=\count397
+\blind@mathformula=\count398
+\blind@Mathformula=\count399
+\c@blind@randomcount=\count400
+\c@blind@randommax=\count401
+\c@blind@pangramcount=\count402
+\c@blind@pangrammax=\count403
 )
 (/usr/share/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
-\c@tracingmulticols=\count401
-\mult@box=\box50
+\c@tracingmulticols=\count404
+\mult@box=\box51
 \multicol@leftmargin=\dimen139
-\c@unbalance=\count402
-\c@collectmore=\count403
-\doublecol@number=\count404
-\multicoltolerance=\count405
-\multicolpretolerance=\count406
+\c@unbalance=\count405
+\c@collectmore=\count406
+\doublecol@number=\count407
+\multicoltolerance=\count408
+\multicolpretolerance=\count409
 \full@width=\dimen140
 \page@free=\dimen141
 \premulticols=\dimen142
 \postmulticols=\dimen143
 \multicolsep=\skip71
 \multicolbaselineskip=\skip72
-\partial@page=\box51
-\last@line=\box52
+\partial@page=\box52
+\last@line=\box53
 \maxbalancingoverflow=\dimen144
-\mult@rightbox=\box53
-\mult@grightbox=\box54
-\mult@firstbox=\box55
-\mult@gfirstbox=\box56
-\@tempa=\box57
+\mult@rightbox=\box54
+\mult@grightbox=\box55
+\mult@firstbox=\box56
+\mult@gfirstbox=\box57
 \@tempa=\box58
 \@tempa=\box59
 \@tempa=\box60
@@ -371,31 +392,32 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \@tempa=\box90
 \@tempa=\box91
 \@tempa=\box92
-\c@minrows=\count407
-\c@columnbadness=\count408
-\c@finalcolumnbadness=\count409
+\@tempa=\box93
+\c@minrows=\count410
+\c@columnbadness=\count411
+\c@finalcolumnbadness=\count412
 \last@try=\dimen145
 \multicolovershoot=\dimen146
 \multicolundershoot=\dimen147
-\mult@nat@firstbox=\box93
-\colbreak@box=\box94
-\mc@col@check@num=\count410
+\mult@nat@firstbox=\box94
+\colbreak@box=\box95
+\mc@col@check@num=\count413
 )
 (/usr/share/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 Package: ragged2e 2021/12/15 v3.1 ragged2e Package
 
 (/usr/share/texmf-dist/tex/latex/footmisc/footmisc.sty
-Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+Package: footmisc 2022/03/08 v6.0d a miscellany of footnote facilities
 \FN@temptoken=\toks17
 \footnotemargin=\dimen148
-\c@pp@next@reset=\count411
-Package footmisc Info: Declaring symbol style bringhurst on input line 855.
-Package footmisc Info: Declaring symbol style chicago on input line 863.
-Package footmisc Info: Declaring symbol style wiley on input line 872.
-Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+\@outputbox@depth=\dimen149
+Package footmisc Info: Declaring symbol style bringhurst on input line 695.
+Package footmisc Info: Declaring symbol style chicago on input line 703.
+Package footmisc Info: Declaring symbol style wiley on input line 712.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 723.
 
-Package footmisc Info: Declaring symbol style lamport* on input line 903.
-Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+Package footmisc Info: Declaring symbol style lamport* on input line 743.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 764
 .
 )
 \CenteringLeftskip=\skip73
@@ -419,17 +441,17 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (/usr/share/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count412
-\Gm@cntv=\count413
-\c@Gm@tempcnt=\count414
-\Gm@bindingoffset=\dimen149
-\Gm@wd@mp=\dimen150
-\Gm@odd@mp=\dimen151
-\Gm@even@mp=\dimen152
-\Gm@layoutwidth=\dimen153
-\Gm@layoutheight=\dimen154
-\Gm@layouthoffset=\dimen155
-\Gm@layoutvoffset=\dimen156
+\Gm@cnth=\count414
+\Gm@cntv=\count415
+\c@Gm@tempcnt=\count416
+\Gm@bindingoffset=\dimen150
+\Gm@wd@mp=\dimen151
+\Gm@odd@mp=\dimen152
+\Gm@even@mp=\dimen153
+\Gm@layoutwidth=\dimen154
+\Gm@layoutheight=\dimen155
+\Gm@layouthoffset=\dimen156
+\Gm@layoutvoffset=\dimen157
 \Gm@dimlist=\toks18
 )
 (/usr/share/texmf-dist/tex/latex/amsmath/amsmath.sty
@@ -443,46 +465,46 @@ Package: amstext 2021/08/26 v2.01 AMS text
 (/usr/share/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks19
-\ex@=\dimen157
+\ex@=\dimen158
 ))
 (/usr/share/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen158
+\pmbraise@=\dimen159
 )
 (/usr/share/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2021/08/26 v2.02 operator names
 )
-\inf@bad=\count415
+\inf@bad=\count417
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count416
-\leftroot@=\count417
+\uproot@=\count418
+\leftroot@=\count419
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count418
-\DOTSCASE@=\count419
+\classnum@=\count420
+\DOTSCASE@=\count421
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box95
-\strutbox@=\box96
-\big@size=\dimen159
+\Mathstrutbox@=\box96
+\strutbox@=\box97
+\big@size=\dimen160
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count420
-\c@MaxMatrixCols=\count421
+\macc@depth=\count422
+\c@MaxMatrixCols=\count423
 \dotsspace@=\muskip21
-\c@parentequation=\count422
-\dspbrk@lvl=\count423
+\c@parentequation=\count424
+\dspbrk@lvl=\count425
 \tag@help=\toks20
-\row@=\count424
-\column@=\count425
-\maxfields@=\count426
+\row@=\count426
+\column@=\count427
+\maxfields@=\count428
 \andhelp@=\toks21
-\eqnshift@=\dimen160
-\alignsep@=\dimen161
-\tagshift@=\dimen162
-\tagwidth@=\dimen163
-\totwidth@=\dimen164
-\lineht@=\dimen165
+\eqnshift@=\dimen161
+\alignsep@=\dimen162
+\tagshift@=\dimen163
+\tagwidth@=\dimen164
+\totwidth@=\dimen165
+\lineht@=\dimen166
 \@envbody=\toks22
 \multlinegap=\skip88
 \multlinetaggap=\skip89
@@ -520,21 +542,22 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
 (/usr/share/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
 
 (/usr/share/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen166
-\captionmargin@=\dimen167
-\captionwidth=\dimen168
-\caption@tempdima=\dimen169
-\caption@indent=\dimen170
-\caption@parindent=\dimen171
-\caption@hangindent=\dimen172
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
+\caption@tempdima=\dimen167
+\captionmargin=\dimen168
+\caption@leftmargin=\dimen169
+\caption@rightmargin=\dimen170
+\caption@width=\dimen171
+\caption@indent=\dimen172
+\caption@parindent=\dimen173
+\caption@hangindent=\dimen174
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count427
-\c@continuedfloat=\count428
+\c@caption@flags=\count429
+\c@continuedfloat=\count430
 )
 (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
@@ -550,22 +573,20 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 )
-\Gin@req@height=\dimen173
-\Gin@req@width=\dimen174
+\Gin@req@height=\dimen175
+\Gin@req@width=\dimen176
 )
 (/usr/share/texmf-dist/tex/latex/caption/subcaption.sty
-Package: subcaption 2020/10/07 v1.3j Sub-captions (AR)
-\c@subfigure=\count429
-\c@subtable=\count430
+Package: subcaption 2022/01/07 v1.5 Sub-captions (AR)
+\c@subfigure=\count431
+\c@subtable=\count432
 )
-\@quotelevel=\count431
-\@quotereset=\count432
+\@quotelevel=\count433
+\@quotereset=\count434
+ (./paper.aux
 
-(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2021-12-14 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count433
-\l__pdf_internal_box=\box97
-) (./paper.aux
+LaTeX Warning: Label `fig:pipeline' multiply defined.
+
 
 LaTeX Warning: Label `tab:table1' multiply defined.
 
@@ -576,18 +597,6 @@ LaTeX Warning: Label `tab:table1' multiply defined.
 LaTeX Warning: Label `tab:table2' multiply defined.
 
 
-LaTeX Warning: Label `fig:pipeline' multiply defined.
-
-
-LaTeX Warning: Label `fig:ae_dim_reduction' multiply defined.
-
-
-LaTeX Warning: Label `fig:outliers' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:outliers' multiply defined.
-
-
 LaTeX Warning: Label `fig:outliers' multiply defined.
 
 
@@ -598,39 +607,6 @@ LaTeX Warning: Label `fig:dense_cities' multiply defined.
 
 
 LaTeX Warning: Label `sub@fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `fig:outliers' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:outliers' multiply defined.
-
-
-LaTeX Warning: Label `fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `fig:outliers' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:outliers' multiply defined.
-
-
-LaTeX Warning: Label `fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:dense_cities' multiply defined.
-
-
-LaTeX Warning: Label `fig:outliers_vs_dense_cities' multiply defined.
 
 )
 \openout1 = `paper.aux'.
@@ -652,27 +628,11 @@ LaTeX Font Info:    ... okay on input line 28.
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2020/12/31 v3.16 biblatex localization (PK/MW)
+File: english.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-Package biblatex Info: Document encoding is UTF8 ....
-
-(/usr/share/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2021-11-22 L3 programming layer (loader) 
-)
-Package biblatex Info: ... and expl3
-(biblatex)             2021-11-22 L3 programming layer (loader) 
-(biblatex)             is new enough (at least 2020/04/06),
-(biblatex)             setting 'casechanger=expl3'.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
-(/usr/share/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2021-11-12 L3 Experimental document command parser
-)
-Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
-)
 \openout3 = `paper.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
@@ -718,16 +678,16 @@ Package ragged2e Info: ABD: executing \RaggedRight on input line 28.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count434
-\scratchdimen=\dimen175
+\scratchcounter=\count435
+\scratchdimen=\dimen177
 \scratchbox=\box98
-\nofMPsegments=\count435
-\nofMParguments=\count436
+\nofMPsegments=\count436
+\nofMParguments=\count437
 \everyMPshowfont=\toks24
-\MPscratchCnt=\count437
-\MPscratchDim=\dimen176
-\MPnumerator=\count438
-\makeMPintoPDFobject=\count439
+\MPscratchCnt=\count438
+\MPscratchDim=\dimen178
+\MPnumerator=\count439
+\makeMPintoPDFobject=\count440
 \everyMPtoPDFconversion=\toks25
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -740,152 +700,150 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 36.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 35.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 36.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 35.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.
-png, id=15, 806.26219pt x 684.30656pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_ma
-trix.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_mat
-rix.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/corr_matrix.png  used on input line 143.
-(pdftex.def)             Requested size: 505.89pt x 429.37166pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.png
-, id=22, 459.96844pt x 594.72188pt>
+, id=20, 459.96844pt x 594.72188pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipelin
 e.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline
 .png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/pipeline.png  used on input line 155.
+raft/images/pipeline.png  used on input line 82.
 (pdftex.def)             Requested size: 284.5458pt x 369.88531pt.
+</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.
+png, id=21, 806.26219pt x 684.30656pt>
+File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_ma
+trix.png Graphic file (type png)
+<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_mat
+rix.png>
+Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+raft/images/corr_matrix.png  used on input line 102.
+(pdftex.def)             Requested size: 354.12144pt x 300.55284pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 157--157
- [] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[3 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matr
-ix.png (PNG copy)>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[4 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.
+[3 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.
 png (PNG copy)>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[5]
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded_r2
-.png, id=35, 1172.12906pt x 647.41875pt>
+.png, id=29, 1172.12906pt x 647.41875pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencod
 ed_r2.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencode
 d_r2.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/unencoded_r2.png  used on input line 286.
+raft/images/unencoded_r2.png  used on input line 141.
 (pdftex.def)             Requested size: 404.71353pt x 223.53752pt.
- [6 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencode
-d_r2.png (PNG copy)>]
+ [4 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_mat
+rix.png (PNG copy)>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded
+_r2.png (PNG copy)>] [6]
+Overfull \hbox (11.83308pt too wide) in paragraph at lines 249--250
+\OT1/cmr/m/n/10 er-ated by the PCA and AE mod-els. While PCA was over-all less 
+noisy, we found that the au-toen-coder model achieved 
+ []
+
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims
-.png, id=39, 1218.80344pt x 691.08188pt>
+.png, id=41, 1218.80344pt x 691.08188pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all
 _dims.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_
 dims.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/pca_all_dims.png  used on input line 296.
-(pdftex.def)             Requested size: 404.71353pt x 229.4813pt.
+raft/images/pca_all_dims.png  used on input line 254.
+(pdftex.def)             Requested size: 354.11345pt x 199.16429pt.
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all
 _dims.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_
 dims.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/pca_all_dims.png  used on input line 302.
-(pdftex.def)             Requested size: 404.71353pt x 229.4813pt.
- [7 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_
-dims.png (PNG copy)>]
+raft/images/pca_all_dims.png  used on input line 261.
+(pdftex.def)             Requested size: 354.11345pt x 199.16429pt.
+[7 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_d
+ims.png (PNG copy)>]
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.png, 
-id=44, 648.2619pt x 711.8595pt>
+id=46, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.
 png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.p
 ng>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/region.png  used on input line 312.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/region.png  used on input line 273.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-us.p
-ng, id=46, 648.2619pt x 711.8595pt>
+ng, id=48, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside
 -us.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-
 us.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/outside-us.png  used on input line 317.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/outside-us.png  used on input line 277.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/california.p
-ng, id=47, 648.2619pt x 711.8595pt>
+ng, id=49, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/califor
 nia.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/californ
 ia.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/california.png  used on input line 322.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/california.png  used on input line 281.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.png, i
-d=48, 648.2619pt x 711.8595pt>
+d=50, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.p
 ng Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.pn
 g>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/texas.png  used on input line 327.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/texas.png  used on input line 285.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york.png
-, id=49, 648.2619pt x 711.8595pt>
+, id=51, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-yor
 k.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york
 .png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/new-york.png  used on input line 332.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/new-york.png  used on input line 289.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesota.pn
-g, id=50, 648.2619pt x 711.8595pt>
+g, id=52, 648.2619pt x 711.8595pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minneso
 ta.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesot
 a.png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/minnesota.png  used on input line 337.
-(pdftex.def)             Requested size: 202.35384pt x 184.9379pt.
+raft/images/minnesota.png  used on input line 293.
+(pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 
-Overfull \hbox (1011.77995pt too wide) in paragraph at lines 311--341
-[]$[]$$[]$$[]$$[]$$[]$$[]$  
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 272--296
+[][] [] 
+ []
+
+
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 272--296
+[] [] 
+ []
+
+
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 272--296
+[] []  
  []
 
 [8 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.pn
@@ -895,86 +853,107 @@ ornia.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/t
 exas.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/ne
 w-york.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/
 minnesota.png>]
+</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population.p
+ng, id=62, 650.43pt x 714.0276pt>
+File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populat
+ion.png Graphic file (type png)
+<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populati
+on.png>
+Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+raft/images/population.png  used on input line 307.
+(pdftex.def)             Requested size: 252.94217pt x 284.52736pt.
+</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population_3
+and4.png, id=63, 650.43pt x 714.0276pt>
+File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populat
+ion_3and4.png Graphic file (type png)
+<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populati
+on_3and4.png>
+Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+raft/images/population_3and4.png  used on input line 311.
+(pdftex.def)             Requested size: 252.94217pt x 284.52736pt.
+
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 306--314
+[][] []  
+ []
+
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.png,
- id=60, 887.315pt x 929.4725pt>
+ id=64, 887.315pt x 929.4725pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1
 .png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.
 png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/o3-dim1.png  used on input line 349.
-(pdftex.def)             Requested size: 252.94156pt x 284.51694pt.
+raft/images/o3-dim1.png  used on input line 328.
+(pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first.png
-, id=61, 887.315pt x 929.4725pt>
+, id=65, 887.315pt x 929.4725pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-firs
 t.png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first
 .png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/o3-first.png  used on input line 354.
-(pdftex.def)             Requested size: 252.94156pt x 284.51694pt.
+raft/images/o3-first.png  used on input line 334.
+(pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2.png,
- id=62, 887.315pt x 929.4725pt>
+ id=66, 887.315pt x 929.4725pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2
 .png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2.
 png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/o3-dim2.png  used on input line 359.
-(pdftex.def)             Requested size: 252.94156pt x 284.51694pt.
+raft/images/o3-dim2.png  used on input line 340.
+(pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last.png,
- id=63, 887.315pt x 929.4725pt>
+ id=67, 887.315pt x 929.4725pt>
 File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last
 .png Graphic file (type png)
 <use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last.
 png>
 Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
-raft/images/o3-last.png  used on input line 364.
-(pdftex.def)             Requested size: 252.94156pt x 284.51694pt.
+raft/images/o3-last.png  used on input line 346.
+(pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
 
-Overfull \hbox (505.88997pt too wide) in paragraph at lines 348--368
-[]$[]$$[]$$[]$$[]$  
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 326--350
+[][] [] 
  []
 
-[9 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.p
-ng> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first
-.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim
-2.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-la
-st.png>]
 
-LaTeX Warning: Citation 'Bai2019' on page 10 undefined on input line 391.
+Overfull \hbox (3.33331pt too wide) in paragraph at lines 326--350
+[] []  
+ []
 
 
-Overfull \hbox (6.29652pt too wide) in paragraph at lines 396--396
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populatio
+n.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/popul
+ation_3and4.png>] [10 </home/nick/github_repos/Pollution-Autoencoders/paper-dra
+ft/images/o3-dim1.png> </home/nick/github_repos/Pollution-Autoencoders/paper-dr
+aft/images/o3-first.png> </home/nick/github_repos/Pollution-Autoencoders/paper-
+draft/images/o3-dim2.png> </home/nick/github_repos/Pollution-Autoencoders/paper
+-draft/images/o3-last.png>] [11]
+Overfull \hbox (6.29652pt too wide) in paragraph at lines 366--366
 \OT1/cmr/m/n/10 Data''. In: \OT1/cmr/m/it/10 2018 IEEE In-ter-na-tional Con-fer
 -ence on Big Data (Big Data)\OT1/cmr/m/n/10 , pp. 2403{2412. \OT1/cmr/m/sc/10 d
 oi\OT1/cmr/m/n/10 : $\OT1/cmtt/m/n/10 10 . 1109 / BigData . 
  []
 
-[10] (./paper.aux)
-
-LaTeX Warning: There were undefined references.
-
+[12] (./paper.aux)
 
 LaTeX Warning: There were multiply-defined labels.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                paper
-(biblatex)                and rerun LaTeX afterwards.
 
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 13085 strings out of 478353
- 246992 string characters out of 5854635
- 973192 words of memory out of 5000000
- 31059 multiletter control sequences out of 15000+600000
- 414296 words of font info for 69 fonts, out of 8000000 for 9000
+ 13404 strings out of 478238
+ 254569 string characters out of 5850456
+ 973494 words of memory out of 5000000
+ 31487 multiletter control sequences out of 15000+600000
+ 480125 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,12n,63p,783b,1417s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,68p,1184b,1427s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -992,10 +971,10 @@ nts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
 xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/
 cm-super/sfrm1000.pfb>
-Output written on paper.pdf (10 pages, 2621529 bytes).
+Output written on paper.pdf (12 pages, 3015717 bytes).
 PDF statistics:
- 158 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
+ 168 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
 

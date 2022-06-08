@@ -1,17 +1,17 @@
-[0] Config.pm:311> INFO - This is Biber 2.16
-[0] Config.pm:314> INFO - Logfile is 'paper.blg'
-[59] biber:340> INFO - === Tue Dec 21, 2021, 09:55:38
-[70] Biber.pm:415> INFO - Reading 'paper.bcf'
-[122] Biber.pm:952> INFO - Found 11 citekeys in bib section 0
-[133] Biber.pm:4340> INFO - Processing section 0
-[141] Biber.pm:4531> INFO - Looking for bibtex format file 'ref.bib' for section 0
-[143] bibtex.pm:1689> INFO - LaTeX decoding ...
-[159] bibtex.pm:1494> INFO - Found BibTeX data source 'ref.bib'
-[243] Utils.pm:395> WARN - legacy month field 'Apr.' in entry 'CommutingFlowPrediction' is not an integer - this will probably not sort properly.
-[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[265] Biber.pm:4168> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[265] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-US'
-[278] bbl.pm:654> INFO - Writing 'paper.bbl' with encoding 'UTF-8'
-[287] bbl.pm:757> INFO - Output to paper.bbl
-[287] Biber.pm:128> INFO - WARNINGS: 1
+[0] Config.pm:307> INFO - This is Biber 2.17
+[0] Config.pm:310> INFO - Logfile is 'paper.blg'
+[83] biber:340> INFO - === Wed Jun  8, 2022, 09:34:40
+[95] Biber.pm:418> INFO - Reading 'paper.bcf'
+[169] Biber.pm:972> INFO - Found 14 citekeys in bib section 0
+[181] Biber.pm:4383> INFO - Processing section 0
+[195] Biber.pm:4574> INFO - Looking for bibtex file 'ref.bib' for section 0
+[197] bibtex.pm:1713> INFO - LaTeX decoding ...
+[228] bibtex.pm:1518> INFO - Found BibTeX data source 'ref.bib'
+[400] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[401] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[401] Biber.pm:4203> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[401] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
+[429] bbl.pm:654> INFO - Writing 'paper.bbl' with encoding 'UTF-8'
+[447] bbl.pm:757> INFO - Output to paper.bbl
+[447] Biber.pm:130> WARN - legacy month field 'Apr.' in entry 'CommutingFlowPrediction' is not an integer - this will probably not sort properly.
+[447] Biber.pm:132> INFO - WARNINGS: 1

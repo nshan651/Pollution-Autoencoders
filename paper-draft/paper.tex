@@ -11,11 +11,11 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{subcaption}
+
 \addbibresource{ref.bib}
 
 % Define macros
 \newcommand\note[1]{\textbf{\textcolor{red}{#1}}}
-\newcommand{\comment}[1]{}
 
 % Captions
 \captionsetup{justification = raggedright, singlelinecheck = false, labelfont=bf}
@@ -26,7 +26,6 @@
 \date{}
 
 \begin{document}
-
 % Indentation
 \setlength{\parindent}{3ex}
 \setlength{\parskip}{0.25ex}
@@ -41,116 +40,40 @@
 \end{centering}
 
 \begin{abstract}
-Climate change is one of the most complex challenges humanity has ever faced. It is a
-multi-dimensional problem that poses economic, social, scientific, political, and 
-moral questions that must be addressed. One of the most important ways of 
-combating climate change is to research pollution mitigation strategies 
-so that policy makers and government planners are better equipped to  make 
-informed decisions. We focused on the principle cause of global warming:
-the polluting gases responsible for the rapid shift in global climate.
-We characterize cities by the amount of pollution present using an undercomplete autoencoder
-model. By representing the level of eight toxic gases present in numerous cities
-across the United States, we explore some of the more prominent features 
-that characterize urban pollution. We compare two techniques for reducing 
-the dimensionality of our input - Principle Component Analysis (PCA) and
-Autoencoders. The first two hidden dimensions represented
-a large percentage of the explained variance in the model, so we cluster
-the cities in an effort to extract any useful features. 
+
+One of the most important ways of combating climate change is to better understand the way that polluting gas levels are geographically distributed. We characterize cities by the amount of pollution present using an autoencoder model. By representing the level of eight toxic gases present in numerous cities across the Uninited States, we explore some of the more prominent features that characterize urban air pollution. We compare two techniques for reducing the dimensionality of our input - Principle Component Analysis (PCA) and a single-layer autoencoder model. We found that the autoencoder was able to explain a larger percentage of the explainable variance for nearly all of the eight gases and particulates. Moreover, we found that the first two hidden dimensions represented 50\% of the total explainable variance for Tropospheric Ozone ($O_3$). Because of this, we compared the clustering of cities along the two axes using several geographic categories, including by region and by population. We found that although there was significant clustering by region, there was no such clustering for the top two hundred most populous U.S. cities.
+
+%Climate change is one of the most complex challenges humanity has ever faced. It is a multi-dimensional problem that poses economic, social, scientific, political, and moral questions that must be addressed. One of the most important ways of combating climate change is to research pollution mitigation strategies so that policy makers and government planners are better equipped to make informed decisions. We focused on the principle cause of global warming: the polluting gases responsible for the rapid shift in global climate. We characterize cities by the amount of pollution present using an undercomplete autoencoder model. By representing the level of eight toxic gases present in numerous cities across the United States, we explore some of the more prominent features that characterize urban pollution. We compare two techniques for reducing the dimensionality of our input - Principle Component Analysis (PCA) and Autoencoders. The first two hidden dimensions represented a large percentage of the explained variance in the model, so we cluster the cities in an effort to extract any useful features. \note{Must have quantifiable results, update later!} 
 \end{abstract}
 
 \vspace{0.25cm}
+
 \section{Introduction}
 
-\par For the past several decades, air pollution has become a major concern for human health
-and the environment. The EPA sets national air quality standards for  six major air
-toxins: ground level Ozone (O$_3$), Carbon Monoxide (CO), Sulfur Dioxide (SO$_2$),
-Lead (Pb), Nitrogen Dioxide (NO$_2$), and particulate matter (PM). The sources of these emissions vary, but the two largest contributors are industrial processes and motorized vehicles. \parencite{NAAQS09}.
+\par For the past several decades, air pollution has become a major concern for human health and the environment. The EPA sets national air quality standards for  six major air toxins: ground level Ozone (O$_3$), Carbon Monoxide (CO), Sulfur Dioxide (SO$_2$), Lead (Pb), Nitrogen Dioxide (NO$_2$), and particulate matter (PM). The sources of these emissions vary, but the two largest contributors are industrial processes and motorized vehicles. \parencite{NAAQS09}.
 \par We wanted to explore how various polluting gases can be characterized with respect to location in an effort to provide researchers and policy makers with the context and tools necessary to make informed decisions. By creating an embedding of time series pollution data for numerous cities throughout the United States, we explore the more interesting features of the model as well as apply it to tangential areas such as the pollution generated by industrial farming and animal husbandry activities.
-
 \par In this paper we use two different methods for data compression, autoencoders and principle component analysis (PCA). The models are trained using time series data for eight different polluting gases. The trained models are compared in terms of efficiency and data loss. The fluctuations in explainable variance when predicting a target allow us to quantify the discrepency between the model results and actual data. In this case, the models are trained to predict a single feature out of the time series data, which represents the daily pollutant averages for a single day. Once the training process is complete, the trained models are employed to create embeddings for various encoder dimensions. 
-
 \par Given the relatively short time span of our features along with the fact that pollution levels do not tend to vary drastrically day-to-day, it is evident that there is a strong correlation among features. While a healthy correlation among features is encouraged, abnormally strong values
 relfect redundancy and end up being a burden on the model. \parencite{featureredundancy}. Ideally there would be high correlation between features and the problem class and a low correlation among the features themselves.
 
 \section{Related Work}
-\par The idea of generating embeddings for a location is a highly potential expanse for
-research. The two major forces behind its competency are the fact that large volumes of
-data is being effectively compressed and that these embeddings, when plugged into any
-model could effectively represent any given location.  A lot of research is being done 
-on location embeddings in recent times. 
-\par For instance, location embeddings are being 
-generated based on human-mobility data \parencite{GeoEmbeddings} to understand the 
-behavioral proximity between different locations irrespective of their spatial distances.
-The sequence of locations that are frequently travelled were fed to a Skip-gram Word2vec 
-model to generate the location embeddings. 
-\par Another approach that was implemented to 
-leverage location embeddings is GPS2Vec  \parencite{GPS2Vec}.  This application consists
-of a neural network that would generate embeddings for a location, based on the semantic 
-contexts that are sourced from the user content published on multiple digital platforms.
-With the integration of these embeddings, a successful geo-tagged image classification 
-task is demonstrated. 
-\par In another effort\parencite{PlaceDeduplication}, the location embeddings derived from user content such as addresses, phone numbers, images, place
-names and all other details from multiple individual online posts, are compressed to 
-form low dimensional embeddings to solve the place duplication issue. Deduplication of 
-locations, is a paramount task for any digital platform since they provide a place graph
-to its users, which is the result of merging location data from multiple sources. This 
-merge leads to duplicity since different sources could hold different names for the same 
-place. By applying K-NN search, pair-wise duplication prediction on these generated 
-location embeddings, the application can identify the duplicates and eliminate them to 
-result in an efficient place graph.
-\par In 2018, a new approach, “DeepMove” is proposed \parencite{DeepMove}. This 
-implementation employs Trip model and OD model to learn latent representations of 
-places.  The approach is successfully applied to New York city yellow taxi dataset – 
-“includes pick-up/drop-off times, the number of passengers, pick-up/drop-off locations 
-represented by longitude and latitude, trip distance, rate types, payment type, and
-itemized fares” \parencite{DeepMove}. Similarities among locations in New York city are 
-derived effectively with “DeepMove”. To resolve the dissonance that arises from the 
-fusion of geographic and semantic features of a location, an unsupervised learning 
-implementation had been demonstrated that would derive location embeddings from human 
-trajectories \parencite{DisentangledLocationEmbeddings}. 
-\par With the ever-growing 
-footprint of digital and social media platforms in everyday life of an individual, a
-lot of research is happening to generate embeddings based on the content posted in 
-different locations. LeGo-CM is one such effort that would generate embeddings of 
-geotagged tweets \parencite{GeotaggedTweets}. The resulting embeddings could be 
-applied to understand the kind of content each location reflects. 
-\par Venue2Vec is another 
-idea that is implemented to enhance the location-aware services in various platforms 
-\parencite{Venue2Vec}. This model is trained on semantic data, temporal-spatial context 
-and sequential relations among locations to generate embeddings. This makes sure that 
-locations with similar data would fall close, when plotted in a multi-dimensional space,
-based on the input features. Hence, the model is effective in predicting the next and  
-future check-in location. 
-\par Community Flow prediction is another area of interest where
-embeddings are a major problem solver. Geo-contextual Multitask Embedding Learner (GMEL)
-, is a model that uses “Graph Attention Network” to encode geographical contexts and 
-spatial correlations to generate location embeddings \parencite{CommutingFlowPrediction}.
-These embeddings are further used to predict the community fow that serves as a vital
-factor in policy establishment and metro planning.
+\par The idea of generating embeddings for a location is a highly potential expanse for research. The two major forces behind its competency are the fact that large volumes of data is being effectively compressed and that these embeddings, when plugged into any model could effectively represent any given location.  A lot of research is being done on location embeddings in recent times. 
+\par For instance, location embeddings are being generated based on human-mobility data \parencite{GeoEmbeddings} to understand the behavioral proximity between different locations irrespective of their spatial distances. The sequence of locations that are frequently travelled were fed to a Skip-gram Word2vec model to generate the location embeddings. 
+\par Another approach that was implemented to leverage location embeddings is GPS2Vec  \parencite{GPS2Vec}. This application consists of a neural network that would generate embeddings for a location, based on the semantic contexts that are sourced from the user content published on multiple digital platforms. With the integration of these embeddings, a successful geo-tagged image classification task is demonstrated. 
+\par In another effort\parencite{PlaceDeduplication}, the location embeddings derived from user content such as addresses, phone numbers, images, place names and all other details from multiple individual online posts, are compressed to form low dimensional embeddings to solve the place duplication issue. Deduplication of locations, is a paramount task for any digital platform since they provide a place graph to its users, which is the result of merging location data from multiple sources. This merge leads to duplicity since different sources could hold different names for the same place. By applying K-NN search, pair-wise duplication prediction on these generated location embeddings, the application can identify the duplicates and eliminate them to result in an efficient place graph.
+\par In 2018, a new approach, “DeepMove” is proposed \parencite{DeepMove}. This implementation employs Trip model and OD model to learn latent representations of places.  The approach is successfully applied to New York city yellow taxi dataset – “includes pick-up/drop-off times, the number of passengers, pick-up/drop-off locations represented by longitude and latitude, trip distance, rate types, payment type, and itemized fares” \parencite{DeepMove}. Similarities among locations in New York city are derived effectively with “DeepMove”. To resolve the dissonance that arises from the fusion of geographic and semantic features of a location, an unsupervised learning implementation had been demonstrated that would derive location embeddings from human trajectories \parencite{DisentangledLocationEmbeddings}. 
+\par With the ever-growing footprint of digital and social media platforms in everyday life of an individual, a lot of research is happening to generate embeddings based on the content posted in different locations. LeGo-CM is one such effort that would generate embeddings of geotagged tweets \parencite{GeotaggedTweets}. The resulting embeddings could be applied to understand the kind of content each location reflects.
+\par Venue2Vec is another idea that is implemented to enhance the location-aware services in various platforms \parencite{Venue2Vec}. This model is trained on semantic data, temporal-spatial context and sequential relations among locations to generate embeddings. This makes sure that locations with similar data would fall close, when plotted in a multi-dimensional space, based on the input features. Hence, the model is effective in predicting the next and future check-in location. 
+\par Community Flow prediction is another area of interest where embeddings are a major problem solver. Geo-contextual Multitask Embedding Learner (GMEL), is a model that uses “Graph Attention Network” to encode geographical contexts and spatial correlations to generate location embeddings \parencite{CommutingFlowPrediction}. These embeddings are further used to predict the community fow that serves as a vital factor in policy establishment and metro planning.
 
 \section{Methodology}
 
-\par Two different methods were used to reduce the dimensionality of the data - principle component analysis (PCA) and autoencoders. A simple linear regression was performed on the encoded data that was generated by both the PCA and autoencoder models. Additionally, a linear regression on the unencoded values was performed for comparison. Each model's goodness of fit was evaluated using the percentage of explained variance of the three linear regressions.
-
-\par In order to explore the nature of the dataset, we calculated the Pearson correlation coefficient of the normalized timeseries data. The Pearson correlation coefficient allows us allows us to observe the strength of the linear correlation between features. 
-
-\begin{equation*}
-    r_{XY}=\frac{cov(X,Y)}{\sigma_{X} \cdot \sigma_{Y}}
-\end{equation*}
-
-% Correlation Matrix 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.png}
-\end{center}
-    \caption{Correlation Matrix for Carbon Monoxide (daily averages for cities throughout the US)}
-\label{fig:matrix}
-\end{figure}
-
+\par In order to execute the proposed idea of pollution data compression, we orchestrated the data through multiple models. We began by applying a linear regression the uncompressed data, which gave us the requisite baseline performance scores to compare the embeddings with. Next, we tuned, trained, and tested eight autoencoder (AE) models and eight principle component analysis (PCA) models. The model metrics of the AE and PCA models are evaluated, and the resulting embeddings are applied to two further linear regressions. Lastly, the scores of the AE and PCA models are compared against the baseline scores to evaluate the performance, efficiency and quality of the embeddings.
 
 \par As previously mentioned in the introduction, the correlation between features was revealed to be rather high. In particular, days one hundred thirty-five to one hundred-eighty nearly all have a correlation coefficient greater than 0.75. This resulted in some overfitting which can be seen in the autoencoder and pca explainable variance scores, which were greater than the unencoded scores.
 
 \newpage
+
 \begin{Center}
 \begin{figure}[h!]
 \caption{Data Pipeline}
@@ -162,10 +85,27 @@ factor in policy establishment and metro planning.
 \end{Center}
 
 \subsection{Data Collection and Preprocessing}
-The dataset was created using OpenWeather's Air Pollution API. The dataset includes data for 
-eight polluting gases and particulates: CO, NO, NO$_2$, O$_3$, SO$_2$, NH$_3$, PM$_{2.5}$, 
-and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude and longitude (part of the input), and the air quality index (aqi). We chose not to use the aqi because it is overall less sensitive to change and is unlikely to reveal any long-term patterns over such a short time span .
-\par We looked at data for the eight pollutants over a five month time frame: January 27th, 2020 through June 6th, 2021. The final dataset includes just over eighteen thousand cities in the United States and other U.S. territories. We found it easier to focus on a single gas when developing the models, so we chose to concentrate on CO during the engineering process. The same process was then applied to the other seven gases and particulates after the development was completed.
+
+\par The dataset was created using OpenWeather's Air Pollution API. The API offers approximately six months of historical pollution data with hourly granularity. The hourly pollution data does not fluctuate drastically over a given day, so we opted to derive the daily average. Doing this made the feature set proportional to the number of cities we had data for; it also reduced the computational load without signifcantly affecting performance. 
+
+\par In a preemptive effort to explore the dataset, we calculated the Pearson correlation coefficient of the normalized temporal data. The Pearson correlation coefficient allows us allows us to observe the strength of the linear correlation between features. 
+
+\begin{equation*}
+    r_{XY}=\frac{cov(X,Y)}{\sigma_{X} \cdot \sigma_{Y}}
+\end{equation*}
+
+\par The correlation matrix of the resultant features illustrates that there are some features with strong correlation bonds, largely toward the end of the feature list. This reflects the fact that the average proportion of the pollutant is similar on some days. The short term consecutive increase in correlation demonstrates that the sources of emission follow a pattern over certain months of the year. Another possibility is that the pollution levels are influenced by some natural phenomenon. Either possibility is difficult to prove given the relatively short time frame of our data. However, there is evidence suggesting that temperature increases have a positive correlation with rising pollution levels, which could explain the stronger correlation present in the summer months of the dataset \parencite{jayamurugan2013}.
+
+% Correlation Matrix 
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.png}
+\end{center}
+    \caption{Correlation Matrix for Carbon Monoxide (daily averages for cities throughout the US)}
+\label{fig:matrix}
+\end{figure}
+
+\par We looked at data for the eight pollutants over a six month time frame: January 27th, 2020 through June 6th, 2021. The final dataset includes just over eighteen thousand cities in the United States and other U.S. territories. The eight polluting gases and particulates that we selected were CO, NO, NO$_2$, O$_3$, SO$_2$, NH$_3$, PM$_{2.5}$, and PM$_{10}$. The air quality index (aqi) was also included, but we chose not to include it because it is overall less sensitive to change and is unlikely to reveal any long-term patterns over such a short time span. Additionally, we found it easier to focus on a single gas when developing the models, so we chose to concentrate on O$_{3}$ during the engineering process. The same process was then applied to the other seven gases and particulates after the development was completed.
 
 % dataset characteristics table
 \begin{table}[h!]
@@ -187,10 +127,22 @@ and PM$_{10}$. Also included was the city name, hourly timestamp, the latitude a
     \end{tabular}
 \end{center}
 \end{table}
-\par OpenWeather's Pollution API ordinarily returns hourly values, but we opted to use the daily average pollution levels as our feature set in order to make the number of starting dimensons more manageable. The daily averages were also feature engineered to be proportional to the number of features so as to avoid the curse of dimensionality \parencite{Trunk79}. 
+
 \par The original data was unit normalized so that the gradient descents could converge more quickly while still preserving the original differences in range. Each step was saved separately to provide expeditious access to both the normalized and non-normalized data.
 
+\subsection{Model Validation}
+
+\par To perform the initial linear regression on uncompressed data, we choose the the daily pollution values of one random day from the dataset while accomodating to train the model with the rest of the features. K-fold cross validation is applied on the model after normalizing the training data. This helps with evaluating the minimum, average, and maximum regression scores of the original data that was not condensed. These scores create a baseline that help us in comparing the scores that were acheived after applying the reduction techniques.
+
+\begin{figure}[h!]
+    \centering
+    \caption{Unencoded R2 Scores}
+    \label{fig:pipeline}
+    \includegraphics[width=0.8\linewidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded_r2.png}
+\end{figure}
+
 \subsection{Autoencoder Model}
+
 \par The autoencoder model used consists of a single encoded and decoded layer. The data was split into a train and test set at the beginning of the testing cycle, and was further separated into a validation set for each given dimension. The validation set was essential for updating the model weights after every epoch. After the model was trained and validated, we created the finalized embeddings using the full dataset. We created embeddings for several of the most significant dimensions based off their increase in explained variance scores.
 
 \begin{table}[h!]
@@ -244,9 +196,10 @@ Moreover, grid search was only performed on a select number of key dimensions ra
     \vspace{0.1cm}
     \begin{tabular}{p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}}
         \hline
-        \multicolumn{5}{c}{CO Grid Search Key Dimensions 1-10}\\
+        \multicolumn{5}{c}{CO grid search for key dimensions 1-10}\\
         \hline
         dimension & $r^{2}$ & learning rate & batch & epochs  \\
+        \hline
         1 & 0.22 & 0.01 & 64 & 10 \\
         2 & 0.44 & 0.0001 & 256 & 50\\
         3 & 0.49 & 0.001 & 64 & 50\\
@@ -263,14 +216,14 @@ Moreover, grid search was only performed on a select number of key dimensions ra
 \end{table}
 \begin{table}[h!]
 \begin{center}
-    \caption{Grid Search Results for Carbon Monoxide}
     \label{tab:table2}
     \vspace{0.1cm}
     \begin{tabular}{p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}}
         \hline
-        \multicolumn{5}{c}{CO Grid Search Key Dimensions 20-120}\\
+        \multicolumn{5}{c}{CO grid search for key dimensions 20-120}\\
         \hline
         dimension & $r^{2}$ & learning rate & batch & epochs  \\
+        \hline
         20 & 0.62 & 0.01 & 64 & 50\\
         30 & 0.64 & 0.01 & 128 & 75\\
         40 & 0.67 & 0.01 & 256 & 100\\
@@ -290,18 +243,6 @@ Moreover, grid search was only performed on a select number of key dimensions ra
 
 \subsection{Principle Component Analysis}
 The PCA model was trained with k-fold cross-validation using five folds. The dataset was split into a training and test set. The trained PCA models were used to create embeddings at different scales of dimensionality based on the number of input components. We prioritized the first ten dimensions because they generally represent the largest increase in the percent explained variance.
-
-\subsection{Additional Model Validation}
-In addition to the PCA and Autoencoder models, a linear regression was performed on the unencoded features. The resulting explainable variance scores serve as a benchmark with which we can compare each model's data loss. 
-
-\begin{figure}[h!]
-    \centering
-    \caption{Unencoded R2 Scores}
-    \label{fig:pipeline}
-    \includegraphics[width=0.8\linewidth]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded_r2.png}
-\end{figure}
-
-\newpage
 
 \section{Results}
 
@@ -329,33 +270,34 @@ In addition to the PCA and Autoencoder models, a linear regression was performed
 % co scatter
 \begin{figure}[h!]
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.png} 
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.png} 
     \caption{Model characterization grouped by region}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-us.png}
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-us.png}
     \caption{Model characterization of U.S. Territories}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/california.png} 
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/california.png} 
     \caption{Model characterization of California}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.png} 
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.png} 
     \caption{Model characterization of Texas}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york.png}
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york.png}
     \caption{Model characterization of New York}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-    \includegraphics[width=0.8\linewidth, height=6.5cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesota.png}
+    \includegraphics[width=0.8\linewidth, height=6cm]{/home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesota.png}
     \caption{Model characterization of Minnesota}
 \end{subfigure}
 \caption{Scatter plots of outlier and highly-populated cities over first two dimensions}
 \label{fig:heuristic_labels}
 \end{figure}
 
+\newpage
 \par The model's characterization appears to be heavily dependent on geographic location. When grouped by region, one can see that there is a fairly tight distribution, especially among the Midwest and Northeast regions. Puerto Rico is also tightly clustered, but the territory contains a limited 211 representative data points.
 
 \par Curiously enough, population size does not seem to be one of the most succint features of the model. Figure \ref{fig:population_comparison} shows the top two hundred most populous cities in the US for the first four dimensions of the model. The first four latent dimensions of O3 account for nearly 60\% of the total explainable variance. However, the top 200 cities appear to be randomly dispersed throughout, suggesting that population alone has less of an effect on the model. It is possible that population is represented indirectly
@@ -411,10 +353,14 @@ In addition to the PCA and Autoencoder models, a linear regression was performed
 
 \section{Discussion}
 
-\par The proposed model provides us with many insights on the most succinct features that characterize urban air pollution in US cities. Based on location identifiers such as city name, state, country, and the geograpic coordinates, we are able to infer much of the explainability of the model. However, more specific external data is needed to fully uncover these features. One study \parencite{Bai2019} uses a stacked autoencoder approach and focuses on the seasonality of pm2.5 levels. The model considers both the seasonality and temporality of pm2.5 levels and supporting meteorological data. The research group was able to accurately predict the pm2.5 levels to the hour for a given season. The pollution autoencoder models we created only consider half a year of data, so we were unable to fully account for seasonal variations in the dataset.
-\par Another study focusing on pm2.5 \parencite{doreswamy2021} uses autoencoders for spatio-temporal clustering analysis. The group looks at Taiwan for its massive air pollution problem, coupled with the fact that the area's unique topography makes it difficult to map the distribution of pollution. The model uses aproximately six years of censor data from Eastern Taiwan to analyze the spatio-temporal qualities of pm2.5, as well as the socioeconomic effects of its presence.
+\par The proposed model provides us with many insights on the most succinct features that characterize urban air pollution in US cities. Based on location identifiers such as city name, state, country, and the geograpic coordinates, we are able to infer much of the explainability of the model. However, more specific external data is needed to fully uncover these features. 
+\par One study \parencite{Bai2019} uses a stacked autoencoder approach and focuses on the seasonality of pm2.5 levels. The model considers both the seasonality and temporality of pm2.5 levels and supporting meteorological data. The research group was able to accurately predict the pm2.5 levels to the hour for a given season. The pollution autoencoder models we created only consider half a year of data, so we were unable to fully account for seasonal variations in the dataset.
+\par Another study focusing on pm2.5 \parencite{Doreswamy2021} uses autoencoders for spatio-temporal clustering analysis. The group looks at Taiwan for its massive air pollution problem, coupled with the fact that the area's unique topography makes it difficult to map the distribution of pollution. The model uses aproximately six years of censor data from Eastern Taiwan to analyze the spatio-temporal qualities of pm2.5, as well as the socioeconomic effects of its presence.
+\par A third study \parencite{Ma2019} concentrates on recovering lost pollution mapping data with mobile sensing networks. The proposed framework separates the process of pollution generation and data sampling to allow the model to deal with irregular time and space intervals. To aid in this, a deep learning approach using autoencoders was chosen to handle the irregular sampling. Additionally, a convolutional long short-term memory (ConvoLSTM) structure was utilized because it allows for the capture of both temporal and spatial dependencies. The autoencoders were used to describe the conditional probability of complete data given partial observations, whereas the ConvLSTM was used as a sampling imitator to model the pollution generation.
 
 \section{Conclusion}
+
+\par This paper presents the advantages of using a deep learning approach to characterize urban pollution data. The bottleneck architecture of the autoencoder model allows the network to extract the most representative features of air pollution in US cities. Furthermore, the autoencoder model is shown to be more effective at representing lower dimensional latent spaces than principle component analysis. The model may be expanded to apply to many different types of polluting gasses, beyond the eight gasses and particulates that we have already analyzed. The generalized model allows us to codify the influences on urban air pollution, which can be useful for further predictive modeling and policy making.
 
 \printbibliography
 

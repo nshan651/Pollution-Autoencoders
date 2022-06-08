@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.1 $
+% $ biblatex bbl format version 3.2 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -19,6 +19,69 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{Bai2019}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=cbac79f31c292969d8c346847f97b0ba}{%
+           family={Bai},
+           familyi={B\bibinitperiod},
+           given={Yun},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=78be8ea0cb80e4e1b59bf06100942e90}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27236cae310a1fcea746e449abed2c39}{%
+           family={Zeng},
+           familyi={Z\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c1a02969945bb4a5ac2ad6564fe6bcef}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Chuan},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eb96d0b531eeac5c6b8b186634522d92}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Jin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6e4de215403f2613e94b4f4cbd054326}
+      \strng{fullhash}{9094bc67dd72383f4da2178f356c528d}
+      \strng{bibnamehash}{6e4de215403f2613e94b4f4cbd054326}
+      \strng{authorbibnamehash}{6e4de215403f2613e94b4f4cbd054326}
+      \strng{authornamehash}{6e4de215403f2613e94b4f4cbd054326}
+      \strng{authorfullhash}{9094bc67dd72383f4da2178f356c528d}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0959-6526}
+      \field{journaltitle}{Journal of Cleaner Production}
+      \field{title}{Hourly PM2.5 concentration forecast using stacked autoencoder model with emphasis on seasonality}
+      \field{volume}{224}
+      \field{year}{2019}
+      \field{pages}{739\bibrangedash 750}
+      \range{pages}{12}
+      \verb{doi}
+      \verb https://doi.org/10.1016/j.jclepro.2019.03.253
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S095965261930962X
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S095965261930962X
+      \endverb
+      \keyw{Stacked autoencoder,PM,Meteorological data,Seasonality,Forecasting}
+    \endentry
     \entry{GeoEmbeddings}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=d42ab81c9463df2097e8e97eb8e02b67}{%
@@ -57,6 +120,51 @@
       \verb 10.3390/ijgi8030134
       \endverb
     \endentry
+    \entry{Doreswamy2021}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=b1e1ace88b102fb325fdb31cad8c20ec}{%
+           family={Doreswamy},
+           familyi={D\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=3487a05df9c6564f74718d119b459b9e}{%
+           family={K\bibnamedelima S},
+           familyi={K\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Harishkumar},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a60122402f63481ec19c05b42dd04137}{%
+           family={Gad},
+           familyi={G\bibinitperiod},
+           given={Ibrahim},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d49d3c706a8a6ce3392999b28b90c80a}{%
+           family={K\bibnamedelima M},
+           familyi={K\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Yogesh},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{becf02d74df70d03ef83dd5e63862c11}
+      \strng{fullhash}{e5eac01e9bc821a170dc1f3b049af249}
+      \strng{bibnamehash}{becf02d74df70d03ef83dd5e63862c11}
+      \strng{authorbibnamehash}{becf02d74df70d03ef83dd5e63862c11}
+      \strng{authornamehash}{becf02d74df70d03ef83dd5e63862c11}
+      \strng{authorfullhash}{e5eac01e9bc821a170dc1f3b049af249}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2021 International Conference on Computing, Communication, and Intelligent Systems (ICCCIS)}
+      \field{title}{Spatio-Temporal Clustering Analysis for Air Pollution Particulate Matter (PM2.5) Using a Deep Learning Model}
+      \field{year}{2021}
+      \field{pages}{529\bibrangedash 535}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1109/ICCCIS51004.2021.9397129
+      \endverb
+    \endentry
     \entry{NAAQS09}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=de3b5f3f3e4dcccb9bdf618270327bf0}{%
@@ -81,6 +189,55 @@
       \field{note}{\url{https://www.epa.gov/sites/production/files/2020-07/documents/2009_04_coscopeandmethodsplan.pdf}}
       \field{title}{Carbon Monoxide NAAQS: Scope and Methods Plan for Health Risk and Exposure Assessment}
       \field{year}{2009}
+    \endentry
+    \entry{jayamurugan2013}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=e42c673361761b6ad9920faf7a2b087d}{%
+           family={Jayamurugan},
+           familyi={J\bibinitperiod},
+           given={Ramasamy},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bf689a31caea064d91375bb026f42446}{%
+           family={Kumaravel},
+           familyi={K\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3807d8ef876f68850d65a644e0ea63d8}{%
+           family={Palanivelraja},
+           familyi={P\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=671d148a8b30387c0effb58f55b164ba}{%
+           family={Chockalingam},
+           familyi={C\bibinitperiod},
+           given={M.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c49cee605d8211b52bf94cfefc4667bc}
+      \strng{fullhash}{60b16b93db29f458f8c2353d96dd734c}
+      \strng{bibnamehash}{c49cee605d8211b52bf94cfefc4667bc}
+      \strng{authorbibnamehash}{c49cee605d8211b52bf94cfefc4667bc}
+      \strng{authornamehash}{c49cee605d8211b52bf94cfefc4667bc}
+      \strng{authorfullhash}{60b16b93db29f458f8c2353d96dd734c}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Atmospheric Sciences}
+      \field{title}{Influence of temperature, relative humidity and seasonal variability on ambient air quality in a coastal urban area}
+      \field{volume}{2013}
+      \field{year}{2013}
+      \field{pages}{1\bibrangedash 7}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1155/2013/264046
+      \endverb
     \endentry
     \entry{CommutingFlowPrediction}{article}{}
       \name{author}{6}{}{%
@@ -151,6 +308,85 @@
       \verb https://ojs.aaai.org/index.php/AAAI/article/view/5425
       \endverb
     \endentry
+    \entry{Ma2019}{inproceedings}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=a92297e6d0aa8a8a8de4577bac57b151}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={Rui},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c98b8df825976ea7cb8362592da21cc7}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ning},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f05132ac8e8c7b39a016123399ca5070}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Xiangxiang},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=471e61c37bc3e62dbe8655e02a002343}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dde0aad7d77e6457f1a1dc4827bc7a08}{%
+           family={Noh},
+           familyi={N\bibinitperiod},
+           given={Hae\bibnamedelima Young},
+           giveni={H\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a26a61af8029e8ca2b52ccb5ba439fe8}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Pei},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3a1f1a0016bb4e33e52e9bd0f48cfd33}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Lin},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{e331f48bd8b3f5d8b48d5b164066d154}
+      \strng{fullhash}{6736f7031db08fbe93388e27eaa5b468}
+      \strng{bibnamehash}{e331f48bd8b3f5d8b48d5b164066d154}
+      \strng{authorbibnamehash}{e331f48bd8b3f5d8b48d5b164066d154}
+      \strng{authornamehash}{e331f48bd8b3f5d8b48d5b164066d154}
+      \strng{authorfullhash}{6736f7031db08fbe93388e27eaa5b468}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Adjunct Proceedings of the 2019 ACM International Joint Conference on Pervasive and Ubiquitous Computing and Proceedings of the 2019 ACM International Symposium on Wearable Computers}
+      \field{isbn}{9781450368698}
+      \field{title}{A Deep Autoencoder Model for Pollution Map Recovery with Mobile Sensing Networks}
+      \field{year}{2019}
+      \field{pages}{577\bibrangedash 583}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1145/3341162.3349327
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3341162.3349327
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3341162.3349327
+      \endverb
+    \endentry
     \entry{DisentangledLocationEmbeddings}{inproceedings}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=894dc7138d363316633afa8556b0b7cf}{%
@@ -203,39 +439,6 @@
       \range{pages}{8}
       \verb{doi}
       \verb 10.1109/IJCNN48605.2020.9207324
-      \endverb
-    \endentry
-    \entry{Trunk79}{article}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=30c58edd0c73a3e602306bc7076ac74c}{%
-           family={Trunk},
-           familyi={T\bibinitperiod},
-           given={G.\bibnamedelimi V.},
-           giveni={G\bibinitperiod\bibinitdelim V\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{30c58edd0c73a3e602306bc7076ac74c}
-      \strng{fullhash}{30c58edd0c73a3e602306bc7076ac74c}
-      \strng{bibnamehash}{30c58edd0c73a3e602306bc7076ac74c}
-      \strng{authorbibnamehash}{30c58edd0c73a3e602306bc7076ac74c}
-      \strng{authornamehash}{30c58edd0c73a3e602306bc7076ac74c}
-      \strng{authorfullhash}{30c58edd0c73a3e602306bc7076ac74c}
-      \field{sortinit}{T}
-      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{year}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
-      \field{note}{\url{https://ieeexplore.ieee.org/document/4766926}}
-      \field{number}{3}
-      \field{title}{A Problem of Dimensionality: A Simple Example}
-      \field{volume}{PAMI-1}
-      \field{year}{1979}
-      \field{pages}{306\bibrangedash 307}
-      \range{pages}{2}
-      \verb{doi}
-      \verb 10.1109/TPAMI.1979.4766926
       \endverb
     \endentry
     \entry{GeotaggedTweets}{inproceedings}{}

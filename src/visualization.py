@@ -9,7 +9,7 @@ from mpl_toolkits import mplot3d
 import plotly.express as px
 
 
-def linegraph(type, dims, component_names, colors_list):
+def linegraph(f_name, dims, component_names, colors_list):
     ''' 
     Plot the explained variance across dimensions using the model results
 
@@ -25,17 +25,8 @@ def linegraph(type, dims, component_names, colors_list):
     # Plot results
     plt.figure(figsize=(12,10))
     for i, component in enumerate(component_names):
-        # AE or PCA
-        if type == 'ae':
-            #file_name = f'{f_name}{component}_metrics.csv'
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics.csv'
-            plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
-        elif type == 'pca':
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics'
-            plt_title = 'PCA Reduced Representation of Air Pollutants'
-        else:
-            print('Type must be "ae" or "pca"')
-            quit()
+        file_name = f'{f_name}{component}_metrics.csv'
+        plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
 
         # Read in model results
         model = pd.read_csv(filepath_or_buffer=file_name)
@@ -169,7 +160,7 @@ def correlation(X_data_file, Y_data_file, component):
     norm_data = pd.read_csv(filepath_or_buffer=X_data_file)
    
     X_matrix = []
-    norm_labels = ['dim_{}'.format(i) for i in range(1, 190+1)]
+    norm_labels = ['dim_{}'.format(i) for i in range(1, SIZE+1)]
     
     
     for i in range(SIZE):
@@ -414,19 +405,20 @@ def scattergeo(component):
 
 ### Function Calls ###
 
-COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+#COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
+COMPONENT_NAMES = ['co', 'no', 'no2']
 #COMPONENT_NAMES = ['co']
 COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:cyan', 'tab:olive', 'tab:pink']
 # Starting dimensions; Change this to edit
 DIMS = 190
 
-#linegraph('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
+#linegraph('/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
 X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
 Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
-#correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
+correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
 #linreg_r2scores()
 #scatter3D('o3')
-scatter('o3', 'for top 200 most populous cities in US', mask=True, hover=False)
+#scatter('o3', 'for top 200 most populous cities in US', mask=True, hover=False)
 #scattergeo('o3')

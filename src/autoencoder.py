@@ -246,8 +246,9 @@ def main():
     
     ### Constants ###
     #components = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
-    components = ['co', 'no', 'no2', 'o3', 'pm2_5', 'pm10', 'nh3'] # minus so2
-    #components = 'so2'
+    # COMPLETED: co, no2, no 
+    components = ['o3', 'pm2_5', 'pm10', 'nh3'] # minus so2
+    #components = ['o3']
     # Starting dimensions
     dims = 190
     # K-fold folds
