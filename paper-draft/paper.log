@@ -714,121 +714,121 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.png
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/pipeline.png
 , id=20, 459.96844pt x 594.72188pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipelin
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/pipelin
 e.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/pipeline
 .png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/pipeline.png  used on input line 82.
 (pdftex.def)             Requested size: 284.5458pt x 369.88531pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_matrix.
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/corr_matrix.
 png, id=21, 806.26219pt x 684.30656pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_ma
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/corr_ma
 trix.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_mat
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/corr_mat
 rix.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/corr_matrix.png  used on input line 102.
 (pdftex.def)             Requested size: 354.12144pt x 300.55284pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[3 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pipeline.
+[3 </home/nick/git/Pollution-Autoencoders/paper-draft/images/pipeline.
 png (PNG copy)>]
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded_r2
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/unencoded_r2
 .png, id=29, 1172.12906pt x 647.41875pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencod
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/unencod
 ed_r2.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencode
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/unencode
 d_r2.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/unencoded_r2.png  used on input line 141.
 (pdftex.def)             Requested size: 404.71353pt x 223.53752pt.
- [4 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/corr_mat
+ [4 </home/nick/git/Pollution-Autoencoders/paper-draft/images/corr_mat
 rix.png (PNG copy)>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/unencoded
+[5 </home/nick/git/Pollution-Autoencoders/paper-draft/images/unencoded
 _r2.png (PNG copy)>] [6]
 Overfull \hbox (11.83308pt too wide) in paragraph at lines 249--250
 \OT1/cmr/m/n/10 er-ated by the PCA and AE mod-els. While PCA was over-all less 
 noisy, we found that the au-toen-coder model achieved 
  []
 
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_dims
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all_dims
 .png, id=41, 1218.80344pt x 691.08188pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all
 _dims.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all_
 dims.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/pca_all_dims.png  used on input line 254.
 (pdftex.def)             Requested size: 354.11345pt x 199.16429pt.
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all
 _dims.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all_
 dims.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/pca_all_dims.png  used on input line 261.
 (pdftex.def)             Requested size: 354.11345pt x 199.16429pt.
-[7 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/pca_all_d
+[7 </home/nick/git/Pollution-Autoencoders/paper-draft/images/pca_all_d
 ims.png (PNG copy)>]
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.png, 
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/region.png, 
 id=46, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/region.
 png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.p
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/region.p
 ng>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/region.png  used on input line 273.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-us.p
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/outside-us.p
 ng, id=48, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/outside
 -us.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/outside-
 us.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/outside-us.png  used on input line 277.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/california.p
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/california.p
 ng, id=49, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/califor
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/califor
 nia.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/californ
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/californ
 ia.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/california.png  used on input line 281.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.png, i
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/texas.png, i
 d=50, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.p
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/texas.p
 ng Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/texas.pn
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/texas.pn
 g>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/texas.png  used on input line 285.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york.png
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/new-york.png
 , id=51, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-yor
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/new-yor
 k.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/new-york
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/new-york
 .png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/new-york.png  used on input line 289.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesota.pn
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/minnesota.pn
 g, id=52, 648.2619pt x 711.8595pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minneso
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/minneso
 ta.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/minnesot
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/minnesot
 a.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/minnesota.png  used on input line 293.
 (pdftex.def)             Requested size: 202.35384pt x 170.71942pt.
 
@@ -846,29 +846,29 @@ Overfull \hbox (3.33331pt too wide) in paragraph at lines 272--296
 [] []  
  []
 
-[8 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/region.pn
-g> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/outside-u
-s.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/calif
-ornia.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/t
-exas.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/ne
-w-york.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/
+[8 </home/nick/git/Pollution-Autoencoders/paper-draft/images/region.pn
+g> </home/nick/git/Pollution-Autoencoders/paper-draft/images/outside-u
+s.png> </home/nick/git/Pollution-Autoencoders/paper-draft/images/calif
+ornia.png> </home/nick/git/Pollution-Autoencoders/paper-draft/images/t
+exas.png> </home/nick/git/Pollution-Autoencoders/paper-draft/images/ne
+w-york.png> </home/nick/git/Pollution-Autoencoders/paper-draft/images/
 minnesota.png>]
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population.p
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/population.p
 ng, id=62, 650.43pt x 714.0276pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populat
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/populat
 ion.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populati
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/populati
 on.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/population.png  used on input line 307.
 (pdftex.def)             Requested size: 252.94217pt x 284.52736pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/population_3
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/population_3
 and4.png, id=63, 650.43pt x 714.0276pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populat
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/populat
 ion_3and4.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populati
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/populati
 on_3and4.png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/population_3and4.png  used on input line 311.
 (pdftex.def)             Requested size: 252.94217pt x 284.52736pt.
 
@@ -876,40 +876,40 @@ Overfull \hbox (3.33331pt too wide) in paragraph at lines 306--314
 [][] []  
  []
 
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.png,
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim1.png,
  id=64, 887.315pt x 929.4725pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim1
 .png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim1.
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim1.
 png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/o3-dim1.png  used on input line 328.
 (pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first.png
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-first.png
 , id=65, 887.315pt x 929.4725pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-firs
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-firs
 t.png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-first
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-first
 .png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/o3-first.png  used on input line 334.
 (pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2.png,
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim2.png,
  id=66, 887.315pt x 929.4725pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim2
 .png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-dim2.
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-dim2.
 png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/o3-dim2.png  used on input line 340.
 (pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
-</home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last.png,
+</home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-last.png,
  id=67, 887.315pt x 929.4725pt>
-File: /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last
+File: /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-last
 .png Graphic file (type png)
-<use /home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/o3-last.
+<use /home/nick/git/Pollution-Autoencoders/paper-draft/images/o3-last.
 png>
-Package pdftex.def Info: /home/nick/github_repos/Pollution-Autoencoders/paper-d
+Package pdftex.def Info: /home/nick/git/Pollution-Autoencoders/paper-d
 raft/images/o3-last.png  used on input line 346.
 (pdftex.def)             Requested size: 202.34512pt x 227.61638pt.
 
@@ -925,12 +925,12 @@ Overfull \hbox (3.33331pt too wide) in paragraph at lines 326--350
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9 </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/populatio
-n.png> </home/nick/github_repos/Pollution-Autoencoders/paper-draft/images/popul
-ation_3and4.png>] [10 </home/nick/github_repos/Pollution-Autoencoders/paper-dra
-ft/images/o3-dim1.png> </home/nick/github_repos/Pollution-Autoencoders/paper-dr
-aft/images/o3-first.png> </home/nick/github_repos/Pollution-Autoencoders/paper-
-draft/images/o3-dim2.png> </home/nick/github_repos/Pollution-Autoencoders/paper
+[9 </home/nick/git/Pollution-Autoencoders/paper-draft/images/populatio
+n.png> </home/nick/git/Pollution-Autoencoders/paper-draft/images/popul
+ation_3and4.png>] [10 </home/nick/git/Pollution-Autoencoders/paper-dra
+ft/images/o3-dim1.png> </home/nick/git/Pollution-Autoencoders/paper-dr
+aft/images/o3-first.png> </home/nick/git/Pollution-Autoencoders/paper-
+draft/images/o3-dim2.png> </home/nick/git/Pollution-Autoencoders/paper
 -draft/images/o3-last.png>] [11]
 Overfull \hbox (6.29652pt too wide) in paragraph at lines 366--366
 \OT1/cmr/m/n/10 Data''. In: \OT1/cmr/m/it/10 2018 IEEE In-ter-na-tional Con-fer

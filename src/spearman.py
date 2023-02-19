@@ -3,8 +3,8 @@ import numpy as np
 from scipy.stats import spearmanr
 
 # Compare monotonicity of norm data and pca embeddings
-dfx = pd.read_csv('/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/o3_data_norm.csv')
-dfy = pd.read_csv('/home/nick/github_repos/Pollution-Autoencoders/data/vec/o3_vec_190.csv')
+dfx = pd.read_csv('/home/nick/git/Pollution-Autoencoders/data/data_norm/o3_data_norm.csv')
+dfy = pd.read_csv('/home/nick/git/Pollution-Autoencoders/data/vec/o3_vec_190.csv')
 
 # Only compare first 10 dims with first 10 features
 dfx = dfx.iloc[:, 3:-1]

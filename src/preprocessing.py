@@ -206,7 +206,7 @@ def main():
     '''
 
     # Retrieve data for list of cities 
-    city_df = pd.read_csv(filepath_or_buffer=f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/other/city_lat_lon.csv")
+    city_df = pd.read_csv(filepath_or_buffer=f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/other/city_lat_lon.csv")
     city_count = len(city_df)
     
     # Start and ending times
@@ -216,10 +216,10 @@ def main():
     # Component gases
     COMPONENT_NAMES = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
     # List of file names to write to
-    #DATA_OUT = [f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/{component}_test.csv" for component in COMPONENT_NAMES]
-    DATA_OUT = [f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv" for component in COMPONENT_NAMES]
+    #DATA_OUT = [f"{os.environ['HOME']}/git/Pollution-Autoencoders/{component}_test.csv" for component in COMPONENT_NAMES]
+    DATA_OUT = [f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv" for component in COMPONENT_NAMES]
     # Output location of normalized data
-    NORM_OUT = [f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/{component}_norm_test.csv" for component in COMPONENT_NAMES]
+    NORM_OUT = [f"{os.environ['HOME']}/git/Pollution-Autoencoders/{component}_norm_test.csv" for component in COMPONENT_NAMES]
     # Dimensions to use
     DIMS = 190
     # Column names

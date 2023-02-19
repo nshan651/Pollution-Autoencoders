@@ -66,12 +66,12 @@ def metrics_comparison(type, dims, component_names, colors_list):
     for i, component in enumerate(component_names):
         # AE or PCA
         if type == 'ae':
-            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/modle_metrics/ae/best_worst/{component}_best_metrics.csv'
-            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/best_worst/{component}_worst_metrics.csv'
+            high_file = f'/home/nick/git/Pollution-Autoencoders/data/modle_metrics/ae/best_worst/{component}_best_metrics.csv'
+            low_file = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/ae/best_worst/{component}_worst_metrics.csv'
             plt_title = 'Autoencoder Reduced Representation of Air Pollutants'
         elif type == 'pca':
-            high_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
-            low_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
+            high_file = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
+            low_file = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
             plt_title = 'PCA Reduced Representation of Air Pollutants'
         else:
             print('Type must be "ae" or "pca"')
@@ -104,12 +104,12 @@ def metrics_comparison(type, dims, component_names, colors_list):
 
 def heatmap(component):
     # Read in component data and create an annotation list of cities
-    data = pd.read_csv('/home/nicks/github_repos/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
+    data = pd.read_csv('/home/nicks/git/Pollution-Autoencoders/data/data_clean/{}_data_clean.csv'.format(component))
     df = pd.DataFrame(data=data)
     annotations = df['city']
 
     # Read in whitelist of cities to graph
-    wlist_data = pd.read_csv(filepath_or_buffer='/home/nick/github_repos/Pollution-Autoencoders/data/other/outliers_whitelist.csv')
+    wlist_data = pd.read_csv(filepath_or_buffer='/home/nick/git/Pollution-Autoencoders/data/other/outliers_whitelist.csv')
     wlist = pd.DataFrame(data=wlist_data[:10])
     
     # Remove lat/lon
@@ -206,8 +206,8 @@ def scatter(component, title, mask=False, hover=False):
     '''
 
     plt.rcParams.update({'font.size': 16})
-    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_4.csv')
-    top200_data = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/other/top200.csv')
+    df = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/vec/{component}_vec_4.csv')
+    top200_data = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/other/top200.csv')
     top200 = [i for i in top200_data['city']]
     # whitelist labels
     wlist = ['RedWing', 'NewYork', 'LosAngeles', 'Chicago']
@@ -375,8 +375,8 @@ def linreg_r2scores():
 
 
 def scattergeo(component):
-    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv')
-    df2 = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_2.csv')
+    df = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv')
+    df2 = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/vec/{component}_vec_2.csv')
     mcolor = df2['dim_2']
     #mcolor = df['o3_2021_06_06']
     #mcolor = df['o3_2020_11_27']
@@ -412,11 +412,11 @@ COLORS_LIST = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', '
 # Starting dimensions; Change this to edit
 DIMS = 190
 
-#linegraph('/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/', DIMS, COMPONENT_NAMES, COLORS_LIST)
+#linegraph('/home/nick/git/Pollution-Autoencoders/data/model_metrics/ae/', DIMS, COMPONENT_NAMES, COLORS_LIST)
 #metrics_comparison('pca', DIMS, COMPONENT_NAMES, COLORS_LIST)
 ### Correlation Matrix ###
-X_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
-Y_DATA_FILE = '/home/nick/github_repos/Pollution-Autoencoders/data/vec/vec.csv'
+X_DATA_FILE = '/home/nick/git/Pollution-Autoencoders/data/data_norm/co_data_norm.csv'
+Y_DATA_FILE = '/home/nick/git/Pollution-Autoencoders/data/vec/vec.csv'
 correlation(X_DATA_FILE, Y_DATA_FILE, 'co')
 #linreg_r2scores()
 #scatter3D('o3')

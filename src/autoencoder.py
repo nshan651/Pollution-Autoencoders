@@ -76,7 +76,7 @@ def ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
     '''
 
     # Metrics file to write to
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics.csv'
+    file_name = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/ae/{component}_metrics.csv'
     # Train Autoencoder model
     variance_list = []
     r2_list = []
@@ -140,7 +140,7 @@ def ae_run(dim, X, X_train, Y_train, optimal_hyperparams, component, label_tup):
     '''
 
     # File to save model metrics to
-    vec_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/{component}_vec_{dim}.csv'
+    vec_file = f'/home/nick/git/Pollution-Autoencoders/data/vec/{component}_vec_{dim}.csv'
 
     # Train the model that will be used to create the embedding based on desired input dimensions
     encoded_layer, *_ = autoencoder(
@@ -192,7 +192,7 @@ def grid_search(x, y, folds, component, iter_dims, key_params):
     # Headers for grid search
     grid_list = ['fold', 'dim', 'variance', 'r2', 'lr', 'batch', 'epochs']
 
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_1_9.csv'
+    file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_1_9.csv'
     # Write header
     with open(file_name,'w+', newline='') as f:
         writer = csv.writer(f)
@@ -267,8 +267,8 @@ def main():
     for component in components:
         ### Setup ###
         # Open normalized data and dependent, non-normalized data
-        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
-        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+        dfx = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
+        dfy = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
         # City names to append
         label_tup = (dfy['city'].values, dfy['state'].values, dfy['country'].values)
         # Drop data labels
@@ -280,14 +280,14 @@ def main():
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=40)
         
         ### Model Training ###
-        param_grid = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/hyperparams/{component}/{component}_hyperparams.csv')
+        param_grid = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/hyperparams/{component}/{component}_hyperparams.csv')
         ae_train_test(dims, X_train, X_test, Y_train, Y_test, component, param_grid)
 
     ### Grid Search ###
     #grid_search(X, Y, folds, components, iter_dims, key_params)
     
     ### Run Model ###
-    #optimal_hyperparams = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/hyperparams/{components}/{components}_hyperparams.csv')
+    #optimal_hyperparams = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/hyperparams/{components}/{components}_hyperparams.csv')
     #ae_run(dims, X, X_train, Y_train, optimal_hyperparams, components, label_tup)
 
     ### Regression Test ###

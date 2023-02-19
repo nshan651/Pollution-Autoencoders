@@ -39,7 +39,7 @@ def pca_train_test(dims, x, y, folds, component):
     '''
     
     # Metrics file
-    file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics'
+    file_name = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics'
     # Headers 
     test_metrics_list = ['fold', 'dim', 'variance', 'r2']
     # Write header
@@ -87,10 +87,10 @@ def pca_train_test(dims, x, y, folds, component):
 def interpolate(dims, component):
     ''' Function to derive the best and worst fold for a given dimension '''
 
-    df = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics')
+    df = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/{component}_metrics')
     # Outputs
-    best_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
-    worst_metrics = f'/home/nick/github_repos/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
+    best_metrics = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_best_metrics.csv'
+    worst_metrics = f'/home/nick/git/Pollution-Autoencoders/data/model_metrics/pca/best_worst/{component}_worst_metrics.csv'
     # Lists to write to file
     best_list=worst_list=['dim', 'variance', 'r2']
 
@@ -160,7 +160,7 @@ def pca_run(dim, X, X_train, Y_train, component, cities):
         cities: List of cities to append to the embedding
     '''
 
-    vec_file = f'/home/nick/github_repos/Pollution-Autoencoders/data/vec/pca/{component}_vec.csv'
+    vec_file = f'/home/nick/git/Pollution-Autoencoders/data/vec/pca/{component}_vec.csv'
 
     # Train pca model
     model, encoded_train_data = pca(
@@ -192,8 +192,8 @@ def main():
 
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    dfx = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
     # City names to append
     cities = dfy['city'].values
     
@@ -216,8 +216,8 @@ def main():
     ''' 
     for component in component_names:
         # Open normalized data and dependent, non-normalized data
-        dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
-        dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
+        dfx = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_norm/{component}_data_norm.csv")
+        dfy = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_clean/{component}_data_clean.csv")
         cities = dfy['city'].values
 
         X = dfx.values

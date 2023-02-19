@@ -22,12 +22,12 @@ def main(*argv):
     key_params = list(itertools.product(lr,batch,epochs))
     ### Input files ###
     # Open normalized data and dependent, non-normalized data
-    dfx = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
-    dfy = pd.read_csv(f"{os.environ['HOME']}/github_repos/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
+    dfx = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_norm/co_data_norm.csv")
+    dfy = pd.read_csv(f"{os.environ['HOME']}/git/Pollution-Autoencoders/data/data_clean/co_data_clean.csv")
     # City names to append
     cities = dfy['city'].values
     # Grid params to create model with
-    param_grid = pd.read_csv(f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
+    param_grid = pd.read_csv(f'/home/nick/git/Pollution-Autoencoders/data/grid_params/hyperparams.csv')
     # Name of the component gas
     component = 'no2'
     file_name=''
@@ -41,19 +41,19 @@ def main(*argv):
     for args in sys.argv:   
         if args == "-k_1_5" or args == "--first-five":
             iter_dims = np.arange(1,6,1)
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_1_5.csv'
+            file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_1_5.csv'
         elif args == "-k_6_9" or args == "--six-to-nine":
             iter_dims = np.arange(6,10,1)
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_6_9.csv'
+            file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_6_9.csv'
         elif args == "-k_10_60" or args == "--ten-to-fifty":
             iter_dims = np.arange(10,51,10)
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_10_50.csv'
+            file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_10_50.csv'
         elif args == "-k_70_120" or args == "--seventy-to-onetwenty":
             iter_dims = np.arange(70,121,10)
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_50_100.csv'
+            file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_50_100.csv'
         elif args == "-k_all" or args == "--run-all":
             iter_dims = np.append(np.arange(1, 10, 1), np.arange(10, 120, 10))
-            file_name = f'/home/nick/github_repos/Pollution-Autoencoders/data/grid_params/{component}_grid_params_all.csv'
+            file_name = f'/home/nick/git/Pollution-Autoencoders/data/grid_params/{component}_grid_params_all.csv'
 
     # Perform grid search
     ae.grid_search(
